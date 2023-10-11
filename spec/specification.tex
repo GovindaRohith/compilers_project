@@ -39,9 +39,11 @@
 \pagebreak
 \section{Introduction}
 \subsection{Motivation}
-motivation here
+This language's inspiration stems from two distinct sources. For many years, compilers were responsible for converting high-level code into binary or assembly code. This put a program's effectiveness wholly dependent on the programmer's coding abilities. Compilers shouldn't be left behind as AI has recently advanced in all industries. More than only translators must be included in the compilers. Many studies are being conducted on the subject everywhere in the world. The more optimizations we do in the compailer, faster we get the output.
+
+                         We took it as an opportunity and we have decided to build a new language called CPlex. CPlex is primarily used for Complex Numbers computations. Complex numbers are mainly used in Electrical Engineering, Signal Processing, Quantum Mechanics, Computer Graphics, Control systems etc. Many scientists make research on the areas mentioned above. This motivates us to build a programming language based on Complex Numbers.
 \subsection{Goal}
-goal here
+CPlex aims to extend its capabilities to a broader, generalized domain. CPlex offers built-in support for complex numbers, facilitating arithmetic operations like addition, subtraction, multiplication, and division. 
 \section{Data types}
 Hello world 
 \section{Operators and expressions}
@@ -49,7 +51,86 @@ Hello world
 \section{Lexical specifications}
 Hello world 
 \section{Declarations}
-Hello world 
+\subsection{Integers:}
+
+\begin{enumerate}
+    \item \textbf{int a, b, c;} \\
+        Integers without initialization. a, b,c can be declared without initialization.
+    \item  \textbf{int a = 5;}\\
+        Integers with initialization. a can be declared with initializing.
+\end{enumerate}
+
+\subsection{Decimals:}
+\begin{enumerate}
+    \item \textbf{double a, b, c;} \\
+        Decimal numbers without initialization. a, b,c can be declared without initialization.
+    \item  \textbf{double a = 5.6;}\\
+        Decimal numbers with initialization. a is assigned to 5.6 .
+\end{enumerate}
+\subsection{Complex declarations:}
+\subsubsection{Complex Numbers without real part:}
+\begin{enumerate}
+    \item \textbf{cint a(3), b(4), c(10);}\\
+Integer type complex numbers.
+The above statements makes declarations as a = 3i, b = 4i, c = 10i.
+    \item \textbf{cdouble c(3.4), d(4.7), e(10.03);} \\
+The above statements makes declarations as c = 3.4i, d = 4.7i, e = 10.03i.
+\end{enumerate}
+
+\subsubsection{Complex Numbers with real part:}
+\begin{enumerate}
+    \item \textbf{cint a(3, 4);}\\
+The above statement declares a complex number a = 3 + 4i.
+    \item \textbf{cdouble a(3.5, 4.7);}\\
+The above statement declares a complex number a = 3.5 + 4.7i.
+\end{enumerate}
+\subsection{Arrays:}
+\subsubsection{Integer Arrays:} 
+\begin{enumerate}
+    \item \textbf{int a[10];}\\
+Integer array without initialization.
+The above statement allocates a with size of 10 where we can declare int datatype numbers.
+\item \textbf{int a(23)[10];} \\
+Integer array with initialization.
+The above statement allocates a with size of 10 and are initialized to 23.
+\end{enumerate}
+
+\subsubsection{Double Arrays:} 
+\begin{enumerate}
+    \item \textbf{double d[25]; } \\
+Double array without declaration.
+The above statement allocates size of 25 where we can declare double datatype numbers.
+\item \textbf{double d(3.8)[25]; } \\
+Double array with declaration.
+The above statement allocates a with size of 25 and are initialized to 3.8 .
+\end{enumerate}
+\subsubsection{Complex Number arrays:}
+ \begin{enumerate}
+     \item \textbf{cint a(3)[10];} \\
+This statement declares an array of size 10 with each value assigned to 3.
+     \item  \textbf{cint a(3, 4)[20];}\\ 
+This statement declares an array of size 20 with each value assigned to a complex number 3 + 4i. If user wants to declare any complex number other 
+than 3 + 4i, then he/she has to declare manually below the declaration part.
+ \end{enumerate}
+ \begin{enumerate}
+    \item \textbf{cdouble a(3.4)[10];} \\
+This statement declares an array of size of 10 with each value assigned to 3.4 .
+\item \textbf{cdouble a(3.4, 6.93)[5];} \\
+This statement declares an array of size of 5 with each value assigned to 3.4 + 6.93i.
+ \end{enumerate}
+
+\subsection{Function Declaration SYNTAX:}
+    \begin{BVerbatim} 
+FUNC_NAME RETURN_TYPE : (DTYPE VAR1, DTYPE VAR2)  {
+   /*
+   CODE TO BE WRITTEN HERE
+   */
+}
+    \end{BVerbatim}
+
+First we declare function name then we mention return type and then we have a Colon after that we declare arguments separated by comma. After the parenthesis we write as usual code. Parenthesis are completely optional for the arguement declaration.
+
+
 \section{Statements}
 Hello world 
 \section{Built-in functions}
