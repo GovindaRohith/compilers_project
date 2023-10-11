@@ -86,10 +86,132 @@ bin &  0 and 1\\
 \end{tabular}
 \caption{Data Types Table}
 \end{table}
+
 \section{Operators and expressions}
-Hello world 
+\subsection{Precedence - Lowest to Highest}
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.5} % Adjust vertical padding
+\setlength{\tabcolsep}{15pt} % Adjust horizontal padding
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Symbol} & \textbf{Purpose} & \textbf{Associativity} & \textbf{Valid Operands} \\
+\hline
+++ & Increment & right to left & computational datatypes \\
+\hline
+\textbf{- -} & Decrement & right to left & computational datatypes \\
+\hline
+rem & Modulo & left to right & int, float  \\
+\hline
+/ & Division  & left to right & computational datatypes \\
+\hline
+* &  Multiplication & left to right & computational datatypes \\
+\hline
++ &  Addition & left to right & computational datatypes  \\
+\hline
+- &  Subtraction & left to right & computational datatypes \\
+\hline
+eq, neq, <, <=, >=, > & Relational Op & left to right & computational datatypes \\
+\hline
+and, or, neg & Logical Op & left to right & bin \\
+\hline
+= & Assignment Op & right to left & initialise, assignment \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Expressions}
+    \subsubsection{ RHS side of expression:}
+    Arithmatic expression should follow BODMAS rule.
+    \subsubsection{ Unary Operators:}
+    \begin{enumerate}
+        \item For int and double datatype the unary operators follows default rule as C language
+        \item For cint, cdouble datatype we can increment as our wish. For Ex for incrementing real part of a complex number a, we write a.r++; 
+        \item For imaginary part of a complex number a we increment as a.i++;
+        \item For incrementing both real and imaginary part of a complex number a we write a++;
+    \end{enumerate}
+
 \section{Lexical specifications}
-Hello world 
+
+\subsection{Reserved keywords}
+Reserved keywords are the keywords that have special meaning in the program and can not be used directly as a variable name. The reserved keywords which are used in Cplex are
+
+\begin{table}[h]
+    \centering
+    \renewcommand{\arraystretch}{1.5} % Adjust vertical padding
+    \setlength{\tabcolsep}{15pt} % Adjust horizontal padding
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        iter & until & return & rem \\
+        \hline
+        eq & neq & and & or \\
+        \hline
+        neg & int & cint & double \\
+        \hline
+        cdouble & str & bin & real \\
+        \hline
+        img & pow & polar & conjugate \\
+        \hline
+        mod & arg & angle & dist \\
+        \hline
+        cprint & rotate & choice & alt \\
+        \hline
+        default & dist & get\_line & is\_triangle \\
+        \hline
+        get\_centroid & get\_circumcenter & get\_orthocenter & get\_incenter \\
+        \hline
+        get\_excenter & get\_area & get\_perimeter & \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Identifiers}
+Identifiers are case-sensitive and consist of letters, digits, and underscores. Identifiers must start with a letter, which can be followed by a sequence of letters, digits, and underscores.\\
+
+\textbf{Valid Identifiers:} 
+\begin{verbatim}
+    counter, va_lu_e, MAXIMUM_VALUE, myFunction, x2
+\end{verbatim}
+\textbf{Invalid identifiers:} 
+\begin{verbatim}
+    1stPlace (starts with a digit)
+    float (a reserved keyword)
+    user-name (contains a hyphen, which is not allowed)
+\end{verbatim}
+
+\subsection{Punctuation}
+Punctuation characters are used to separate elements and control program flow. 
+\begin{enumerate}
+    \item \textbf{Semicolon(;):} Every statement should end with semicolon.
+    \item \textbf{Comma(,):} Comma is used to seperate the arguments in function call and in iter loop
+    \item \textbf{Collon(:):} Collon is used to seperate the arguments from return type in function definition.
+    \item \textbf{Double Quotes(" "):} Double quotes are used to define string.
+\end{enumerate}
+
+\subsection{Special symbols}
+Special symbols are characters with specific meanings and purposes within the language. They are used for operators, punctuation, and other syntactical elements.
+\begin{enumerate}
+    \item \textbf{Curly braces (\{ \}):} Curly braces are used to define the scope of the function.
+    \item \textbf{Square braces ([ ]):} Square braces are used to define the array.
+    \item \textbf{Round braces (( )):} Round braces are used to define the arguments in function call and function definition, loops, conditional statements.
+\end{enumerate}
+
+\subsection{Comments}
+Comments are used to provide explanatory notes within the source code. They are not executed by the compiler and are for the benefit of programmers. There are two types of comments Single-line, Multi-line. \\
+
+\begin{BVerbatim}
+     // UNTIL END LINE 
+     /* MULTILINE COMMENT */
+\end{BVerbatim}
+
+\subsection{Whitespace}
+White spaces refer to spaces, tabs, and newline characters that are used for formatting and separating code elements. White spaces are generally ignored by the compiler, and their primary purpose is to enhance code readability.
+\begin{itemize}
+    \item Space (' ')
+    \item Tab (\textbackslash{}t)
+    \item Newline (\textbackslash{}n)
+\end{itemize}
+
 \section{Declarations}
 \subsection{Integers:}
 
