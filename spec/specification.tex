@@ -45,7 +45,47 @@ This language's inspiration stems from two distinct sources. For many years, com
 \subsection{Goal}
 CPlex aims to extend its capabilities to a broader, generalized domain. CPlex offers built-in support for complex numbers, facilitating arithmetic operations like addition, subtraction, multiplication, and division. 
 \section{Data types}
-Hello world 
+
+\subsection{Computational}
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.5} % Adjust vertical padding
+\setlength{\tabcolsep}{30pt} % Adjust horizontal padding
+\begin{tabular}{|c|c|}
+\hline
+\bfseries Datatype & \bfseries Example \\
+\hline
+int &  3, 7, 0 etc\\
+\hline
+cint &  3+4i, 6+11i etc\\
+\hline
+double &  3.14, 0 etc \\
+\hline
+cdouble &   3.14+7i, 8+5.5i, 3.14+5.5i etc\\
+
+\hline
+\end{tabular}
+\caption{Data Types Table}
+\end{table}
+\subsection{Non-computational}
+
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.5} % Adjust vertical padding
+\setlength{\tabcolsep}{30pt} % Adjust horizontal padding
+\begin{tabular}{|c|c|}
+\hline
+\bfseries Datatype & \bfseries Example \\
+\hline
+
+\hline
+str &  "hi this compilers project", "", " " etc\\
+\hline
+bin &  0 and 1\\
+\hline
+\end{tabular}
+\caption{Data Types Table}
+\end{table}
 \section{Operators and expressions}
 Hello world 
 \section{Lexical specifications}
@@ -132,7 +172,118 @@ First we declare function name then we mention return type and then we have a Co
 
 
 \section{Statements}
-Hello world 
+
+% \textbf{Examples}
+
+
+
+\subsection{Intializations / Assignments}
+\begin{itemize}
+    \item Every intialization or assignment statement in our language ends with ";".
+    \item Every statement has an equal to symbol(=) in which LHS contains variable and RHS contains  value or return value or expression . It also contains a only a variable in RHS it means we are assigning RHS variable value to LHS variable  \\
+    \textbf{Examples:}
+    \item a = 2;
+    \item b = func(a);
+    \item c = a+b;
+    \item d = c;
+\end{itemize}
+
+
+\subsection{Function call}
+\begin{itemize}
+    \item A function cal can be inbuit function call or user function call.
+    \item Every function call statement in our language ends with ";".
+   \item A function call can be done by writing the function name  followed by parenthesis, and in parenthesis we write arguments in the same order as that of in the function declaration. The type of arguments should be same as in function declaration\\
+   \textbf{Examples:}
+   \item func(a,b,c);
+   \item get\_centriod(a,b,c);
+   
+\end{itemize}
+\subsection{Return Type}
+\begin{itemize}
+    \item Return statement must be written in a function scope.
+    \item Every return statement in our language ends with ";".
+   \item A return statement contains return word followed by a value or a variable or a expression. The value or variable or expression value should be same as return type of function.\\
+   \textbf{Examples:}
+   \item return 2;
+   \item return a;
+   \item return a+b;
+   
+\end{itemize}
+\subsection{Conditionals}
+\subsubsection{\texttt{choice(cond) \{...\} }}
+The conditionals \texttt{choice(cond) \{...\} } is similar to the \texttt{if} statement in C. The condition \texttt{cond} is evaluated and if it is true then the statements inside the curly braces are executed. If the condition is false then the statements inside the curly braces are not executed.
+A sample code snippet is shown below:
+\begin{figure}[H]
+    \label{choice}
+    \centering
+    \begin{BVerbatim}
+        choice(a eq b) {
+            cprint(1);
+        }
+    \end{BVerbatim}
+    \caption{Output for table 'department' and k=10}
+    \end{figure}
+\subsubsection{\texttt{choice(cond) \{...\} default \{\... \} }}
+The conditionals \texttt{choice(cond) \{...\} default \{\... \} } is similar to the \texttt{if-else} statement in C. The condition \texttt{cond} is evaluated and if it is true then the statements inside the first curly braces are executed. If the condition is false then the statements inside the second curly braces are executed.
+A sample code snippet is shown below:
+\begin{figure}[H]
+    \label{choice}
+    \centering
+    \begin{BVerbatim}
+        choice(a eq b) {
+            cprint(1);
+        } default {
+            cprint(0);
+        }
+    \end{BVerbatim}
+    \caption{Output for table 'department' and k=10}
+    \end{figure}
+\subsubsection{\texttt{choice(cond) \{...\} alt(cond) \{...\} default \{\... \} }}
+The conditionals \texttt{choice(cond) \{...\} alt(cond) \{...\} default \{\... \} } is similar to the \texttt{if-else if-else} statement in C. The condition \texttt{cond} is evaluated and if it is true then the statements inside the first curly braces are executed. If the condition is false then the condition \texttt{cond} is evaluated and if it is true then the statements inside the second curly braces are executed. If the condition is false then the statements inside the third curly braces are executed.
+A sample code snippet is shown below:
+\begin{figure}[H]
+    \label{choice}
+    \centering
+    \begin{BVerbatim}
+        choice(a eq b) {
+            cprint(1);
+        } alt(a eq c) {
+            cprint(2);
+        } default {
+            cprint(0);
+        }
+    \end{BVerbatim}
+    \caption{Output for table 'department' and k=10}
+    \end{figure}
+\subsection{Loops}
+\subsubsection{\texttt{iter(cond1;cond2;cond3) \{...\} }}
+The loop \texttt{iter(cond1;cond2;cond3) \{...\} } is similar to the \texttt{for} loop in C. The condition \texttt{cond1} is evaluated and if it is true then the statements inside the curly braces are executed. After the execution of the statements inside the curly braces the condition \texttt{cond2} is evaluated and if it is true then the statements inside the curly braces are executed. This process is repeated until the condition \texttt{cond3} is true.
+A sample code snippet is shown below:
+\begin{figure}[H]
+    \label{iter}
+    \centering
+    \begin{BVerbatim}
+        iter(i=0;i<10;i=i+1) {
+            cprint(i);
+        }
+    \end{BVerbatim}
+    \caption{Output for table 'department' and k=10}
+    \end{figure}
+\subsubsection{\texttt{until(cond) \{...\} }}
+The loop \texttt{until(cond) \{...\} } is similar to the \texttt{while} loop in C. The condition \texttt{cond} is evaluated and if it is true then the statements inside the curly braces are executed. This process is repeated until the condition \texttt{cond} is true.
+A sample code snippet is shown below:
+\begin{figure}[H]
+    \label{until}
+    \centering
+    \begin{BVerbatim}
+        until(i<10) {
+            cprint(i);
+            i=i+1;
+        }
+    \end{BVerbatim}
+    \caption{Output for table 'department' and k=10}
+    \end{figure}
 \section{Built-in functions}
 \subsection{Inbuilt complex functions:}
 \begin{itemize}
