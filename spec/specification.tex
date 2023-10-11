@@ -15,6 +15,8 @@
 \title{Compilers-2\\Group-12}
 \date{}
 \begin{document}
+% fix error in this document?
+
 \begin{figure}[H]
     \centering 
     \includegraphics[scale=0.1]{./logo.png}
@@ -51,9 +53,86 @@ Hello world
 \section{Statements}
 Hello world 
 \section{Built-in functions}
-Hello world 
-% \section{Syntax specification}
-% hello world
+\subsection{Inbuilt complex functions:}
+\begin{itemize}
+    \item \texttt{ real double : cdouble c}: Returns the real part of the complex number \texttt{c}.
+    \item \texttt{img double : (cdouble c)}: Returns the imaginary part of the complex number \texttt{c}.
+    \item \texttt{ pow cdouble : (cdouble base,double exponent)}: Returns the complex number ${(base)}^{(exponent)}$. This is done by using De Moivre's formula.
+    \item \texttt{ polar void :(cdouble c)}: Prints the polar form of a complex number \texttt{c}. Given a complex number $c=a+ib$ the polar form looks $c=r(e^{i \theta })$ (Where $\theta$ is the argument of the complex number and $r$ is the modulus of the complex number).
+    \item \texttt{conjugate cdouble : (cdouble c)}: Returns the conjugate of the complex number \texttt{c}. Given a complex number $c=a+ib$ the conjugate looks like $c=a-ib$.
+    \item  \texttt{mod double : (cdouble c)}: Returns the modulus of the complex number \texttt{c}. Given a complex number $c=a+ib$ the modulus looks like $c=\sqrt{a^2+b^2}$.
+    \item \texttt{arg double :(cdouble c)}: Returns the argument of the complex number \texttt{c}. Given a complex number $c=a+ib$ the argument looks like $c=\tan^{-1}(\frac{b}{a})$.
+    \item  \texttt{angle double : (cdouble c1,cdouble c2)}: Returns the angle between the complex numbers \texttt{c1} and \texttt{c2}. Given two complex numbers $c_1=a_1+b_1i$ and $c_2=a_2+b_2i$ the angle between them looks like $c=\tan^{-1}(\frac{b_2-b_1}{a_2-a_1})$.
+    \item \texttt{dist double : (cdouble c1,cdouble c2)}: Returns the distance between the complex numbers \texttt{c1} and \texttt{c2}. Given two complex numbers $c_1=a_1+b_1i$ and $c_2=a_2+b_2i$ the distance between them looks like $c=\sqrt{(a_2-a_1)^2+(b_2-b_1)^2}$.
+    \item \texttt{ cprint void: (cdouble c)}: Prints the complex number \texttt{c} in the form $a+ib$.
+\end{itemize}
+\subsection{Geometry related:}
+\begin{itemize}
+    \item \texttt{rotate cdouble : (cdouble c,cdouble origin,double angle)}: Returns the complex number \texttt{c} rotated by an angle \texttt{angle} about the point \texttt{origin}. The rotation is done in the counter-clockwise direction.    
+    \item \texttt{dist double :(cdouble c1,cdouble c2)}: Returns the distance between the complex numbers \texttt{c1} and \texttt{c2}. Given two complex numbers $c_1=a_1+b_1i$ and $c_2=a_2+b_2i$ the distance between them looks like $c=\sqrt{(a_2-a_1)^2+(b_2-b_1)^2}$.
+    \item \texttt{get\_line void :(cdouble c1,cdouble c2,double *a,double *b,double *c)}: Given two complex numbers $c_1=a_1+b_1i$ and $c_2=a_2+b_2i$ this function prints the line $ax+by+c=0$ passing through the points $c_1$ and $c_2$.
+    \item \texttt{is\_traingle bin :(cdouble c1,cdouble c2,cdouble c3)}: Given three complex numbers $c_1=a_1+b_1i$,$c_2=a_2+b_2i$ and $c_3=a_3+b_3i$ this function returns true if the points $c_1$,$c_2$ and $c_3$ form a triangle else false.
+    \item \texttt{ get\_centroid cdouble:(cdouble c1,cdouble c2,cdouble c3)}: Given three complex numbers $c_1=a_1+b_1i$,$c_2=a_2+b_2i$ and $c_3=a_3+b_3i$ this function returns the centroid of the triangle formed by(if exists) the points $c_1$,$c_2$ and $c_3$.
+    \item \texttt{get\_circumcenter cdouble :(cdouble c1,cdouble c2,cdouble c3)}: Given three complex numbers $c_1=a_1+b_1i$,$c_2=a_2+b_2i$ and $c_3=a_3+b_3i$ this function returns the circumcenter of the triangle formed by(if exists) the points $c_1$,$c_2$ and $c_3$.
+    \item \texttt{get\_orthocenter cdouble :(cdouble c1,cdouble c2,cdouble c3)}: Given three complex numbers $c_1=a_1+b_1i$,$c_2=a_2+b_2i$ and $c_3=a_3+b_3i$ this function returns the orthocenter of the triangle formed by(if exists) the points $c_1$,$c_2$ and $c_3$.
+    \item \texttt{get\_incenter cdouble :(cdouble c1,cdouble c2,cdouble c3)}: Given three complex numbers $c_1=a_1+b_1i$,$c_2=a_2+b_2i$ and $c_3=a_3+b_3i$ this function returns the incenter of the triangle formed by(if exists) the points $c_1$,$c_2$ and $c_3$.
+    \item \texttt{get\_excenter cdouble :(cdouble c1,cdouble c2,cdouble c3)}: Given three complex numbers $c_1=a_1+b_1i$,$c_2=a_2+b_2i$ and $c_3=a_3+b_3i$ this function returns the excenter of the triangle formed by(if exists) the points $c_1$,$c_2$ and $c_3$.
+    \item \texttt{ get\_area double :(cdouble c1,cdouble c2,cdouble c3)}: Given three complex numbers $c_1=a_1+b_1i$,$c_2=a_2+b_2i$ and $c_3=a_3+b_3i$ this function returns the area of the triangle formed by(if exists) the points $c_1$,$c_2$ and $c_3$.
+    \item \texttt{get\_perimeter double :(cdouble c1,cdouble c2,cdouble c3)}: Given three complex numbers $c_1=a_1+b_1i$,$c_2=a_2+b_2i$ and $c_3=a_3+b_3i$ this function returns the perimeter of the triangle formed by(if exists) the points $c_1$,$c_2$ and $c_3$.
+\end{itemize}
 \section{Example programs}
-hello world 
+\subsection{Example program 1:}
+\begin{figure}[H]
+    \label{ex_program_1}
+    \centering
+    \begin{BVerbatim}
+my_centroid cdouble : cdouble c1,cdouble c2,cdouble c3  {
+    cdouble centroid;
+    centroid = (c1+c2+c3)/3;
+    return centroid;
+}
+main int :  {
+    cint a(3,4);
+    cint b(5,5),c(-101,100);
+    cdouble centroid;
+    centroid = my_centroid(a,b,c);
+    choice(centroid eq get_centroid(a,b,c)) {
+        cprint(centroid);
+    } 
+    default {
+        cprint(is_triangle(a,b,c));
+    }
+    return 0;
+}
+    \end{BVerbatim}
+    \caption{Output for table 'department' and k=10}
+    \end{figure}
+\subsection{Example program 2:}
+\begin{figure}[H]
+    \label{ex_program_2}
+    \centering
+    \begin{BVerbatim}
+        main int :  {
+            cint a(3,4);
+            cint b(5,5),c(-101,100);
+            cdouble centroid;
+            centriod = get_centroid(a,b,c);
+            cprint(centroid);
+            circumcente= get_circumcenter(a,b,c);
+            cprint(circumcenter);
+            orthocenter = get_orthocenter(a,b,c);
+            cprint(orthocenter);
+            choice (dist(centriod,circumcenter) eq dist(orthocenter,centroid)*2){
+                cprint(1); //ratio verified
+            }
+            default {
+                cprint(-1);
+            }
+            //circum centriod orthocenter
+            //      2        1
+            return 0;
+        }
+            \end{BVerbatim}
+    \caption{Output for table 'department' and k=10}
+    \end{figure}
 \end{document}
