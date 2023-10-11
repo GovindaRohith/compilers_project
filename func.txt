@@ -1,15 +1,15 @@
-print
-add
-sub
-mul
-div
-comparasions 
-pow/sqrt (demovire theorem)
-polar form -> normal form
-log
-conjugate
-mod
-argument/amplitude
+print --done
+add --done
+sub --done
+mul --done
+div --done
+comparasions --done
+pow/sqrt (demovire theorem) 
+polar form -> normal form --done
+log --done
+conjugate --done
+mod --done
+argument/amplitude --done
 omega
 angle b/w two complex numbers
 traingle functions when given three points{
@@ -19,5 +19,5 @@ traingle functions when given three points{
     area(z1,z2,z3),
     .....
 }
-extract real and imaginary part of complex
+extract real and imaginary part of complex --real complex
 plotting complex numbers--optional
