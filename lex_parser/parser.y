@@ -7,11 +7,13 @@ FILE *parsed_fp;
 int ret_no;
 %}
 
-%token ID_T 
-%token CONST_T
-%token STR_T
-%token CHAR_T
-%token COMP_OP
+%token ID_TOKEN 
+%token INT_TOKEN 
+%token DOUBLE_TOKEN 
+%token SEMI_TOKEN 
+%token COMMA_TOKEN 
+%token COLON_TOKEN
+%token QUOTE_TOKEN 
 
 
 %%
