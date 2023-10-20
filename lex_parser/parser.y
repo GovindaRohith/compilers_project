@@ -34,6 +34,25 @@ int ret_no;
 %token POW
 %token POLAR
 %token CONJUGATE
+%token MOD
+%token ARG
+%token ANGLE
+%token DIST
+%token CPRINT
+%token ROTATE
+%token CHOICE
+%token ALT
+%token DEFAULT
+%token GET_LINE
+%token IS_TRIANGLE
+%token GET_CENTROID
+%token GET_CIRCUMCENTER
+%token GET_ORTHOCENTER
+%token GET_INCENTER
+%token GET_EXCENTER
+%token GET_AREA
+%token GET_PERIMETER
+
 
 %%
 program : temp program
@@ -66,6 +85,24 @@ temp: ID_T
     | POW
     | POLAR
     | CONJUGATE
+    | MOD
+    | ARG
+    | ANGLE
+    | DIST
+    | CPRINT
+    | ROTATE
+    | CHOICE
+    | ALT
+    | DEFAULT
+    | GET_LINE
+    | IS_TRIANGLE
+    | GET_CENTROID
+    | GET_CIRCUMCENTER
+    | GET_ORTHOCENTER
+    | GET_INCENTER
+    | GET_EXCENTER
+    | GET_AREA
+    | GET_PERIMETER
     ;
 %%
 #include "lex.yy.c"
