@@ -7,13 +7,53 @@ FILE *parsed_fp;
 int ret_no;
 %}
 
-%token ID_TOKEN 
-%token INT_TOKEN 
-%token DOUBLE_TOKEN 
-%token SEMI_TOKEN 
-%token COMMA_TOKEN 
-%token COLON_TOKEN
-%token QUOTE_TOKEN 
+%token ITER
+%token UNTIL
+%token RETURN
+%token REM
+%token EQ
+%token NEQ
+%token AND
+%token OR
+%token NEG
+%token AND
+%token OR
+%token INT
+%token CINT
+%token DOUBLE
+%token CDOUBLE
+%token STR
+%token BIN
+%token REAL
+%token IMG
+%token POW
+%token POLAR
+%token CONJUGATE
+%token MOD
+%token ARG
+%token ANGLE
+%token DIST
+%token CPRINT
+%token ROTATE
+%token CHOICE
+%token ALT
+%token DEFAULT
+%token GET_LINE
+%token IS_TRIANGLE
+%token GET_CENTROID
+%token GET_CIRCUMCENTER
+%token GET_ORTHOCENTER
+%token GET_INCENTER
+%token GET_EXCENTER
+%token GET_AREA
+%token GET_PERIMETER
+%token ID 
+%token INT
+%token DOUBLE 
+%token SEMICOL
+%token COMMA
+%token COLON
+%token QUOTE
 
 
 %%
@@ -25,6 +65,53 @@ temp: ID_T
     | STR_T
     | CHAR_T
     | COMP_OP
+    | ITER
+    | UNTIL
+    | RETURN
+    | REM
+    | EQ
+    | NEQ
+    | AND
+    | OR
+    | NEG
+    | AND
+    | OR
+    | INT
+    | CINT
+    | DOUBLE
+    | CDOUBLE
+    | STR
+    | BIN
+    | REAL
+    | IMG
+    | POW
+    | POLAR
+    | CONJUGATE
+    | MOD
+    | ARG
+    | ANGLE
+    | DIST
+    | CPRINT
+    | ROTATE
+    | CHOICE
+    | ALT
+    | DEFAULT
+    | GET_LINE
+    | IS_TRIANGLE
+    | GET_CENTROID
+    | GET_CIRCUMCENTER
+    | GET_ORTHOCENTER
+    | GET_INCENTER
+    | GET_EXCENTER
+    | GET_AREA
+    | GET_PERIMETER
+    | ID
+    | INT
+    | DOUBLE
+    | SEMICOL
+    | COMMA
+    | COLON
+    | QUOTE
     ;
 %%
 #include "lex.yy.c"
