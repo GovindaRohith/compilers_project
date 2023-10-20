@@ -12,3 +12,4 @@ git pull origin main
 git add .
 git commit -m "Message"
 git push
+git reset --hard 
