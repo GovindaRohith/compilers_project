@@ -202,6 +202,167 @@ double -?digit+(\.digit+)
  return GET_PERIMETER;
 }
 
+
+
+   [>] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+      return GT;
+   }
+
+   [<] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return LT;
+   }
+
+   "eq" {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return EQ;
+   }
+
+   "neq" {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return NE;
+   }
+
+   "++" {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return INC;
+   }
+
+   "--" {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return DEC;
+   }
+
+   "rem" {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return REM;
+   }
+
+   "and" {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return AND;
+   }
+
+   "or" {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return OR;
+   }
+
+   "neg" {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return NEG;
+   }
+
+   [=] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return ASSIGN;
+   }
+
+   [<=] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return LE;
+   }
+
+   [>=] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return GE;
+   }
+
+   []
+
+   [&&] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return AND;
+   }
+
+   [||] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+     return OR;
+   }
+
+   [!] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return NOT;
+   }
+
+   [-+*/] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return ARITH_OP;
+   }
+
+   [..] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return ACCESS_OP1;
+   }
+
+   [.] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return ACCESS_OP2;
+   }
+
+   [@] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return INN_PROD;
+   }
+
+   [(] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return OPEN_CIR_PAR;
+   }
+
+   [)] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return CLOSE_CIR_PAR;
+   }
+
+   [{] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return OPEN_CURLY_PAR;
+   }
+
+   [}] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return CLOSE_CURLY_PAR;
+   }
+
+   [[] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return OPEN_SQUARE_PAR;
+   }
+
+   []] {
+    fprintf(parsed_fp, "%s", yytext);
+    fprintf(token_fp, "%s", yytext);
+    return CLOSE_SQUARE_PAR;
+   }
+
+
 {id} {
     //to print ID's
     fprintf(token_fp,"ID: %s\n",yytext);

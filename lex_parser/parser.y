@@ -112,6 +112,32 @@ temp: ID_T
     | COMMA
     | COLON
     | QUOTE
+    |GT
+    |LT
+    |EQ
+    |NE
+    |INC
+    |DEC
+    |REM
+    |AND
+    |OR
+    |NEG
+    |ASSIGN
+    |LE
+    |GE
+    |AND
+    | OR
+    |NOT
+    |ARITH_OP
+    |ACCESS_OP1
+    |ACCESS_OP2
+    |INN_PROD
+    |OPEN_CIR_PAR
+    |CLOSE_CIR_PAR
+    |OPEN_CURLY_PAR
+    |CLOSE_CURLY_PAR
+    |OPEN_SQUARE_PAR
+    |CLOSE_SQUARE_PAR
     ;
 %%
 #include "lex.yy.c"
