@@ -55,6 +55,32 @@ int ret_no;
 %token COLON
 %token QUOTE
 
+%token GT
+%token LT
+%token EQ
+%token NE
+%token INC
+%token DEC
+%token REM
+%token AND
+%token OR
+%token NEG
+%token ASSIGN
+%token LE
+%token GE
+%token AND
+%token  OR
+%token NOT
+%token ARITH_OP
+%token ACCESS_OP1
+%token ACCESS_OP2
+%token INN_PROD
+%token OPEN_CIR_PAR
+%token CLOSE_CIR_PAR
+%token OPEN_CURLY_PAR
+%token CLOSE_CURLY_PAR
+%token OPEN_SQUARE_PAR
+%token CLOSE_SQUARE_PAR
 
 %%
 program : temp program
