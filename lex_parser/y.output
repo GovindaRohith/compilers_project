@@ -1,0 +1,2330 @@
+State 44 conflicts: 1 shift/reduce
+State 45 conflicts: 2 shift/reduce
+State 141 conflicts: 2 reduce/reduce
+State 167 conflicts: 2 reduce/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: type
+    2        | ε
+
+    3 type: CLASS_TOKEN class_decl program
+    4     | SCOPE_TOKEN func_decl program
+
+    5 cust_dtype: DTYPE_TOKEN
+    6           | VOID_TOKEN
+
+    7 fn_foo: cust_dtype ID_T fn_name OPARAN_TOKEN params CPARAN_TOKEN
+
+    8 func_decl: fn_foo OBRACE_TOKEN stmts CBRACE_TOKEN
+
+    9 fn_name: OSQ_TOKEN CONST_T CSQ_TOKEN
+   10        | ε
+
+   11 params: params_list
+   12       | ε
+
+   13 params_list: params_decl param_temp
+
+   14 params_decl: DTYPE_TOKEN ID_T
+   15            | ID_T ID_T
+
+   16 param_temp: COMMA_TOKEN params_list
+   17           | ε
+
+   18 stmts: stmt_types stmts
+   19      | ε
+   20      | OPARAN_TOKEN stmts CPARAN_TOKEN
+
+   21 id_list: ID_T COMMA_TOKEN id_list
+   22        | OPARAN_TOKEN id_list CPARAN_TOKEN
+   23        | ID_T SEMI_TOKEN
+
+   24 stmt_types: decl_stmt
+   25           | EXPR_TOKEN expr_stmt
+   26           | cond_stmt
+   27           | loop_stmt
+   28           | for_loop_stmt
+   29           | ret_stmt
+   30           | unary_stmt SEMI_TOKEN
+   31           | CALL_TOKEN fn_call_stmt SEMI_TOKEN
+   32           | CALL_TOKEN class_call_stmt SEMI_TOKEN
+
+   33 decl_stmt: DECLARE_TOKEN DTYPE_TOKEN id_list
+   34          | DECLARE_TOKEN ID_T id_list
+
+   35 expr_stmt: ID_T EQ_TOKEN exp_rhs SEMI_TOKEN
+
+   36 call_params: exp_rhs COMMA_TOKEN call_params
+   37            | exp_rhs CPARAN_TOKEN
+
+   38 fn_tempy: call_params
+   39         | CPARAN_TOKEN
+
+   40 fn_call_stmt: ID_T fn_name OPARAN_TOKEN fn_tempy
+
+   41 if_this: THIS_TOKEN
+   42        | ID_T
+
+   43 class_call_stmt: if_this ARROW_TOKEN ID_T fn_name OPARAN_TOKEN fn_tempy
+
+   44 if_foo: IF_TOKEN OPARAN_TOKEN predicate CPARAN_TOKEN
+
+   45 else_foo: ELSE_TOKEN
+
+   46 cond_stmt: if_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN else_foo OBRACE_TOKEN stmts CBRACE_TOKEN
+   47          | if_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN
+
+   48 loop_foo: LOOP_WHILE OPARAN_TOKEN exp_rhs CPARAN_TOKEN
+
+   49 loop_stmt: loop_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN
+
+   50 cust_unary: unary_stmt
+   51           | ε
+
+   52 in_for: in_for_fpart SEMI_TOKEN predicate SEMI_TOKEN cust_unary
+
+   53 in_for_fpart: EXPR_TOKEN ID_T EQ_TOKEN exp_rhs
+   54             | ε
+   55             | OPARAN_TOKEN in_for_fpart CPARAN_TOKEN
+
+   56 predicate: NEG_OP exp_rhs
+   57          | exp_rhs COMP_OP exp_rhs
+   58          | OPARAN_TOKEN predicate CPARAN_TOKEN
+   59          | predicate COMP_OP predicate
+   60          | ε
+
+   61 for_foo: FOR_TOKEN OPARAN_TOKEN in_for CPARAN_TOKEN
+
+   62 for_loop_stmt: for_foo OBRACE_TOKEN stmts CBRACE_TOKEN
+
+   63 ret_stmt: RETURN_TOKEN ret_type SEMI_TOKEN
+
+   64 ret_type: VOID_TOKEN
+   65         | exp_rhs
+
+   66 unary_stmt: UNARY_OP OPARAN_TOKEN exp_rhs CPARAN_TOKEN
+   67           | NEG_OP exp_rhs
+   68           | OPARAN_TOKEN unary_stmt CPARAN_TOKEN
+
+   69 exp_rhs: OPARAN_TOKEN exp_rhs CPARAN_TOKEN
+   70        | ARTH_OP OPARAN_TOKEN exp_rhs COMMA_TOKEN exp_rhs CPARAN_TOKEN
+   71        | UNARY_OP OPARAN_TOKEN exp_rhs CPARAN_TOKEN
+   72        | NEG_OP exp_rhs
+   73        | exp_rhs COMP_OP exp_rhs
+   74        | ID_T
+   75        | CONST_T
+   76        | STR_T
+   77        | CHAR_T
+   78        | TF_TOKEN
+   79        | fn_call_stmt
+   80        | class_call_stmt
+
+   81 class_foo: ID_T fn_name
+
+   82 class_decl: class_foo OBRACE_TOKEN body CBRACE_TOKEN
+
+   83 body: body class_fun
+   84     | stmts class_fun
+
+   85 class_fun: SCOPE_TOKEN func_decl
+   86          | ε
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    ID_T (258) 7 14 15 21 23 34 35 40 42 43 53 74 81
+    CONST_T (259) 9 75
+    STR_T (260) 76
+    CHAR_T (261) 77
+    COMP_OP (262) 57 59 73
+    NEG_OP (263) 56 67 72
+    UNARY_OP (264) 66 71
+    ARTH_OP (265) 70
+    TF_TOKEN (266) 78
+    RETURN_TOKEN (267) 63
+    SCOPE_TOKEN (268) 4 85
+    CLASS_TOKEN (269) 3
+    DECLARE_TOKEN (270) 33 34
+    EXPR_TOKEN (271) 25 53
+    CALL_TOKEN (272) 31 32
+    THIS_TOKEN (273) 41
+    LOOP_WHILE (274) 48
+    IF_TOKEN (275) 44
+    ELSE_TOKEN (276) 45
+    ARROW_TOKEN (277) 43
+    DTYPE_TOKEN (278) 5 14 33
+    EQ_TOKEN (279) 35 53
+    DO_TOKEN (280) 46 47 49
+    FOR_TOKEN (281) 61
+    SEMI_TOKEN (282) 23 30 31 32 35 52 63
+    COMMA_TOKEN (283) 16 21 36 70
+    OPARAN_TOKEN (284) 7 20 22 40 43 44 48 55 58 61 66 68 69 70 71
+    CPARAN_TOKEN (285) 7 20 22 37 39 44 48 55 58 61 66 68 69 70 71
+    OSQ_TOKEN (286) 9
+    CSQ_TOKEN (287) 9
+    OBRACE_TOKEN (288) 8 46 47 49 62 82
+    CBRACE_TOKEN (289) 8 46 47 49 62 82
+    VOID_TOKEN (290) 6 64
+
+
+Nonterminals, with rules where they appear
+
+    $accept (36)
+        on left: 0
+    program (37)
+        on left: 1 2
+        on right: 0 3 4
+    type (38)
+        on left: 3 4
+        on right: 1
+    cust_dtype (39)
+        on left: 5 6
+        on right: 7
+    fn_foo (40)
+        on left: 7
+        on right: 8
+    func_decl (41)
+        on left: 8
+        on right: 4 85
+    fn_name (42)
+        on left: 9 10
+        on right: 7 40 43 81
+    params (43)
+        on left: 11 12
+        on right: 7
+    params_list (44)
+        on left: 13
+        on right: 11 16
+    params_decl (45)
+        on left: 14 15
+        on right: 13
+    param_temp (46)
+        on left: 16 17
+        on right: 13
+    stmts (47)
+        on left: 18 19 20
+        on right: 8 18 20 46 47 49 62 84
+    id_list (48)
+        on left: 21 22 23
+        on right: 21 22 33 34
+    stmt_types (49)
+        on left: 24 25 26 27 28 29 30 31 32
+        on right: 18
+    decl_stmt (50)
+        on left: 33 34
+        on right: 24
+    expr_stmt (51)
+        on left: 35
+        on right: 25
+    call_params (52)
+        on left: 36 37
+        on right: 36 38
+    fn_tempy (53)
+        on left: 38 39
+        on right: 40 43
+    fn_call_stmt (54)
+        on left: 40
+        on right: 31 79
+    if_this (55)
+        on left: 41 42
+        on right: 43
+    class_call_stmt (56)
+        on left: 43
+        on right: 32 80
+    if_foo (57)
+        on left: 44
+        on right: 46 47
+    else_foo (58)
+        on left: 45
+        on right: 46
+    cond_stmt (59)
+        on left: 46 47
+        on right: 26
+    loop_foo (60)
+        on left: 48
+        on right: 49
+    loop_stmt (61)
+        on left: 49
+        on right: 27
+    cust_unary (62)
+        on left: 50 51
+        on right: 52
+    in_for (63)
+        on left: 52
+        on right: 61
+    in_for_fpart (64)
+        on left: 53 54 55
+        on right: 52 55
+    predicate (65)
+        on left: 56 57 58 59 60
+        on right: 44 52 58 59
+    for_foo (66)
+        on left: 61
+        on right: 62
+    for_loop_stmt (67)
+        on left: 62
+        on right: 28
+    ret_stmt (68)
+        on left: 63
+        on right: 29
+    ret_type (69)
+        on left: 64 65
+        on right: 63
+    unary_stmt (70)
+        on left: 66 67 68
+        on right: 30 50 68
+    exp_rhs (71)
+        on left: 69 70 71 72 73 74 75 76 77 78 79 80
+        on right: 35 36 37 48 53 56 57 65 66 67 69 70 71 72 73
+    class_foo (72)
+        on left: 81
+        on right: 82
+    class_decl (73)
+        on left: 82
+        on right: 3
+    body (74)
+        on left: 83 84
+        on right: 82 83
+    class_fun (75)
+        on left: 85 86
+        on right: 83 84
+
+
+State 0
+
+    0 $accept: • program $end
+
+    SCOPE_TOKEN  shift, and go to state 1
+    CLASS_TOKEN  shift, and go to state 2
+
+    $default  reduce using rule 2 (program)
+
+    program  go to state 3
+    type     go to state 4
+
+
+State 1
+
+    4 type: SCOPE_TOKEN • func_decl program
+
+    DTYPE_TOKEN  shift, and go to state 5
+    VOID_TOKEN   shift, and go to state 6
+
+    cust_dtype  go to state 7
+    fn_foo      go to state 8
+    func_decl   go to state 9
+
+
+State 2
+
+    3 type: CLASS_TOKEN • class_decl program
+
+    ID_T  shift, and go to state 10
+
+    class_foo   go to state 11
+    class_decl  go to state 12
+
+
+State 3
+
+    0 $accept: program • $end
+
+    $end  shift, and go to state 13
+
+
+State 4
+
+    1 program: type •
+
+    $default  reduce using rule 1 (program)
+
+
+State 5
+
+    5 cust_dtype: DTYPE_TOKEN •
+
+    $default  reduce using rule 5 (cust_dtype)
+
+
+State 6
+
+    6 cust_dtype: VOID_TOKEN •
+
+    $default  reduce using rule 6 (cust_dtype)
+
+
+State 7
+
+    7 fn_foo: cust_dtype • ID_T fn_name OPARAN_TOKEN params CPARAN_TOKEN
+
+    ID_T  shift, and go to state 14
+
+
+State 8
+
+    8 func_decl: fn_foo • OBRACE_TOKEN stmts CBRACE_TOKEN
+
+    OBRACE_TOKEN  shift, and go to state 15
+
+
+State 9
+
+    4 type: SCOPE_TOKEN func_decl • program
+
+    SCOPE_TOKEN  shift, and go to state 1
+    CLASS_TOKEN  shift, and go to state 2
+
+    $default  reduce using rule 2 (program)
+
+    program  go to state 16
+    type     go to state 4
+
+
+State 10
+
+   81 class_foo: ID_T • fn_name
+
+    OSQ_TOKEN  shift, and go to state 17
+
+    $default  reduce using rule 10 (fn_name)
+
+    fn_name  go to state 18
+
+
+State 11
+
+   82 class_decl: class_foo • OBRACE_TOKEN body CBRACE_TOKEN
+
+    OBRACE_TOKEN  shift, and go to state 19
+
+
+State 12
+
+    3 type: CLASS_TOKEN class_decl • program
+
+    SCOPE_TOKEN  shift, and go to state 1
+    CLASS_TOKEN  shift, and go to state 2
+
+    $default  reduce using rule 2 (program)
+
+    program  go to state 20
+    type     go to state 4
+
+
+State 13
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 14
+
+    7 fn_foo: cust_dtype ID_T • fn_name OPARAN_TOKEN params CPARAN_TOKEN
+
+    OSQ_TOKEN  shift, and go to state 17
+
+    $default  reduce using rule 10 (fn_name)
+
+    fn_name  go to state 21
+
+
+State 15
+
+    8 func_decl: fn_foo OBRACE_TOKEN • stmts CBRACE_TOKEN
+
+    NEG_OP         shift, and go to state 22
+    UNARY_OP       shift, and go to state 23
+    RETURN_TOKEN   shift, and go to state 24
+    DECLARE_TOKEN  shift, and go to state 25
+    EXPR_TOKEN     shift, and go to state 26
+    CALL_TOKEN     shift, and go to state 27
+    LOOP_WHILE     shift, and go to state 28
+    IF_TOKEN       shift, and go to state 29
+    FOR_TOKEN      shift, and go to state 30
+    OPARAN_TOKEN   shift, and go to state 31
+
+    $default  reduce using rule 19 (stmts)
+
+    stmts          go to state 32
+    stmt_types     go to state 33
+    decl_stmt      go to state 34
+    if_foo         go to state 35
+    cond_stmt      go to state 36
+    loop_foo       go to state 37
+    loop_stmt      go to state 38
+    for_foo        go to state 39
+    for_loop_stmt  go to state 40
+    ret_stmt       go to state 41
+    unary_stmt     go to state 42
+
+
+State 16
+
+    4 type: SCOPE_TOKEN func_decl program •
+
+    $default  reduce using rule 4 (type)
+
+
+State 17
+
+    9 fn_name: OSQ_TOKEN • CONST_T CSQ_TOKEN
+
+    CONST_T  shift, and go to state 43
+
+
+State 18
+
+   81 class_foo: ID_T fn_name •
+
+    $default  reduce using rule 81 (class_foo)
+
+
+State 19
+
+   82 class_decl: class_foo OBRACE_TOKEN • body CBRACE_TOKEN
+
+    NEG_OP         shift, and go to state 22
+    UNARY_OP       shift, and go to state 23
+    RETURN_TOKEN   shift, and go to state 24
+    DECLARE_TOKEN  shift, and go to state 25
+    EXPR_TOKEN     shift, and go to state 26
+    CALL_TOKEN     shift, and go to state 27
+    LOOP_WHILE     shift, and go to state 28
+    IF_TOKEN       shift, and go to state 29
+    FOR_TOKEN      shift, and go to state 30
+    OPARAN_TOKEN   shift, and go to state 31
+
+    $default  reduce using rule 19 (stmts)
+
+    stmts          go to state 44
+    stmt_types     go to state 33
+    decl_stmt      go to state 34
+    if_foo         go to state 35
+    cond_stmt      go to state 36
+    loop_foo       go to state 37
+    loop_stmt      go to state 38
+    for_foo        go to state 39
+    for_loop_stmt  go to state 40
+    ret_stmt       go to state 41
+    unary_stmt     go to state 42
+    body           go to state 45
+
+
+State 20
+
+    3 type: CLASS_TOKEN class_decl program •
+
+    $default  reduce using rule 3 (type)
+
+
+State 21
+
+    7 fn_foo: cust_dtype ID_T fn_name • OPARAN_TOKEN params CPARAN_TOKEN
+
+    OPARAN_TOKEN  shift, and go to state 46
+
+
+State 22
+
+   67 unary_stmt: NEG_OP • exp_rhs
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 60
+
+
+State 23
+
+   66 unary_stmt: UNARY_OP • OPARAN_TOKEN exp_rhs CPARAN_TOKEN
+
+    OPARAN_TOKEN  shift, and go to state 61
+
+
+State 24
+
+   63 ret_stmt: RETURN_TOKEN • ret_type SEMI_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+    VOID_TOKEN    shift, and go to state 62
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    ret_type         go to state 63
+    exp_rhs          go to state 64
+
+
+State 25
+
+   33 decl_stmt: DECLARE_TOKEN • DTYPE_TOKEN id_list
+   34          | DECLARE_TOKEN • ID_T id_list
+
+    ID_T         shift, and go to state 65
+    DTYPE_TOKEN  shift, and go to state 66
+
+
+State 26
+
+   25 stmt_types: EXPR_TOKEN • expr_stmt
+
+    ID_T  shift, and go to state 67
+
+    expr_stmt  go to state 68
+
+
+State 27
+
+   31 stmt_types: CALL_TOKEN • fn_call_stmt SEMI_TOKEN
+   32           | CALL_TOKEN • class_call_stmt SEMI_TOKEN
+
+    ID_T        shift, and go to state 69
+    THIS_TOKEN  shift, and go to state 55
+
+    fn_call_stmt     go to state 70
+    if_this          go to state 58
+    class_call_stmt  go to state 71
+
+
+State 28
+
+   48 loop_foo: LOOP_WHILE • OPARAN_TOKEN exp_rhs CPARAN_TOKEN
+
+    OPARAN_TOKEN  shift, and go to state 72
+
+
+State 29
+
+   44 if_foo: IF_TOKEN • OPARAN_TOKEN predicate CPARAN_TOKEN
+
+    OPARAN_TOKEN  shift, and go to state 73
+
+
+State 30
+
+   61 for_foo: FOR_TOKEN • OPARAN_TOKEN in_for CPARAN_TOKEN
+
+    OPARAN_TOKEN  shift, and go to state 74
+
+
+State 31
+
+   20 stmts: OPARAN_TOKEN • stmts CPARAN_TOKEN
+   68 unary_stmt: OPARAN_TOKEN • unary_stmt CPARAN_TOKEN
+
+    NEG_OP         shift, and go to state 22
+    UNARY_OP       shift, and go to state 23
+    RETURN_TOKEN   shift, and go to state 24
+    DECLARE_TOKEN  shift, and go to state 25
+    EXPR_TOKEN     shift, and go to state 26
+    CALL_TOKEN     shift, and go to state 27
+    LOOP_WHILE     shift, and go to state 28
+    IF_TOKEN       shift, and go to state 29
+    FOR_TOKEN      shift, and go to state 30
+    OPARAN_TOKEN   shift, and go to state 31
+
+    $default  reduce using rule 19 (stmts)
+
+    stmts          go to state 75
+    stmt_types     go to state 33
+    decl_stmt      go to state 34
+    if_foo         go to state 35
+    cond_stmt      go to state 36
+    loop_foo       go to state 37
+    loop_stmt      go to state 38
+    for_foo        go to state 39
+    for_loop_stmt  go to state 40
+    ret_stmt       go to state 41
+    unary_stmt     go to state 76
+
+
+State 32
+
+    8 func_decl: fn_foo OBRACE_TOKEN stmts • CBRACE_TOKEN
+
+    CBRACE_TOKEN  shift, and go to state 77
+
+
+State 33
+
+   18 stmts: stmt_types • stmts
+
+    NEG_OP         shift, and go to state 22
+    UNARY_OP       shift, and go to state 23
+    RETURN_TOKEN   shift, and go to state 24
+    DECLARE_TOKEN  shift, and go to state 25
+    EXPR_TOKEN     shift, and go to state 26
+    CALL_TOKEN     shift, and go to state 27
+    LOOP_WHILE     shift, and go to state 28
+    IF_TOKEN       shift, and go to state 29
+    FOR_TOKEN      shift, and go to state 30
+    OPARAN_TOKEN   shift, and go to state 31
+
+    $default  reduce using rule 19 (stmts)
+
+    stmts          go to state 78
+    stmt_types     go to state 33
+    decl_stmt      go to state 34
+    if_foo         go to state 35
+    cond_stmt      go to state 36
+    loop_foo       go to state 37
+    loop_stmt      go to state 38
+    for_foo        go to state 39
+    for_loop_stmt  go to state 40
+    ret_stmt       go to state 41
+    unary_stmt     go to state 42
+
+
+State 34
+
+   24 stmt_types: decl_stmt •
+
+    $default  reduce using rule 24 (stmt_types)
+
+
+State 35
+
+   46 cond_stmt: if_foo • DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN else_foo OBRACE_TOKEN stmts CBRACE_TOKEN
+   47          | if_foo • DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN
+
+    DO_TOKEN  shift, and go to state 79
+
+
+State 36
+
+   26 stmt_types: cond_stmt •
+
+    $default  reduce using rule 26 (stmt_types)
+
+
+State 37
+
+   49 loop_stmt: loop_foo • DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN
+
+    DO_TOKEN  shift, and go to state 80
+
+
+State 38
+
+   27 stmt_types: loop_stmt •
+
+    $default  reduce using rule 27 (stmt_types)
+
+
+State 39
+
+   62 for_loop_stmt: for_foo • OBRACE_TOKEN stmts CBRACE_TOKEN
+
+    OBRACE_TOKEN  shift, and go to state 81
+
+
+State 40
+
+   28 stmt_types: for_loop_stmt •
+
+    $default  reduce using rule 28 (stmt_types)
+
+
+State 41
+
+   29 stmt_types: ret_stmt •
+
+    $default  reduce using rule 29 (stmt_types)
+
+
+State 42
+
+   30 stmt_types: unary_stmt • SEMI_TOKEN
+
+    SEMI_TOKEN  shift, and go to state 82
+
+
+State 43
+
+    9 fn_name: OSQ_TOKEN CONST_T • CSQ_TOKEN
+
+    CSQ_TOKEN  shift, and go to state 83
+
+
+State 44
+
+   84 body: stmts • class_fun
+
+    SCOPE_TOKEN  shift, and go to state 84
+
+    SCOPE_TOKEN  [reduce using rule 86 (class_fun)]
+    $default     reduce using rule 86 (class_fun)
+
+    class_fun  go to state 85
+
+
+State 45
+
+   82 class_decl: class_foo OBRACE_TOKEN body • CBRACE_TOKEN
+   83 body: body • class_fun
+
+    SCOPE_TOKEN   shift, and go to state 84
+    CBRACE_TOKEN  shift, and go to state 86
+
+    SCOPE_TOKEN   [reduce using rule 86 (class_fun)]
+    CBRACE_TOKEN  [reduce using rule 86 (class_fun)]
+
+    class_fun  go to state 87
+
+
+State 46
+
+    7 fn_foo: cust_dtype ID_T fn_name OPARAN_TOKEN • params CPARAN_TOKEN
+
+    ID_T         shift, and go to state 88
+    DTYPE_TOKEN  shift, and go to state 89
+
+    $default  reduce using rule 12 (params)
+
+    params       go to state 90
+    params_list  go to state 91
+    params_decl  go to state 92
+
+
+State 47
+
+   40 fn_call_stmt: ID_T • fn_name OPARAN_TOKEN fn_tempy
+   42 if_this: ID_T •
+   74 exp_rhs: ID_T •
+
+    OSQ_TOKEN  shift, and go to state 17
+
+    ARROW_TOKEN   reduce using rule 42 (if_this)
+    OPARAN_TOKEN  reduce using rule 10 (fn_name)
+    $default      reduce using rule 74 (exp_rhs)
+
+    fn_name  go to state 93
+
+
+State 48
+
+   75 exp_rhs: CONST_T •
+
+    $default  reduce using rule 75 (exp_rhs)
+
+
+State 49
+
+   76 exp_rhs: STR_T •
+
+    $default  reduce using rule 76 (exp_rhs)
+
+
+State 50
+
+   77 exp_rhs: CHAR_T •
+
+    $default  reduce using rule 77 (exp_rhs)
+
+
+State 51
+
+   72 exp_rhs: NEG_OP • exp_rhs
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 94
+
+
+State 52
+
+   71 exp_rhs: UNARY_OP • OPARAN_TOKEN exp_rhs CPARAN_TOKEN
+
+    OPARAN_TOKEN  shift, and go to state 95
+
+
+State 53
+
+   70 exp_rhs: ARTH_OP • OPARAN_TOKEN exp_rhs COMMA_TOKEN exp_rhs CPARAN_TOKEN
+
+    OPARAN_TOKEN  shift, and go to state 96
+
+
+State 54
+
+   78 exp_rhs: TF_TOKEN •
+
+    $default  reduce using rule 78 (exp_rhs)
+
+
+State 55
+
+   41 if_this: THIS_TOKEN •
+
+    $default  reduce using rule 41 (if_this)
+
+
+State 56
+
+   69 exp_rhs: OPARAN_TOKEN • exp_rhs CPARAN_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 97
+
+
+State 57
+
+   79 exp_rhs: fn_call_stmt •
+
+    $default  reduce using rule 79 (exp_rhs)
+
+
+State 58
+
+   43 class_call_stmt: if_this • ARROW_TOKEN ID_T fn_name OPARAN_TOKEN fn_tempy
+
+    ARROW_TOKEN  shift, and go to state 98
+
+
+State 59
+
+   80 exp_rhs: class_call_stmt •
+
+    $default  reduce using rule 80 (exp_rhs)
+
+
+State 60
+
+   67 unary_stmt: NEG_OP exp_rhs •
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP  shift, and go to state 99
+
+    $default  reduce using rule 67 (unary_stmt)
+
+
+State 61
+
+   66 unary_stmt: UNARY_OP OPARAN_TOKEN • exp_rhs CPARAN_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 100
+
+
+State 62
+
+   64 ret_type: VOID_TOKEN •
+
+    $default  reduce using rule 64 (ret_type)
+
+
+State 63
+
+   63 ret_stmt: RETURN_TOKEN ret_type • SEMI_TOKEN
+
+    SEMI_TOKEN  shift, and go to state 101
+
+
+State 64
+
+   65 ret_type: exp_rhs •
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP  shift, and go to state 99
+
+    $default  reduce using rule 65 (ret_type)
+
+
+State 65
+
+   34 decl_stmt: DECLARE_TOKEN ID_T • id_list
+
+    ID_T          shift, and go to state 102
+    OPARAN_TOKEN  shift, and go to state 103
+
+    id_list  go to state 104
+
+
+State 66
+
+   33 decl_stmt: DECLARE_TOKEN DTYPE_TOKEN • id_list
+
+    ID_T          shift, and go to state 102
+    OPARAN_TOKEN  shift, and go to state 103
+
+    id_list  go to state 105
+
+
+State 67
+
+   35 expr_stmt: ID_T • EQ_TOKEN exp_rhs SEMI_TOKEN
+
+    EQ_TOKEN  shift, and go to state 106
+
+
+State 68
+
+   25 stmt_types: EXPR_TOKEN expr_stmt •
+
+    $default  reduce using rule 25 (stmt_types)
+
+
+State 69
+
+   40 fn_call_stmt: ID_T • fn_name OPARAN_TOKEN fn_tempy
+   42 if_this: ID_T •
+
+    OSQ_TOKEN  shift, and go to state 17
+
+    ARROW_TOKEN  reduce using rule 42 (if_this)
+    $default     reduce using rule 10 (fn_name)
+
+    fn_name  go to state 93
+
+
+State 70
+
+   31 stmt_types: CALL_TOKEN fn_call_stmt • SEMI_TOKEN
+
+    SEMI_TOKEN  shift, and go to state 107
+
+
+State 71
+
+   32 stmt_types: CALL_TOKEN class_call_stmt • SEMI_TOKEN
+
+    SEMI_TOKEN  shift, and go to state 108
+
+
+State 72
+
+   48 loop_foo: LOOP_WHILE OPARAN_TOKEN • exp_rhs CPARAN_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 109
+
+
+State 73
+
+   44 if_foo: IF_TOKEN OPARAN_TOKEN • predicate CPARAN_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 110
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 111
+
+    $default  reduce using rule 60 (predicate)
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    predicate        go to state 112
+    exp_rhs          go to state 113
+
+
+State 74
+
+   61 for_foo: FOR_TOKEN OPARAN_TOKEN • in_for CPARAN_TOKEN
+
+    EXPR_TOKEN    shift, and go to state 114
+    OPARAN_TOKEN  shift, and go to state 115
+
+    $default  reduce using rule 54 (in_for_fpart)
+
+    in_for        go to state 116
+    in_for_fpart  go to state 117
+
+
+State 75
+
+   20 stmts: OPARAN_TOKEN stmts • CPARAN_TOKEN
+
+    CPARAN_TOKEN  shift, and go to state 118
+
+
+State 76
+
+   30 stmt_types: unary_stmt • SEMI_TOKEN
+   68 unary_stmt: OPARAN_TOKEN unary_stmt • CPARAN_TOKEN
+
+    SEMI_TOKEN    shift, and go to state 82
+    CPARAN_TOKEN  shift, and go to state 119
+
+
+State 77
+
+    8 func_decl: fn_foo OBRACE_TOKEN stmts CBRACE_TOKEN •
+
+    $default  reduce using rule 8 (func_decl)
+
+
+State 78
+
+   18 stmts: stmt_types stmts •
+
+    $default  reduce using rule 18 (stmts)
+
+
+State 79
+
+   46 cond_stmt: if_foo DO_TOKEN • OBRACE_TOKEN stmts CBRACE_TOKEN else_foo OBRACE_TOKEN stmts CBRACE_TOKEN
+   47          | if_foo DO_TOKEN • OBRACE_TOKEN stmts CBRACE_TOKEN
+
+    OBRACE_TOKEN  shift, and go to state 120
+
+
+State 80
+
+   49 loop_stmt: loop_foo DO_TOKEN • OBRACE_TOKEN stmts CBRACE_TOKEN
+
+    OBRACE_TOKEN  shift, and go to state 121
+
+
+State 81
+
+   62 for_loop_stmt: for_foo OBRACE_TOKEN • stmts CBRACE_TOKEN
+
+    NEG_OP         shift, and go to state 22
+    UNARY_OP       shift, and go to state 23
+    RETURN_TOKEN   shift, and go to state 24
+    DECLARE_TOKEN  shift, and go to state 25
+    EXPR_TOKEN     shift, and go to state 26
+    CALL_TOKEN     shift, and go to state 27
+    LOOP_WHILE     shift, and go to state 28
+    IF_TOKEN       shift, and go to state 29
+    FOR_TOKEN      shift, and go to state 30
+    OPARAN_TOKEN   shift, and go to state 31
+
+    $default  reduce using rule 19 (stmts)
+
+    stmts          go to state 122
+    stmt_types     go to state 33
+    decl_stmt      go to state 34
+    if_foo         go to state 35
+    cond_stmt      go to state 36
+    loop_foo       go to state 37
+    loop_stmt      go to state 38
+    for_foo        go to state 39
+    for_loop_stmt  go to state 40
+    ret_stmt       go to state 41
+    unary_stmt     go to state 42
+
+
+State 82
+
+   30 stmt_types: unary_stmt SEMI_TOKEN •
+
+    $default  reduce using rule 30 (stmt_types)
+
+
+State 83
+
+    9 fn_name: OSQ_TOKEN CONST_T CSQ_TOKEN •
+
+    $default  reduce using rule 9 (fn_name)
+
+
+State 84
+
+   85 class_fun: SCOPE_TOKEN • func_decl
+
+    DTYPE_TOKEN  shift, and go to state 5
+    VOID_TOKEN   shift, and go to state 6
+
+    cust_dtype  go to state 7
+    fn_foo      go to state 8
+    func_decl   go to state 123
+
+
+State 85
+
+   84 body: stmts class_fun •
+
+    $default  reduce using rule 84 (body)
+
+
+State 86
+
+   82 class_decl: class_foo OBRACE_TOKEN body CBRACE_TOKEN •
+
+    $default  reduce using rule 82 (class_decl)
+
+
+State 87
+
+   83 body: body class_fun •
+
+    $default  reduce using rule 83 (body)
+
+
+State 88
+
+   15 params_decl: ID_T • ID_T
+
+    ID_T  shift, and go to state 124
+
+
+State 89
+
+   14 params_decl: DTYPE_TOKEN • ID_T
+
+    ID_T  shift, and go to state 125
+
+
+State 90
+
+    7 fn_foo: cust_dtype ID_T fn_name OPARAN_TOKEN params • CPARAN_TOKEN
+
+    CPARAN_TOKEN  shift, and go to state 126
+
+
+State 91
+
+   11 params: params_list •
+
+    $default  reduce using rule 11 (params)
+
+
+State 92
+
+   13 params_list: params_decl • param_temp
+
+    COMMA_TOKEN  shift, and go to state 127
+
+    $default  reduce using rule 17 (param_temp)
+
+    param_temp  go to state 128
+
+
+State 93
+
+   40 fn_call_stmt: ID_T fn_name • OPARAN_TOKEN fn_tempy
+
+    OPARAN_TOKEN  shift, and go to state 129
+
+
+State 94
+
+   72 exp_rhs: NEG_OP exp_rhs •
+   73        | exp_rhs • COMP_OP exp_rhs
+
+    $default  reduce using rule 72 (exp_rhs)
+
+
+State 95
+
+   71 exp_rhs: UNARY_OP OPARAN_TOKEN • exp_rhs CPARAN_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 130
+
+
+State 96
+
+   70 exp_rhs: ARTH_OP OPARAN_TOKEN • exp_rhs COMMA_TOKEN exp_rhs CPARAN_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 131
+
+
+State 97
+
+   69 exp_rhs: OPARAN_TOKEN exp_rhs • CPARAN_TOKEN
+   73        | exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP       shift, and go to state 99
+    CPARAN_TOKEN  shift, and go to state 132
+
+
+State 98
+
+   43 class_call_stmt: if_this ARROW_TOKEN • ID_T fn_name OPARAN_TOKEN fn_tempy
+
+    ID_T  shift, and go to state 133
+
+
+State 99
+
+   73 exp_rhs: exp_rhs COMP_OP • exp_rhs
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 134
+
+
+State 100
+
+   66 unary_stmt: UNARY_OP OPARAN_TOKEN exp_rhs • CPARAN_TOKEN
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP       shift, and go to state 99
+    CPARAN_TOKEN  shift, and go to state 135
+
+
+State 101
+
+   63 ret_stmt: RETURN_TOKEN ret_type SEMI_TOKEN •
+
+    $default  reduce using rule 63 (ret_stmt)
+
+
+State 102
+
+   21 id_list: ID_T • COMMA_TOKEN id_list
+   23        | ID_T • SEMI_TOKEN
+
+    SEMI_TOKEN   shift, and go to state 136
+    COMMA_TOKEN  shift, and go to state 137
+
+
+State 103
+
+   22 id_list: OPARAN_TOKEN • id_list CPARAN_TOKEN
+
+    ID_T          shift, and go to state 102
+    OPARAN_TOKEN  shift, and go to state 103
+
+    id_list  go to state 138
+
+
+State 104
+
+   34 decl_stmt: DECLARE_TOKEN ID_T id_list •
+
+    $default  reduce using rule 34 (decl_stmt)
+
+
+State 105
+
+   33 decl_stmt: DECLARE_TOKEN DTYPE_TOKEN id_list •
+
+    $default  reduce using rule 33 (decl_stmt)
+
+
+State 106
+
+   35 expr_stmt: ID_T EQ_TOKEN • exp_rhs SEMI_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 139
+
+
+State 107
+
+   31 stmt_types: CALL_TOKEN fn_call_stmt SEMI_TOKEN •
+
+    $default  reduce using rule 31 (stmt_types)
+
+
+State 108
+
+   32 stmt_types: CALL_TOKEN class_call_stmt SEMI_TOKEN •
+
+    $default  reduce using rule 32 (stmt_types)
+
+
+State 109
+
+   48 loop_foo: LOOP_WHILE OPARAN_TOKEN exp_rhs • CPARAN_TOKEN
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP       shift, and go to state 99
+    CPARAN_TOKEN  shift, and go to state 140
+
+
+State 110
+
+   56 predicate: NEG_OP • exp_rhs
+   72 exp_rhs: NEG_OP • exp_rhs
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 141
+
+
+State 111
+
+   58 predicate: OPARAN_TOKEN • predicate CPARAN_TOKEN
+   69 exp_rhs: OPARAN_TOKEN • exp_rhs CPARAN_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 110
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 111
+
+    $default  reduce using rule 60 (predicate)
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    predicate        go to state 142
+    exp_rhs          go to state 143
+
+
+State 112
+
+   44 if_foo: IF_TOKEN OPARAN_TOKEN predicate • CPARAN_TOKEN
+   59 predicate: predicate • COMP_OP predicate
+
+    COMP_OP       shift, and go to state 144
+    CPARAN_TOKEN  shift, and go to state 145
+
+
+State 113
+
+   57 predicate: exp_rhs • COMP_OP exp_rhs
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP  shift, and go to state 146
+
+
+State 114
+
+   53 in_for_fpart: EXPR_TOKEN • ID_T EQ_TOKEN exp_rhs
+
+    ID_T  shift, and go to state 147
+
+
+State 115
+
+   55 in_for_fpart: OPARAN_TOKEN • in_for_fpart CPARAN_TOKEN
+
+    EXPR_TOKEN    shift, and go to state 114
+    OPARAN_TOKEN  shift, and go to state 115
+
+    $default  reduce using rule 54 (in_for_fpart)
+
+    in_for_fpart  go to state 148
+
+
+State 116
+
+   61 for_foo: FOR_TOKEN OPARAN_TOKEN in_for • CPARAN_TOKEN
+
+    CPARAN_TOKEN  shift, and go to state 149
+
+
+State 117
+
+   52 in_for: in_for_fpart • SEMI_TOKEN predicate SEMI_TOKEN cust_unary
+
+    SEMI_TOKEN  shift, and go to state 150
+
+
+State 118
+
+   20 stmts: OPARAN_TOKEN stmts CPARAN_TOKEN •
+
+    $default  reduce using rule 20 (stmts)
+
+
+State 119
+
+   68 unary_stmt: OPARAN_TOKEN unary_stmt CPARAN_TOKEN •
+
+    $default  reduce using rule 68 (unary_stmt)
+
+
+State 120
+
+   46 cond_stmt: if_foo DO_TOKEN OBRACE_TOKEN • stmts CBRACE_TOKEN else_foo OBRACE_TOKEN stmts CBRACE_TOKEN
+   47          | if_foo DO_TOKEN OBRACE_TOKEN • stmts CBRACE_TOKEN
+
+    NEG_OP         shift, and go to state 22
+    UNARY_OP       shift, and go to state 23
+    RETURN_TOKEN   shift, and go to state 24
+    DECLARE_TOKEN  shift, and go to state 25
+    EXPR_TOKEN     shift, and go to state 26
+    CALL_TOKEN     shift, and go to state 27
+    LOOP_WHILE     shift, and go to state 28
+    IF_TOKEN       shift, and go to state 29
+    FOR_TOKEN      shift, and go to state 30
+    OPARAN_TOKEN   shift, and go to state 31
+
+    $default  reduce using rule 19 (stmts)
+
+    stmts          go to state 151
+    stmt_types     go to state 33
+    decl_stmt      go to state 34
+    if_foo         go to state 35
+    cond_stmt      go to state 36
+    loop_foo       go to state 37
+    loop_stmt      go to state 38
+    for_foo        go to state 39
+    for_loop_stmt  go to state 40
+    ret_stmt       go to state 41
+    unary_stmt     go to state 42
+
+
+State 121
+
+   49 loop_stmt: loop_foo DO_TOKEN OBRACE_TOKEN • stmts CBRACE_TOKEN
+
+    NEG_OP         shift, and go to state 22
+    UNARY_OP       shift, and go to state 23
+    RETURN_TOKEN   shift, and go to state 24
+    DECLARE_TOKEN  shift, and go to state 25
+    EXPR_TOKEN     shift, and go to state 26
+    CALL_TOKEN     shift, and go to state 27
+    LOOP_WHILE     shift, and go to state 28
+    IF_TOKEN       shift, and go to state 29
+    FOR_TOKEN      shift, and go to state 30
+    OPARAN_TOKEN   shift, and go to state 31
+
+    $default  reduce using rule 19 (stmts)
+
+    stmts          go to state 152
+    stmt_types     go to state 33
+    decl_stmt      go to state 34
+    if_foo         go to state 35
+    cond_stmt      go to state 36
+    loop_foo       go to state 37
+    loop_stmt      go to state 38
+    for_foo        go to state 39
+    for_loop_stmt  go to state 40
+    ret_stmt       go to state 41
+    unary_stmt     go to state 42
+
+
+State 122
+
+   62 for_loop_stmt: for_foo OBRACE_TOKEN stmts • CBRACE_TOKEN
+
+    CBRACE_TOKEN  shift, and go to state 153
+
+
+State 123
+
+   85 class_fun: SCOPE_TOKEN func_decl •
+
+    $default  reduce using rule 85 (class_fun)
+
+
+State 124
+
+   15 params_decl: ID_T ID_T •
+
+    $default  reduce using rule 15 (params_decl)
+
+
+State 125
+
+   14 params_decl: DTYPE_TOKEN ID_T •
+
+    $default  reduce using rule 14 (params_decl)
+
+
+State 126
+
+    7 fn_foo: cust_dtype ID_T fn_name OPARAN_TOKEN params CPARAN_TOKEN •
+
+    $default  reduce using rule 7 (fn_foo)
+
+
+State 127
+
+   16 param_temp: COMMA_TOKEN • params_list
+
+    ID_T         shift, and go to state 88
+    DTYPE_TOKEN  shift, and go to state 89
+
+    params_list  go to state 154
+    params_decl  go to state 92
+
+
+State 128
+
+   13 params_list: params_decl param_temp •
+
+    $default  reduce using rule 13 (params_list)
+
+
+State 129
+
+   40 fn_call_stmt: ID_T fn_name OPARAN_TOKEN • fn_tempy
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+    CPARAN_TOKEN  shift, and go to state 155
+
+    call_params      go to state 156
+    fn_tempy         go to state 157
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 158
+
+
+State 130
+
+   71 exp_rhs: UNARY_OP OPARAN_TOKEN exp_rhs • CPARAN_TOKEN
+   73        | exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP       shift, and go to state 99
+    CPARAN_TOKEN  shift, and go to state 159
+
+
+State 131
+
+   70 exp_rhs: ARTH_OP OPARAN_TOKEN exp_rhs • COMMA_TOKEN exp_rhs CPARAN_TOKEN
+   73        | exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP      shift, and go to state 99
+    COMMA_TOKEN  shift, and go to state 160
+
+
+State 132
+
+   69 exp_rhs: OPARAN_TOKEN exp_rhs CPARAN_TOKEN •
+
+    $default  reduce using rule 69 (exp_rhs)
+
+
+State 133
+
+   43 class_call_stmt: if_this ARROW_TOKEN ID_T • fn_name OPARAN_TOKEN fn_tempy
+
+    OSQ_TOKEN  shift, and go to state 17
+
+    $default  reduce using rule 10 (fn_name)
+
+    fn_name  go to state 161
+
+
+State 134
+
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+   73        | exp_rhs COMP_OP exp_rhs •
+
+    $default  reduce using rule 73 (exp_rhs)
+
+
+State 135
+
+   66 unary_stmt: UNARY_OP OPARAN_TOKEN exp_rhs CPARAN_TOKEN •
+
+    $default  reduce using rule 66 (unary_stmt)
+
+
+State 136
+
+   23 id_list: ID_T SEMI_TOKEN •
+
+    $default  reduce using rule 23 (id_list)
+
+
+State 137
+
+   21 id_list: ID_T COMMA_TOKEN • id_list
+
+    ID_T          shift, and go to state 102
+    OPARAN_TOKEN  shift, and go to state 103
+
+    id_list  go to state 162
+
+
+State 138
+
+   22 id_list: OPARAN_TOKEN id_list • CPARAN_TOKEN
+
+    CPARAN_TOKEN  shift, and go to state 163
+
+
+State 139
+
+   35 expr_stmt: ID_T EQ_TOKEN exp_rhs • SEMI_TOKEN
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP     shift, and go to state 99
+    SEMI_TOKEN  shift, and go to state 164
+
+
+State 140
+
+   48 loop_foo: LOOP_WHILE OPARAN_TOKEN exp_rhs CPARAN_TOKEN •
+
+    $default  reduce using rule 48 (loop_foo)
+
+
+State 141
+
+   56 predicate: NEG_OP exp_rhs •
+   72 exp_rhs: NEG_OP exp_rhs •
+   73        | exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP       reduce using rule 56 (predicate)
+    COMP_OP       [reduce using rule 72 (exp_rhs)]
+    CPARAN_TOKEN  reduce using rule 56 (predicate)
+    CPARAN_TOKEN  [reduce using rule 72 (exp_rhs)]
+    $default      reduce using rule 56 (predicate)
+
+
+State 142
+
+   58 predicate: OPARAN_TOKEN predicate • CPARAN_TOKEN
+   59          | predicate • COMP_OP predicate
+
+    COMP_OP       shift, and go to state 144
+    CPARAN_TOKEN  shift, and go to state 165
+
+
+State 143
+
+   57 predicate: exp_rhs • COMP_OP exp_rhs
+   69 exp_rhs: OPARAN_TOKEN exp_rhs • CPARAN_TOKEN
+   73        | exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP       shift, and go to state 146
+    CPARAN_TOKEN  shift, and go to state 132
+
+
+State 144
+
+   59 predicate: predicate COMP_OP • predicate
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 110
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 111
+
+    $default  reduce using rule 60 (predicate)
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    predicate        go to state 166
+    exp_rhs          go to state 113
+
+
+State 145
+
+   44 if_foo: IF_TOKEN OPARAN_TOKEN predicate CPARAN_TOKEN •
+
+    $default  reduce using rule 44 (if_foo)
+
+
+State 146
+
+   57 predicate: exp_rhs COMP_OP • exp_rhs
+   73 exp_rhs: exp_rhs COMP_OP • exp_rhs
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 167
+
+
+State 147
+
+   53 in_for_fpart: EXPR_TOKEN ID_T • EQ_TOKEN exp_rhs
+
+    EQ_TOKEN  shift, and go to state 168
+
+
+State 148
+
+   55 in_for_fpart: OPARAN_TOKEN in_for_fpart • CPARAN_TOKEN
+
+    CPARAN_TOKEN  shift, and go to state 169
+
+
+State 149
+
+   61 for_foo: FOR_TOKEN OPARAN_TOKEN in_for CPARAN_TOKEN •
+
+    $default  reduce using rule 61 (for_foo)
+
+
+State 150
+
+   52 in_for: in_for_fpart SEMI_TOKEN • predicate SEMI_TOKEN cust_unary
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 110
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 111
+
+    $default  reduce using rule 60 (predicate)
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    predicate        go to state 170
+    exp_rhs          go to state 113
+
+
+State 151
+
+   46 cond_stmt: if_foo DO_TOKEN OBRACE_TOKEN stmts • CBRACE_TOKEN else_foo OBRACE_TOKEN stmts CBRACE_TOKEN
+   47          | if_foo DO_TOKEN OBRACE_TOKEN stmts • CBRACE_TOKEN
+
+    CBRACE_TOKEN  shift, and go to state 171
+
+
+State 152
+
+   49 loop_stmt: loop_foo DO_TOKEN OBRACE_TOKEN stmts • CBRACE_TOKEN
+
+    CBRACE_TOKEN  shift, and go to state 172
+
+
+State 153
+
+   62 for_loop_stmt: for_foo OBRACE_TOKEN stmts CBRACE_TOKEN •
+
+    $default  reduce using rule 62 (for_loop_stmt)
+
+
+State 154
+
+   16 param_temp: COMMA_TOKEN params_list •
+
+    $default  reduce using rule 16 (param_temp)
+
+
+State 155
+
+   39 fn_tempy: CPARAN_TOKEN •
+
+    $default  reduce using rule 39 (fn_tempy)
+
+
+State 156
+
+   38 fn_tempy: call_params •
+
+    $default  reduce using rule 38 (fn_tempy)
+
+
+State 157
+
+   40 fn_call_stmt: ID_T fn_name OPARAN_TOKEN fn_tempy •
+
+    $default  reduce using rule 40 (fn_call_stmt)
+
+
+State 158
+
+   36 call_params: exp_rhs • COMMA_TOKEN call_params
+   37            | exp_rhs • CPARAN_TOKEN
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP       shift, and go to state 99
+    COMMA_TOKEN   shift, and go to state 173
+    CPARAN_TOKEN  shift, and go to state 174
+
+
+State 159
+
+   71 exp_rhs: UNARY_OP OPARAN_TOKEN exp_rhs CPARAN_TOKEN •
+
+    $default  reduce using rule 71 (exp_rhs)
+
+
+State 160
+
+   70 exp_rhs: ARTH_OP OPARAN_TOKEN exp_rhs COMMA_TOKEN • exp_rhs CPARAN_TOKEN
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 175
+
+
+State 161
+
+   43 class_call_stmt: if_this ARROW_TOKEN ID_T fn_name • OPARAN_TOKEN fn_tempy
+
+    OPARAN_TOKEN  shift, and go to state 176
+
+
+State 162
+
+   21 id_list: ID_T COMMA_TOKEN id_list •
+
+    $default  reduce using rule 21 (id_list)
+
+
+State 163
+
+   22 id_list: OPARAN_TOKEN id_list CPARAN_TOKEN •
+
+    $default  reduce using rule 22 (id_list)
+
+
+State 164
+
+   35 expr_stmt: ID_T EQ_TOKEN exp_rhs SEMI_TOKEN •
+
+    $default  reduce using rule 35 (expr_stmt)
+
+
+State 165
+
+   58 predicate: OPARAN_TOKEN predicate CPARAN_TOKEN •
+
+    $default  reduce using rule 58 (predicate)
+
+
+State 166
+
+   59 predicate: predicate • COMP_OP predicate
+   59          | predicate COMP_OP predicate •
+
+    $default  reduce using rule 59 (predicate)
+
+
+State 167
+
+   57 predicate: exp_rhs COMP_OP exp_rhs •
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+   73        | exp_rhs COMP_OP exp_rhs •
+
+    COMP_OP       reduce using rule 57 (predicate)
+    COMP_OP       [reduce using rule 73 (exp_rhs)]
+    CPARAN_TOKEN  reduce using rule 57 (predicate)
+    CPARAN_TOKEN  [reduce using rule 73 (exp_rhs)]
+    $default      reduce using rule 57 (predicate)
+
+
+State 168
+
+   53 in_for_fpart: EXPR_TOKEN ID_T EQ_TOKEN • exp_rhs
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 177
+
+
+State 169
+
+   55 in_for_fpart: OPARAN_TOKEN in_for_fpart CPARAN_TOKEN •
+
+    $default  reduce using rule 55 (in_for_fpart)
+
+
+State 170
+
+   52 in_for: in_for_fpart SEMI_TOKEN predicate • SEMI_TOKEN cust_unary
+   59 predicate: predicate • COMP_OP predicate
+
+    COMP_OP     shift, and go to state 144
+    SEMI_TOKEN  shift, and go to state 178
+
+
+State 171
+
+   46 cond_stmt: if_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN • else_foo OBRACE_TOKEN stmts CBRACE_TOKEN
+   47          | if_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN •
+
+    ELSE_TOKEN  shift, and go to state 179
+
+    $default  reduce using rule 47 (cond_stmt)
+
+    else_foo  go to state 180
+
+
+State 172
+
+   49 loop_stmt: loop_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN •
+
+    $default  reduce using rule 49 (loop_stmt)
+
+
+State 173
+
+   36 call_params: exp_rhs COMMA_TOKEN • call_params
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+
+    call_params      go to state 181
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 158
+
+
+State 174
+
+   37 call_params: exp_rhs CPARAN_TOKEN •
+
+    $default  reduce using rule 37 (call_params)
+
+
+State 175
+
+   70 exp_rhs: ARTH_OP OPARAN_TOKEN exp_rhs COMMA_TOKEN exp_rhs • CPARAN_TOKEN
+   73        | exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP       shift, and go to state 99
+    CPARAN_TOKEN  shift, and go to state 182
+
+
+State 176
+
+   43 class_call_stmt: if_this ARROW_TOKEN ID_T fn_name OPARAN_TOKEN • fn_tempy
+
+    ID_T          shift, and go to state 47
+    CONST_T       shift, and go to state 48
+    STR_T         shift, and go to state 49
+    CHAR_T        shift, and go to state 50
+    NEG_OP        shift, and go to state 51
+    UNARY_OP      shift, and go to state 52
+    ARTH_OP       shift, and go to state 53
+    TF_TOKEN      shift, and go to state 54
+    THIS_TOKEN    shift, and go to state 55
+    OPARAN_TOKEN  shift, and go to state 56
+    CPARAN_TOKEN  shift, and go to state 155
+
+    call_params      go to state 156
+    fn_tempy         go to state 183
+    fn_call_stmt     go to state 57
+    if_this          go to state 58
+    class_call_stmt  go to state 59
+    exp_rhs          go to state 158
+
+
+State 177
+
+   53 in_for_fpart: EXPR_TOKEN ID_T EQ_TOKEN exp_rhs •
+   73 exp_rhs: exp_rhs • COMP_OP exp_rhs
+
+    COMP_OP  shift, and go to state 99
+
+    $default  reduce using rule 53 (in_for_fpart)
+
+
+State 178
+
+   52 in_for: in_for_fpart SEMI_TOKEN predicate SEMI_TOKEN • cust_unary
+
+    NEG_OP        shift, and go to state 22
+    UNARY_OP      shift, and go to state 23
+    OPARAN_TOKEN  shift, and go to state 184
+
+    $default  reduce using rule 51 (cust_unary)
+
+    cust_unary  go to state 185
+    unary_stmt  go to state 186
+
+
+State 179
+
+   45 else_foo: ELSE_TOKEN •
+
+    $default  reduce using rule 45 (else_foo)
+
+
+State 180
+
+   46 cond_stmt: if_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN else_foo • OBRACE_TOKEN stmts CBRACE_TOKEN
+
+    OBRACE_TOKEN  shift, and go to state 187
+
+
+State 181
+
+   36 call_params: exp_rhs COMMA_TOKEN call_params •
+
+    $default  reduce using rule 36 (call_params)
+
+
+State 182
+
+   70 exp_rhs: ARTH_OP OPARAN_TOKEN exp_rhs COMMA_TOKEN exp_rhs CPARAN_TOKEN •
+
+    $default  reduce using rule 70 (exp_rhs)
+
+
+State 183
+
+   43 class_call_stmt: if_this ARROW_TOKEN ID_T fn_name OPARAN_TOKEN fn_tempy •
+
+    $default  reduce using rule 43 (class_call_stmt)
+
+
+State 184
+
+   68 unary_stmt: OPARAN_TOKEN • unary_stmt CPARAN_TOKEN
+
+    NEG_OP        shift, and go to state 22
+    UNARY_OP      shift, and go to state 23
+    OPARAN_TOKEN  shift, and go to state 184
+
+    unary_stmt  go to state 188
+
+
+State 185
+
+   52 in_for: in_for_fpart SEMI_TOKEN predicate SEMI_TOKEN cust_unary •
+
+    $default  reduce using rule 52 (in_for)
+
+
+State 186
+
+   50 cust_unary: unary_stmt •
+
+    $default  reduce using rule 50 (cust_unary)
+
+
+State 187
+
+   46 cond_stmt: if_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN else_foo OBRACE_TOKEN • stmts CBRACE_TOKEN
+
+    NEG_OP         shift, and go to state 22
+    UNARY_OP       shift, and go to state 23
+    RETURN_TOKEN   shift, and go to state 24
+    DECLARE_TOKEN  shift, and go to state 25
+    EXPR_TOKEN     shift, and go to state 26
+    CALL_TOKEN     shift, and go to state 27
+    LOOP_WHILE     shift, and go to state 28
+    IF_TOKEN       shift, and go to state 29
+    FOR_TOKEN      shift, and go to state 30
+    OPARAN_TOKEN   shift, and go to state 31
+
+    $default  reduce using rule 19 (stmts)
+
+    stmts          go to state 189
+    stmt_types     go to state 33
+    decl_stmt      go to state 34
+    if_foo         go to state 35
+    cond_stmt      go to state 36
+    loop_foo       go to state 37
+    loop_stmt      go to state 38
+    for_foo        go to state 39
+    for_loop_stmt  go to state 40
+    ret_stmt       go to state 41
+    unary_stmt     go to state 42
+
+
+State 188
+
+   68 unary_stmt: OPARAN_TOKEN unary_stmt • CPARAN_TOKEN
+
+    CPARAN_TOKEN  shift, and go to state 119
+
+
+State 189
+
+   46 cond_stmt: if_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN else_foo OBRACE_TOKEN stmts • CBRACE_TOKEN
+
+    CBRACE_TOKEN  shift, and go to state 190
+
+
+State 190
+
+   46 cond_stmt: if_foo DO_TOKEN OBRACE_TOKEN stmts CBRACE_TOKEN else_foo OBRACE_TOKEN stmts CBRACE_TOKEN •
+
+    $default  reduce using rule 46 (cond_stmt)
