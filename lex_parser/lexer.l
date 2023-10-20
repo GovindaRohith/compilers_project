@@ -23,176 +23,94 @@ id {letter}({letter}|{digit}|"_")*
  fprintf(parsed_fp,"%s",yytext);
  return COMP_OP;
 }
-"neg" {fprintf(token_fp,"reserved keyword: %s\n",yytext);fprintf(parsed_fp,"%s",yytext);return NEG_OP;}
-"postincr"|"postdecr" {
-    //to identify unary stmts
+"iter" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return UNARY_OP;
+    return ITER;
 }
-"add"|"sub"|"mul"|"div" {
-    //return token for arth_ops
+"until" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return ARTH_OP;
+    return UNTIL;
 }
-"true"|"false" {
-    //return token for true and false
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return TF_TOKEN;
-}
-
 "return" {
-    //return TOKEN
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return RETURN_TOKEN;
+    return RETURN;
 }
-"global"|"local" {
-    //SCOPE TOKEN return 
+"rem" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return SCOPE_TOKEN;
+    return REM;
 }
-"class" {
-    //return TOKEN for class keyword
+"eq" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return CLASS_TOKEN;
+    return EQ;
 }
-"declare" {
-    //return TOKEN for declare keyword
+"neq" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return DECLARE_TOKEN;
+    return NEQ;
 }
-"expr" {
-    //return TOKEN for expr 
+"and" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return EXPR_TOKEN;
+    return AND;
 }
-"call" {
-    //return TOKEN for call keyword
+"or" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return CALL_TOKEN;
+    return OR;
 }
-"this" {
+"neg" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return THIS_TOKEN;
+    return NEG;
 }
-"for" {
-    fprintf(token_fp,"reserved keyword: for\n");
-    fprintf(parsed_fp,"%s",yytext);
-    return FOR_TOKEN;
-    }
-"loop"{blanks}"while" {
-    //Eliminating white spaces and returning loop_while token
-    fprintf(token_fp,"reserved keyword: loop\n");
-    fprintf(token_fp,"reserved keyword: while\n");
-    fprintf(parsed_fp,"loop while ");
-    return LOOP_WHILE;
-    }
-"in"{blanks}"case"{blanks}"that" {
-    //Eliminating white spaces and returning loop_while token
-    fprintf(token_fp,"reserved keyword: in case that\n");
-    fprintf(parsed_fp,"in case that");
-    return IF_TOKEN;
-    }
-"do" {
-    fprintf(token_fp,"reserved keyword: do\n");
-    fprintf(parsed_fp,"%s",yytext);
-    return DO_TOKEN;
+"and" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return AND;
 }
-"otherwise" {
-    fprintf(token_fp,"reserved keyword: otherwise\n");
-    fprintf(parsed_fp,"%s",yytext);
-    return ELSE_TOKEN;
-    }
-
-"->" {
-    fprintf(token_fp,"special symbol: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return ARROW_TOKEN;
+"or" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return OR;
 }
-
-"("|"["|"{" {
-    fprintf(token_fp,"special symbol: %s\n",yytext);
-    //Sort the brackets accordinlgy below
-    fprintf(parsed_fp,"%s",yytext);
-    if(yytext[0]=='(')return OPARAN_TOKEN;
-    else if(yytext[0]=='[') return OSQ_TOKEN;
-    else return OBRACE_TOKEN;
-    }
-")"|"]"|"}" {
-    fprintf(token_fp,"special symbol: %s\n",yytext);
-    //Sort the brackets accordinlgy below
-    fprintf(parsed_fp,"%s",yytext);
-    if(yytext[0]==')')return CPARAN_TOKEN;
-    else if(yytext[0]==']') return CSQ_TOKEN;
-    else return CBRACE_TOKEN;
+"int" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return INT;
 }
-";" {
-    fprintf(token_fp,"punctuation: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return SEMI_TOKEN;
-    }
-"," {
-    fprintf(token_fp,"punctuation: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return COMMA_TOKEN;
-    }
-"int"|"char"|"string"|"bool" {
-    fprintf(token_fp,"datatype: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return DTYPE_TOKEN;
+"cint" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return CINT;
 }
-"void" {
-    fprintf(token_fp,"datatype: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return VOID_TOKEN;
+"double" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return DOUBLE;
 }
-
-"=" {
-    fprintf(token_fp,"operator: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return EQ_TOKEN;
-    }
-{id} {
-    //to print ID's
-    fprintf(token_fp,"ID: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return ID_T;
-    }
-
-"-"?{digit} {
-    //to identify integer literals (including negative numbers)
-    fprintf(token_fp,"constant: %s\n",yytext);
-    fprintf(parsed_fp,"%s",yytext);
-    return CONST_T;
-    }
-
-\"(.*)+\" {
-    /*To identify strings*/
-    yytext++; //skip first quote 
-    yytext[strlen(yytext)-1]='\0'; //skip last quote
-    fprintf(token_fp,"punctuation: \"\nconstant: %s\npunctuation: \"\n",yytext);
-    fprintf(parsed_fp,"\"%s\"",yytext);
-    return STR_T;
+"cdouble" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return CDOUBLE;
 }
-
-\'(.)\' {
-    /*To identify chars */
-    yytext++; //skip first quote
-    yytext[strlen(yytext)-1]='\0'; //skip last quote
-    fprintf(token_fp,"punctuation: \'\nconstant: %s\npunctuation: \'\n",yytext);
-    fprintf(parsed_fp,"\'%s\'",yytext);
-    return CHAR_T;
-    }
-
+"str" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return STR;
+}
+"bin" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return BIN;
+}
+"real" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return REAL;
+}
+"img" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return IMG;
+}
+"pow" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return POW;
+}
+"polar" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return POLAR;
+}
+"conjugate" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return CONJUGATE;
+}
 . { 
     fprintf (stderr, "Lexical Error ,At line no : %d\n",l_no);
     exit(0);

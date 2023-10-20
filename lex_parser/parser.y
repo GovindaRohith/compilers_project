@@ -12,7 +12,28 @@ int ret_no;
 %token STR_T
 %token CHAR_T
 %token COMP_OP
-
+%token ITER
+%token UNTIL
+%token RETURN
+%token REM
+%token EQ
+%token NEQ
+%token AND
+%token OR
+%token NEG
+%token AND
+%token OR
+%token INT
+%token CINT
+%token DOUBLE
+%token CDOUBLE
+%token STR
+%token BIN
+%token REAL
+%token IMG
+%token POW
+%token POLAR
+%token CONJUGATE
 
 %%
 program : temp program
@@ -23,6 +44,28 @@ temp: ID_T
     | STR_T
     | CHAR_T
     | COMP_OP
+    | ITER
+    | UNTIL
+    | RETURN
+    | REM
+    | EQ
+    | NEQ
+    | AND
+    | OR
+    | NEG
+    | AND
+    | OR
+    | INT
+    | CINT
+    | DOUBLE
+    | CDOUBLE
+    | STR
+    | BIN
+    | REAL
+    | IMG
+    | POW
+    | POLAR
+    | CONJUGATE
     ;
 %%
 #include "lex.yy.c"
