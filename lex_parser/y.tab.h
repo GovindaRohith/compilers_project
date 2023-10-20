@@ -54,39 +54,69 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    ID_T = 258,                    /* ID_T  */
-    CONST_T = 259,                 /* CONST_T  */
-    STR_T = 260,                   /* STR_T  */
-    CHAR_T = 261,                  /* CHAR_T  */
-    COMP_OP = 262,                 /* COMP_OP  */
-    NEG_OP = 263,                  /* NEG_OP  */
-    UNARY_OP = 264,                /* UNARY_OP  */
-    ARTH_OP = 265,                 /* ARTH_OP  */
-    TF_TOKEN = 266,                /* TF_TOKEN  */
-    RETURN_TOKEN = 267,            /* RETURN_TOKEN  */
-    SCOPE_TOKEN = 268,             /* SCOPE_TOKEN  */
-    CLASS_TOKEN = 269,             /* CLASS_TOKEN  */
-    DECLARE_TOKEN = 270,           /* DECLARE_TOKEN  */
-    EXPR_TOKEN = 271,              /* EXPR_TOKEN  */
-    CALL_TOKEN = 272,              /* CALL_TOKEN  */
-    THIS_TOKEN = 273,              /* THIS_TOKEN  */
-    LOOP_WHILE = 274,              /* LOOP_WHILE  */
-    IF_TOKEN = 275,                /* IF_TOKEN  */
-    ELSE_TOKEN = 276,              /* ELSE_TOKEN  */
-    ARROW_TOKEN = 277,             /* ARROW_TOKEN  */
-    DTYPE_TOKEN = 278,             /* DTYPE_TOKEN  */
-    EQ_TOKEN = 279,                /* EQ_TOKEN  */
-    DO_TOKEN = 280,                /* DO_TOKEN  */
-    FOR_TOKEN = 281,               /* FOR_TOKEN  */
-    SEMI_TOKEN = 282,              /* SEMI_TOKEN  */
-    COMMA_TOKEN = 283,             /* COMMA_TOKEN  */
-    OPARAN_TOKEN = 284,            /* OPARAN_TOKEN  */
-    CPARAN_TOKEN = 285,            /* CPARAN_TOKEN  */
-    OSQ_TOKEN = 286,               /* OSQ_TOKEN  */
-    CSQ_TOKEN = 287,               /* CSQ_TOKEN  */
-    OBRACE_TOKEN = 288,            /* OBRACE_TOKEN  */
-    CBRACE_TOKEN = 289,            /* CBRACE_TOKEN  */
-    VOID_TOKEN = 290               /* VOID_TOKEN  */
+    ITER = 258,                    /* ITER  */
+    UNTIL = 259,                   /* UNTIL  */
+    RETURN = 260,                  /* RETURN  */
+    REM = 261,                     /* REM  */
+    NEQ = 262,                     /* NEQ  */
+    OR = 263,                      /* OR  */
+    NEG = 264,                     /* NEG  */
+    AND = 265,                     /* AND  */
+    INT = 266,                     /* INT  */
+    CINT = 267,                    /* CINT  */
+    DOUBLE = 268,                  /* DOUBLE  */
+    CDOUBLE = 269,                 /* CDOUBLE  */
+    STR = 270,                     /* STR  */
+    BIN = 271,                     /* BIN  */
+    REAL = 272,                    /* REAL  */
+    IMG = 273,                     /* IMG  */
+    POW = 274,                     /* POW  */
+    POLAR = 275,                   /* POLAR  */
+    CONJUGATE = 276,               /* CONJUGATE  */
+    MOD = 277,                     /* MOD  */
+    ARG = 278,                     /* ARG  */
+    ANGLE = 279,                   /* ANGLE  */
+    DIST = 280,                    /* DIST  */
+    CPRINT = 281,                  /* CPRINT  */
+    ROTATE = 282,                  /* ROTATE  */
+    CHOICE = 283,                  /* CHOICE  */
+    ALT = 284,                     /* ALT  */
+    DEFAULT = 285,                 /* DEFAULT  */
+    GET_LINE = 286,                /* GET_LINE  */
+    IS_TRIANGLE = 287,             /* IS_TRIANGLE  */
+    GET_CENTROID = 288,            /* GET_CENTROID  */
+    GET_CIRCUMCENTER = 289,        /* GET_CIRCUMCENTER  */
+    GET_ORTHOCENTER = 290,         /* GET_ORTHOCENTER  */
+    GET_INCENTER = 291,            /* GET_INCENTER  */
+    GET_EXCENTER = 292,            /* GET_EXCENTER  */
+    GET_AREA = 293,                /* GET_AREA  */
+    GET_PERIMETER = 294,           /* GET_PERIMETER  */
+    ID = 295,                      /* ID  */
+    SEMICOL = 296,                 /* SEMICOL  */
+    COMMA = 297,                   /* COMMA  */
+    COLON = 298,                   /* COLON  */
+    QUOTE = 299,                   /* QUOTE  */
+    GT = 300,                      /* GT  */
+    LT = 301,                      /* LT  */
+    EQ = 302,                      /* EQ  */
+    NE = 303,                      /* NE  */
+    INC = 304,                     /* INC  */
+    DEC = 305,                     /* DEC  */
+    ASSIGN = 306,                  /* ASSIGN  */
+    LE = 307,                      /* LE  */
+    GE = 308,                      /* GE  */
+    INT_NUM = 309,                 /* INT_NUM  */
+    DOUBLE_NUM = 310,              /* DOUBLE_NUM  */
+    ARITH_OP = 311,                /* ARITH_OP  */
+    ACCESS_OP1 = 312,              /* ACCESS_OP1  */
+    ACCESS_OP2 = 313,              /* ACCESS_OP2  */
+    INN_PROD = 314,                /* INN_PROD  */
+    OPEN_CIR_PAR = 315,            /* OPEN_CIR_PAR  */
+    CLOSE_CIR_PAR = 316,           /* CLOSE_CIR_PAR  */
+    OPEN_CURLY_PAR = 317,          /* OPEN_CURLY_PAR  */
+    CLOSE_CURLY_PAR = 318,         /* CLOSE_CURLY_PAR  */
+    OPEN_SQUARE_PAR = 319,         /* OPEN_SQUARE_PAR  */
+    CLOSE_SQUARE_PAR = 320         /* CLOSE_SQUARE_PAR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -95,39 +125,69 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define ID_T 258
-#define CONST_T 259
-#define STR_T 260
-#define CHAR_T 261
-#define COMP_OP 262
-#define NEG_OP 263
-#define UNARY_OP 264
-#define ARTH_OP 265
-#define TF_TOKEN 266
-#define RETURN_TOKEN 267
-#define SCOPE_TOKEN 268
-#define CLASS_TOKEN 269
-#define DECLARE_TOKEN 270
-#define EXPR_TOKEN 271
-#define CALL_TOKEN 272
-#define THIS_TOKEN 273
-#define LOOP_WHILE 274
-#define IF_TOKEN 275
-#define ELSE_TOKEN 276
-#define ARROW_TOKEN 277
-#define DTYPE_TOKEN 278
-#define EQ_TOKEN 279
-#define DO_TOKEN 280
-#define FOR_TOKEN 281
-#define SEMI_TOKEN 282
-#define COMMA_TOKEN 283
-#define OPARAN_TOKEN 284
-#define CPARAN_TOKEN 285
-#define OSQ_TOKEN 286
-#define CSQ_TOKEN 287
-#define OBRACE_TOKEN 288
-#define CBRACE_TOKEN 289
-#define VOID_TOKEN 290
+#define ITER 258
+#define UNTIL 259
+#define RETURN 260
+#define REM 261
+#define NEQ 262
+#define OR 263
+#define NEG 264
+#define AND 265
+#define INT 266
+#define CINT 267
+#define DOUBLE 268
+#define CDOUBLE 269
+#define STR 270
+#define BIN 271
+#define REAL 272
+#define IMG 273
+#define POW 274
+#define POLAR 275
+#define CONJUGATE 276
+#define MOD 277
+#define ARG 278
+#define ANGLE 279
+#define DIST 280
+#define CPRINT 281
+#define ROTATE 282
+#define CHOICE 283
+#define ALT 284
+#define DEFAULT 285
+#define GET_LINE 286
+#define IS_TRIANGLE 287
+#define GET_CENTROID 288
+#define GET_CIRCUMCENTER 289
+#define GET_ORTHOCENTER 290
+#define GET_INCENTER 291
+#define GET_EXCENTER 292
+#define GET_AREA 293
+#define GET_PERIMETER 294
+#define ID 295
+#define SEMICOL 296
+#define COMMA 297
+#define COLON 298
+#define QUOTE 299
+#define GT 300
+#define LT 301
+#define EQ 302
+#define NE 303
+#define INC 304
+#define DEC 305
+#define ASSIGN 306
+#define LE 307
+#define GE 308
+#define INT_NUM 309
+#define DOUBLE_NUM 310
+#define ARITH_OP 311
+#define ACCESS_OP1 312
+#define ACCESS_OP2 313
+#define INN_PROD 314
+#define OPEN_CIR_PAR 315
+#define CLOSE_CIR_PAR 316
+#define OPEN_CURLY_PAR 317
+#define CLOSE_CURLY_PAR 318
+#define OPEN_SQUARE_PAR 319
+#define CLOSE_SQUARE_PAR 320
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

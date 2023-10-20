@@ -11,13 +11,10 @@ int ret_no;
 %token UNTIL
 %token RETURN
 %token REM
-%token EQ
 %token NEQ
-%token AND
 %token OR
 %token NEG
 %token AND
-%token OR
 %token INT
 %token CINT
 %token DOUBLE
@@ -48,29 +45,21 @@ int ret_no;
 %token GET_AREA
 %token GET_PERIMETER
 %token ID 
-%token INT
-%token DOUBLE 
 %token SEMICOL
 %token COMMA
 %token COLON
 %token QUOTE
-
 %token GT
 %token LT
 %token EQ
 %token NE
 %token INC
 %token DEC
-%token REM
-%token AND
-%token OR
-%token NEG
 %token ASSIGN
 %token LE
 %token GE
-%token AND
-%token  OR
-%token NOT
+%token INT_NUM
+%token DOUBLE_NUM
 %token ARITH_OP
 %token ACCESS_OP1
 %token ACCESS_OP2
@@ -83,25 +72,14 @@ int ret_no;
 %token CLOSE_SQUARE_PAR
 
 %%
-program : temp program
+program : temp program {printf("Hello world\n");}
         | /* Epsilon */
         ;
-temp: ID_T
-    | CONST_T
-    | STR_T
-    | CHAR_T
-    | COMP_OP
-    | ITER
+temp: ITER
     | UNTIL
     | RETURN
-    | REM
-    | EQ
     | NEQ
-    | AND
-    | OR
     | NEG
-    | AND
-    | OR
     | INT
     | CINT
     | DOUBLE
@@ -132,8 +110,8 @@ temp: ID_T
     | GET_AREA
     | GET_PERIMETER
     | ID
-    | INT
-    | DOUBLE
+    | INT_NUM
+    | DOUBLE_NUM
     | SEMICOL
     | COMMA
     | COLON
@@ -147,13 +125,9 @@ temp: ID_T
     |REM
     |AND
     |OR
-    |NEG
     |ASSIGN
     |LE
     |GE
-    |AND
-    | OR
-    |NOT
     |ARITH_OP
     |ACCESS_OP1
     |ACCESS_OP2
@@ -182,13 +156,13 @@ int main()
   arr=(char *)calloc(1000,sizeof(char));
   int t;
   printf("Enter test case number: ");
-  scanf("%d",&t);
+  // scanf("%d",&t);
   char input_file[100];
   char token_file[100];
   char parsed_file[100];
-  sprintf(input_file,"./TPP/public_test_%d.clike",t);
-  sprintf(token_file,"./TPP/TPPO/seq_tokens_%d.txt",t);
-  sprintf(parsed_file,"./TPP/TPPO/parser_%d.parsed",t);
+  sprintf(input_file,"./input.txt");
+  sprintf(token_file,"./out_token.txt");
+  sprintf(parsed_file,"./parser.txt");
   yyin = fopen(input_file, "r"); //open input file
   token_fp=fopen(token_file,"w"); //open token file
   parsed_fp=fopen(parsed_file,"w"); //open token file

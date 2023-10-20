@@ -7,23 +7,23 @@ FILE *parsed_fp;
 %}
 
 
-/Regular defintions/
+/*Regular defintions*/
 blanks (" ")+
 letter [A-Za-z]
 digit [0-9]+
 id {letter}({letter}|{digit}|"_")*
-int -?digit+
-double -?digit+(\.digit+) 
+int_num -?digit+
+double_num -?digit+(\.digit+) 
 
 %%
-"//".* {/To address comments/}
+"//".* {/*To address comments*/}
 "\n" {l_no++;fprintf(parsed_fp,"\n");}
 {blanks} {fprintf(parsed_fp,"%s",yytext);}
 
 "mod" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  fprintf(parsed_fp,"%s",yytext);
- return COMP_OP;
+ return MOD;
 }
 "iter" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
@@ -36,38 +36,6 @@ double -?digit+(\.digit+)
 "return" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
     return RETURN;
-}
-"rem" {
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    return REM;
-}
-"eq" {
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    return EQ;
-}
-"neq" {
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    return NEQ;
-}
-"and" {
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    return AND;
-}
-"or" {
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    return OR;
-}
-"neg" {
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    return NEG;
-}
-"and" {
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    return AND;
-}
-"or" {
-    fprintf(token_fp,"reserved keyword: %s\n",yytext);
-    return OR;
 }
 "int" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
@@ -113,11 +81,6 @@ double -?digit+(\.digit+)
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
     return CONJUGATE;
 }
-. { 
-    fprintf (stderr, "Lexical Error ,At line no : %d\n",l_no);
-    exit(0);
- return MOD;
-}
 
 "arg" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
@@ -134,7 +97,7 @@ double -?digit+(\.digit+)
 }
 "cprint" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
- return CPRINTF;
+ return CPRINT;
 }
 
 "rotate" {
@@ -202,8 +165,6 @@ double -?digit+(\.digit+)
  return GET_PERIMETER;
 }
 
-
-
    [>] {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "%s", yytext);
@@ -264,57 +225,37 @@ double -?digit+(\.digit+)
     return NEG;
    }
 
-   [=] {
+   "=" {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "%s", yytext);
     return ASSIGN;
    }
 
-   [<=] {
+   "<=" {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "%s", yytext);
     return LE;
    }
 
-   [>=] {
+   ">=" {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "%s", yytext);
     return GE;
    }
 
-   []
-
-   [&&] {
-    fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
-    return AND;
-   }
-
-   [||] {
-    fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
-     return OR;
-   }
-
-   [!] {
-    fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
-    return NOT;
-   }
-
-   [-+*/] {
+   [*/+-] {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "%s", yytext);
     return ARITH_OP;
    }
 
-   [..] {
+   ".." {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "%s", yytext);
     return ACCESS_OP1;
    }
 
-   [.] {
+   "." {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "%s", yytext);
     return ACCESS_OP2;
@@ -367,40 +308,46 @@ double -?digit+(\.digit+)
     //to print ID's
     fprintf(token_fp,"ID: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
-    return ID_TOKEN;
+    return ID;
     }
 
-{int} {
+{int_num} {
     //to print int
     fprintf(token_fp,"int: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
-    return INT_TOKEN;
+    return INT_NUM;
     }
-{double} {
+{double_num} {
     //to print double
     fprintf(token_fp,"double: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
-    return DOUBLE_TOKEN;
+    return DOUBLE_NUM;
     }
 
 ";" {//Punctuations
     fprintf(token_fp,"punctuation: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
-    return SEMI_TOKEN;
+    return SEMICOL;
     }
 "," {
     fprintf(token_fp,"punctuation: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
-    return COMMA_TOKEN;
+    return COMMA;
     }
 ":" {
     fprintf(token_fp,"punctuation: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
-    return COLON_TOKEN;
+    return COLON;
     }
 "\"" {
     fprintf(token_fp,"punctuation: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
-    return QUOTE_TOKEN;
+    return QUOTE;
     }
+
+. { 
+    fprintf (stderr, "Lexical Error ,At line no : %d\n",l_no);
+    exit(0);
+ return MOD;
+}
 %%
