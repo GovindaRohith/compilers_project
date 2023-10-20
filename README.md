@@ -5,3 +5,10 @@ export ZONE=us-central1-b
 
 
 AIzaSyBQFlcPuV05iPonpvMmS3O4osXRm3Z0wVs
+
+git pull origin main
+
+
+git add .
+git commit -m "Message"
+git push
