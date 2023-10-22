@@ -70,75 +70,74 @@ int ret_no;
 %token CLOSE_CURLY_PAR
 %token OPEN_SQUARE_PAR
 %token CLOSE_SQUARE_PAR
-
+%left ARITH_OP
+%left GT
+%left LT
+%left EQ
+%left NE
+%left GE
+%left LE
+%left AND
+%left OR
+%left NEG
 %%
-program : temp program {printf("Hello world\n");}
+program : stmts {printf("Hello world\n");}
+        ;
+stmts : stmt_types stmts
+      | /* Epsilon */
+      | OPEN_CIR_PAR stmts CLOSE_CIR_PAR
+      ;
+stmt_types : assign_stmt SEMICOL
+           | decl_stmt SEMICOL
+           | if_stmt SEMICOL
+           | for_stmt 
+           | while_stmt 
+           | return_stmt SEMICOL      
+           ;
+if_stmt : CHOICE
+        ;
+for_stmt: ITER
+        ;
+while_stmt: UNTIL
+          ;
+decl_stmt : GET_AREA {/*Note above 4 are wrtitten for testing only*/}
+          ;
+assign_stmt : ID ASSIGN exp_rhs
+            ;
+return_stmt : RETURN exp_rhs
+            ;
+predicate : exp_rhs GT exp_rhs
+          | exp_rhs LT exp_rhs
+          | exp_rhs EQ exp_rhs
+          | exp_rhs NE exp_rhs
+          | exp_rhs GE exp_rhs
+          | exp_rhs LE exp_rhs
+          | exp_rhs AND exp_rhs
+          | exp_rhs OR exp_rhs
+          | NEG exp_rhs
+          ;
+exp_rhs : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
+        | exp_rhs ARITH_OP exp_rhs
+        | predicate
+        | ID 
+        | INT_NUM
+        | DOUBLE_NUM
+        | fn_call
+        | ID INC
+        | ID DEC
+        | INT_NUM INC
+        | INT_NUM DEC
+        | DOUBLE_NUM INC
+        | DOUBLE_NUM DEC
+        | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR
+        | OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR {/*This is doubt for a=(3,3) type*/}
+        ;
+fn_call : ID OPEN_CIR_PAR fn_args CLOSE_CIR_PAR
+        ;
+fn_args : exp_rhs COMMA fn_args
+        | exp_rhs
         | /* Epsilon */
         ;
-temp: ITER
-    | UNTIL
-    | RETURN
-    | NEQ
-    | NEG
-    | INT
-    | CINT
-    | DOUBLE
-    | CDOUBLE
-    | STR
-    | BIN
-    | REAL
-    | IMG
-    | POW
-    | POLAR
-    | CONJUGATE
-    | MOD
-    | ARG
-    | ANGLE
-    | DIST
-    | CPRINT
-    | ROTATE
-    | CHOICE
-    | ALT
-    | DEFAULT
-    | GET_LINE
-    | IS_TRIANGLE
-    | GET_CENTROID
-    | GET_CIRCUMCENTER
-    | GET_ORTHOCENTER
-    | GET_INCENTER
-    | GET_EXCENTER
-    | GET_AREA
-    | GET_PERIMETER
-    | ID
-    | INT_NUM
-    | DOUBLE_NUM
-    | SEMICOL
-    | COMMA
-    | COLON
-    | QUOTE
-    |GT
-    |LT
-    |EQ
-    |NE
-    |INC
-    |DEC
-    |REM
-    |AND
-    |OR
-    |ASSIGN
-    |LE
-    |GE
-    |ARITH_OP
-    |ACCESS_OP1
-    |ACCESS_OP2
-    |INN_PROD
-    |OPEN_CIR_PAR
-    |CLOSE_CIR_PAR
-    |OPEN_CURLY_PAR
-    |CLOSE_CURLY_PAR
-    |OPEN_SQUARE_PAR
-    |CLOSE_SQUARE_PAR
-    ;
 %%
 #include "lex.yy.c"
 
