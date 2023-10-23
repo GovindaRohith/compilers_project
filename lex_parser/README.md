@@ -32,12 +32,67 @@ predicate : exp_rhs GT exp_rhs
           | NEG predicate
           | OPEN_CIR_PAR predicate CLOSE_CIR_PAR
           ;
-
-%left GT
-%left LT
-%left EQ
-%left NE
-%left GE
-%left LE
-%left AND
-%left OR
+temp :  ITER
+        | UNTIL
+        | RETURN
+        | REM
+        | NEQ
+        | OR
+        | NEG
+        | AND
+        | INT
+        | CINT
+        | DOUBLE
+        | CDOUBLE
+        | STR
+        | BIN
+        | REAL
+        | IMG
+        | POW
+        | POLAR
+        | CONJUGATE
+        | MOD
+        | ARG
+        | ANGLE
+        | DIST
+        | CPRINT
+        | ROTATE
+        | CHOICE
+        | ALT
+        | DEFAULT
+        | GET_LINE
+        | IS_TRIANGLE
+        | GET_CENTROID
+        | GET_CIRCUMCENTER
+        | GET_ORTHOCENTER
+        | GET_INCENTER
+        | GET_EXCENTER
+        | GET_AREA
+        | GET_PERIMETER
+        | ID 
+        | SEMICOL
+        | COMMA
+        | COLON
+        | QUOTE
+        | GT
+        | LT
+        | EQ
+        | NE
+        | INC
+        | DEC
+        | ASSIGN
+        | LE
+        | GE
+        | INT_NUM
+        | DOUBLE_NUM
+        | ARITH_OP
+        | ACCESS_OP1
+        | ACCESS_OP2
+        | INN_PROD
+        | OPEN_CIR_PAR
+        | CLOSE_CIR_PAR
+        | OPEN_CURLY_PAR
+        | CLOSE_CURLY_PAR
+        | OPEN_SQUARE_PAR
+        | CLOSE_SQUARE_PAR
+        ;
