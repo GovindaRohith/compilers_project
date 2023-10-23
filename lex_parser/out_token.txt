@@ -1,0 +1,80 @@
+Name: Yoligi Govinda Rohith
+ID: CS21BTECH11062
+Input file: public_test_0.clike
+ID: main
+reserved keyword: int
+punctuation: :
+{reserved keyword: cint
+ID: a
+(int: 3
+punctuation: ,
+int: 4
+)punctuation: ;
+reserved keyword: cint
+ID: b
+(int: 5
+punctuation: ,
+int: 5
+)punctuation: ,
+ID: c
+(int: -101
+punctuation: ,
+int: 100
+)punctuation: ;
+reserved keyword: cdouble
+ID: centroid
+punctuation: ;
+ID: centriod
+=reserved keyword: get_centroid
+(ID: a
+punctuation: ,
+ID: b
+punctuation: ,
+ID: c
+)punctuation: ;
+reserved keyword: cprint
+(ID: centroid
+)punctuation: ;
+ID: circumcente
+=reserved keyword: get_circumcenter
+(ID: a
+punctuation: ,
+ID: b
+punctuation: ,
+ID: c
+)punctuation: ;
+reserved keyword: cprint
+(ID: circumcenter
+)punctuation: ;
+ID: orthocenter
+=reserved keyword: get_orthocenter
+(ID: a
+punctuation: ,
+ID: b
+punctuation: ,
+ID: c
+)punctuation: ;
+reserved keyword: cprint
+(ID: orthocenter
+)punctuation: ;
+reserved keyword: choice
+(reserved keyword: dist
+(ID: centriod
+punctuation: ,
+ID: circumcenter
+)eqreserved keyword: dist
+(ID: orthocenter
+punctuation: ,
+ID: centroid
+)*int: 2
+){reserved keyword: cprint
+(int: 1
+)punctuation: ;
+}reserved keyword: default
+{reserved keyword: cprint
+(int: -1
+)punctuation: ;
+}reserved keyword: return
+int: 0
+punctuation: ;
+}
