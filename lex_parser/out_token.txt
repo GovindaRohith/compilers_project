@@ -1,9 +1,0 @@
-Name: Yoligi Govinda Rohith
-ID: CS21BTECH11062
-Input file: public_test_0.clike
-ID: main
-reserved keyword: int
-punctuation: :
-{reserved keyword: cint
-ID: a
-(

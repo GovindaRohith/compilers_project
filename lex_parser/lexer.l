@@ -10,10 +10,11 @@ FILE *parsed_fp;
 /*Regular defintions*/
 blanks (" ")+
 letter [A-Za-z]
-digit [0-9]+
+digit [0-9]
 id {letter}({letter}|{digit}|"_")*
-int_num -?digit+
-double_num -?digit+(\.digit+) 
+int_num -?{digit}+
+
+double_num -?{digit}+(\.{digit}+) 
 
 %%
 "//".* {/*To address comments*/}
@@ -249,22 +250,10 @@ double_num -?digit+(\.digit+)
     return ARITH_OP;
    }
 
-   ".." {
-    fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
-    return ACCESS_OP1;
-   }
-
    "." {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "%s", yytext);
     return ACCESS_OP2;
-   }
-
-   [@] {
-    fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
-    return INN_PROD;
    }
 
    [(] {
@@ -345,9 +334,9 @@ double_num -?digit+(\.digit+)
     return QUOTE;
     }
 
-. { 
-    fprintf (stderr, "Lexical Error ,At line no : %d\n",l_no);
-    exit(0);
- return MOD;
-}
 %%
+
+int yywrap() 
+ { 
+    
+ } 
