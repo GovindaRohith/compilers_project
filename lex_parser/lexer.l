@@ -108,16 +108,19 @@ double_num -?{digit}+(\.{digit}+)
 
 "choice" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
+ fprintf(parsed_fp,"%s",yytext);
  return CHOICE;
 }
 
 "alt" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
+ fprintf(parsed_fp,"%s",yytext);
  return ALT;
 }
 
 "default" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
+ fprintf(parsed_fp,"%s",yytext);
  return DEFAULT;
 }
 

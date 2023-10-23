@@ -1,761 +1,2179 @@
+Terminals unused in grammar
+
+    REM
+    NEQ
+    INT
+    CINT
+    DOUBLE
+    CDOUBLE
+    STR
+    BIN
+    COLON
+    QUOTE
+    ACCESS_OP1
+    ACCESS_OP2
+    INN_PROD
+
+
 Grammar
 
-    0 $accept: S $end
+    0 $accept: program $end
 
-    1 S: temp S
-    2  | ε
+    1 program: stmts
 
-    3 temp: ITER
-    4     | UNTIL
-    5     | RETURN
-    6     | REM
-    7     | NEQ
-    8     | OR
-    9     | NEG
-   10     | AND
-   11     | INT
-   12     | CINT
-   13     | DOUBLE
-   14     | CDOUBLE
-   15     | STR
-   16     | BIN
-   17     | REAL
-   18     | IMG
-   19     | POW
-   20     | POLAR
-   21     | CONJUGATE
-   22     | MOD
-   23     | ARG
-   24     | ANGLE
-   25     | DIST
-   26     | CPRINT
-   27     | ROTATE
-   28     | CHOICE
-   29     | ALT
-   30     | DEFAULT
-   31     | GET_LINE
-   32     | IS_TRIANGLE
-   33     | GET_CENTROID
-   34     | GET_CIRCUMCENTER
-   35     | GET_ORTHOCENTER
-   36     | GET_INCENTER
-   37     | GET_EXCENTER
-   38     | GET_AREA
-   39     | GET_PERIMETER
-   40     | ID
-   41     | SEMICOL
-   42     | COMMA
-   43     | COLON
-   44     | QUOTE
-   45     | GT
-   46     | LT
-   47     | EQ
-   48     | NE
-   49     | INC
-   50     | DEC
-   51     | ASSIGN
-   52     | LE
-   53     | GE
-   54     | INT_NUM
-   55     | DOUBLE_NUM
-   56     | ARITH_OP
-   57     | ACCESS_OP1
-   58     | ACCESS_OP2
-   59     | INN_PROD
-   60     | OPEN_CIR_PAR
-   61     | CLOSE_CIR_PAR
-   62     | OPEN_CURLY_PAR
-   63     | CLOSE_CURLY_PAR
-   64     | OPEN_SQUARE_PAR
-   65     | CLOSE_SQUARE_PAR
+    2 stmts: stmt_types stmts
+    3      | ε
+    4      | OPEN_CIR_PAR stmts CLOSE_CIR_PAR
+
+    5 stmt_types: assign_stmt SEMICOL
+    6           | decl_stmt SEMICOL
+    7           | if_stmt
+    8           | for_stmt
+    9           | while_stmt
+   10           | return_stmt SEMICOL
+   11           | void_fn_calls SEMICOL
+
+   12 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+   13        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+
+   14 elif_stmt: ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+   15          | ε
+
+   16 for_stmt: ITER
+
+   17 while_stmt: UNTIL
+
+   18 decl_stmt: GET_AREA
+
+   19 void_fn_calls: fn_call
+
+   20 assign_stmt: ID ASSIGN exp_rhs
+
+   21 return_stmt: RETURN exp_rhs
+
+   22 predicate: exp_rhs GT exp_rhs
+   23          | exp_rhs LT exp_rhs
+   24          | exp_rhs EQ exp_rhs
+   25          | exp_rhs NE exp_rhs
+   26          | exp_rhs GE exp_rhs
+   27          | exp_rhs LE exp_rhs
+   28          | exp_rhs AND exp_rhs
+   29          | exp_rhs OR exp_rhs
+   30          | NEG exp_rhs
+
+   31 exp_rhs: OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
+   32        | exp_rhs ARITH_OP exp_rhs
+   33        | predicate
+   34        | ID
+   35        | INT_NUM
+   36        | DOUBLE_NUM
+   37        | fn_call
+   38        | ID INC
+   39        | ID DEC
+   40        | INT_NUM INC
+   41        | INT_NUM DEC
+   42        | DOUBLE_NUM INC
+   43        | DOUBLE_NUM DEC
+   44        | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR
+   45        | OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
+
+   46 fn_call: fn_type OPEN_CIR_PAR fn_args CLOSE_CIR_PAR
+
+   47 fn_args: exp_rhs COMMA fn_args
+   48        | exp_rhs
+   49        | ε
+
+   50 fn_type: ID
+   51        | inbuilt_fn
+
+   52 inbuilt_fn: REAL
+   53           | IMG
+   54           | POW
+   55           | POLAR
+   56           | CONJUGATE
+   57           | MOD
+   58           | ARG
+   59           | ANGLE
+   60           | DIST
+   61           | CPRINT
+   62           | ROTATE
+   63           | GET_LINE
+   64           | IS_TRIANGLE
+   65           | GET_CENTROID
+   66           | GET_CIRCUMCENTER
+   67           | GET_ORTHOCENTER
+   68           | GET_INCENTER
+   69           | GET_EXCENTER
+   70           | GET_AREA
+   71           | GET_PERIMETER
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    ITER (258) 3
-    UNTIL (259) 4
-    RETURN (260) 5
-    REM (261) 6
-    NEQ (262) 7
-    OR (263) 8
-    NEG (264) 9
-    AND (265) 10
-    INT (266) 11
-    CINT (267) 12
-    DOUBLE (268) 13
-    CDOUBLE (269) 14
-    STR (270) 15
-    BIN (271) 16
-    REAL (272) 17
-    IMG (273) 18
-    POW (274) 19
-    POLAR (275) 20
-    CONJUGATE (276) 21
-    MOD (277) 22
-    ARG (278) 23
-    ANGLE (279) 24
-    DIST (280) 25
-    CPRINT (281) 26
-    ROTATE (282) 27
-    CHOICE (283) 28
-    ALT (284) 29
-    DEFAULT (285) 30
-    GET_LINE (286) 31
-    IS_TRIANGLE (287) 32
-    GET_CENTROID (288) 33
-    GET_CIRCUMCENTER (289) 34
-    GET_ORTHOCENTER (290) 35
-    GET_INCENTER (291) 36
-    GET_EXCENTER (292) 37
-    GET_AREA (293) 38
-    GET_PERIMETER (294) 39
-    ID (295) 40
-    SEMICOL (296) 41
-    COMMA (297) 42
-    COLON (298) 43
-    QUOTE (299) 44
-    GT (300) 45
-    LT (301) 46
-    EQ (302) 47
-    NE (303) 48
-    INC (304) 49
-    DEC (305) 50
-    ASSIGN (306) 51
-    LE (307) 52
-    GE (308) 53
-    INT_NUM (309) 54
-    DOUBLE_NUM (310) 55
-    ARITH_OP (311) 56
-    ACCESS_OP1 (312) 57
-    ACCESS_OP2 (313) 58
-    INN_PROD (314) 59
-    OPEN_CIR_PAR (315) 60
-    CLOSE_CIR_PAR (316) 61
-    OPEN_CURLY_PAR (317) 62
-    CLOSE_CURLY_PAR (318) 63
-    OPEN_SQUARE_PAR (319) 64
-    CLOSE_SQUARE_PAR (320) 65
+    ITER (258) 16
+    UNTIL (259) 17
+    RETURN (260) 21
+    REM (261)
+    NEQ (262)
+    OR (263) 29
+    NEG (264) 30
+    AND (265) 28
+    INT (266)
+    CINT (267)
+    DOUBLE (268)
+    CDOUBLE (269)
+    STR (270)
+    BIN (271)
+    REAL (272) 52
+    IMG (273) 53
+    POW (274) 54
+    POLAR (275) 55
+    CONJUGATE (276) 56
+    MOD (277) 57
+    ARG (278) 58
+    ANGLE (279) 59
+    DIST (280) 60
+    CPRINT (281) 61
+    ROTATE (282) 62
+    CHOICE (283) 12 13
+    ALT (284) 14
+    DEFAULT (285) 13
+    GET_LINE (286) 63
+    IS_TRIANGLE (287) 64
+    GET_CENTROID (288) 65
+    GET_CIRCUMCENTER (289) 66
+    GET_ORTHOCENTER (290) 67
+    GET_INCENTER (291) 68
+    GET_EXCENTER (292) 69
+    GET_AREA (293) 18 70
+    GET_PERIMETER (294) 71
+    ID (295) 20 34 38 39 44 50
+    SEMICOL (296) 5 6 10 11
+    COMMA (297) 45 47
+    COLON (298)
+    QUOTE (299)
+    GT (300) 22
+    LT (301) 23
+    EQ (302) 24
+    NE (303) 25
+    INC (304) 38 40 42
+    DEC (305) 39 41 43
+    ASSIGN (306) 20
+    LE (307) 27
+    GE (308) 26
+    INT_NUM (309) 35 40 41
+    DOUBLE_NUM (310) 36 42 43
+    ARITH_OP (311) 32
+    ACCESS_OP1 (312)
+    ACCESS_OP2 (313)
+    INN_PROD (314)
+    OPEN_CIR_PAR (315) 4 12 13 14 31 45 46
+    CLOSE_CIR_PAR (316) 4 12 13 14 31 45 46
+    OPEN_CURLY_PAR (317) 12 13 14
+    CLOSE_CURLY_PAR (318) 12 13 14
+    OPEN_SQUARE_PAR (319) 44
+    CLOSE_SQUARE_PAR (320) 44
 
 
 Nonterminals, with rules where they appear
 
     $accept (66)
         on left: 0
-    S (67)
-        on left: 1 2
-        on right: 0 1
-    temp (68)
-        on left: 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
-        on right: 1
+    program (67)
+        on left: 1
+        on right: 0
+    stmts (68)
+        on left: 2 3 4
+        on right: 1 2 4
+    stmt_types (69)
+        on left: 5 6 7 8 9 10 11
+        on right: 2 12 13 14
+    if_stmt (70)
+        on left: 12 13
+        on right: 7
+    elif_stmt (71)
+        on left: 14 15
+        on right: 12 13 14
+    for_stmt (72)
+        on left: 16
+        on right: 8
+    while_stmt (73)
+        on left: 17
+        on right: 9
+    decl_stmt (74)
+        on left: 18
+        on right: 6
+    void_fn_calls (75)
+        on left: 19
+        on right: 11
+    assign_stmt (76)
+        on left: 20
+        on right: 5
+    return_stmt (77)
+        on left: 21
+        on right: 10
+    predicate (78)
+        on left: 22 23 24 25 26 27 28 29 30
+        on right: 12 13 14 33
+    exp_rhs (79)
+        on left: 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45
+        on right: 20 21 22 23 24 25 26 27 28 29 30 31 32 44 45 47 48
+    fn_call (80)
+        on left: 46
+        on right: 19 37
+    fn_args (81)
+        on left: 47 48 49
+        on right: 46 47
+    fn_type (82)
+        on left: 50 51
+        on right: 46
+    inbuilt_fn (83)
+        on left: 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
+        on right: 51
 
 
 State 0
 
-    0 $accept: • S $end
+    0 $accept: • program $end
 
     ITER              shift, and go to state 1
     UNTIL             shift, and go to state 2
     RETURN            shift, and go to state 3
-    REM               shift, and go to state 4
-    NEQ               shift, and go to state 5
-    OR                shift, and go to state 6
-    NEG               shift, and go to state 7
-    AND               shift, and go to state 8
-    INT               shift, and go to state 9
-    CINT              shift, and go to state 10
-    DOUBLE            shift, and go to state 11
-    CDOUBLE           shift, and go to state 12
-    STR               shift, and go to state 13
-    BIN               shift, and go to state 14
-    REAL              shift, and go to state 15
-    IMG               shift, and go to state 16
-    POW               shift, and go to state 17
-    POLAR             shift, and go to state 18
-    CONJUGATE         shift, and go to state 19
-    MOD               shift, and go to state 20
-    ARG               shift, and go to state 21
-    ANGLE             shift, and go to state 22
-    DIST              shift, and go to state 23
-    CPRINT            shift, and go to state 24
-    ROTATE            shift, and go to state 25
-    CHOICE            shift, and go to state 26
-    ALT               shift, and go to state 27
-    DEFAULT           shift, and go to state 28
-    GET_LINE          shift, and go to state 29
-    IS_TRIANGLE       shift, and go to state 30
-    GET_CENTROID      shift, and go to state 31
-    GET_CIRCUMCENTER  shift, and go to state 32
-    GET_ORTHOCENTER   shift, and go to state 33
-    GET_INCENTER      shift, and go to state 34
-    GET_EXCENTER      shift, and go to state 35
-    GET_AREA          shift, and go to state 36
-    GET_PERIMETER     shift, and go to state 37
-    ID                shift, and go to state 38
-    SEMICOL           shift, and go to state 39
-    COMMA             shift, and go to state 40
-    COLON             shift, and go to state 41
-    QUOTE             shift, and go to state 42
-    GT                shift, and go to state 43
-    LT                shift, and go to state 44
-    EQ                shift, and go to state 45
-    NE                shift, and go to state 46
-    INC               shift, and go to state 47
-    DEC               shift, and go to state 48
-    ASSIGN            shift, and go to state 49
-    LE                shift, and go to state 50
-    GE                shift, and go to state 51
-    INT_NUM           shift, and go to state 52
-    DOUBLE_NUM        shift, and go to state 53
-    ARITH_OP          shift, and go to state 54
-    ACCESS_OP1        shift, and go to state 55
-    ACCESS_OP2        shift, and go to state 56
-    INN_PROD          shift, and go to state 57
-    OPEN_CIR_PAR      shift, and go to state 58
-    CLOSE_CIR_PAR     shift, and go to state 59
-    OPEN_CURLY_PAR    shift, and go to state 60
-    CLOSE_CURLY_PAR   shift, and go to state 61
-    OPEN_SQUARE_PAR   shift, and go to state 62
-    CLOSE_SQUARE_PAR  shift, and go to state 63
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    CHOICE            shift, and go to state 15
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 23
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 25
+    OPEN_CIR_PAR      shift, and go to state 26
 
-    $default  reduce using rule 2 (S)
+    $default  reduce using rule 3 (stmts)
 
-    S     go to state 64
-    temp  go to state 65
+    program        go to state 27
+    stmts          go to state 28
+    stmt_types     go to state 29
+    if_stmt        go to state 30
+    for_stmt       go to state 31
+    while_stmt     go to state 32
+    decl_stmt      go to state 33
+    void_fn_calls  go to state 34
+    assign_stmt    go to state 35
+    return_stmt    go to state 36
+    fn_call        go to state 37
+    fn_type        go to state 38
+    inbuilt_fn     go to state 39
 
 
 State 1
 
-    3 temp: ITER •
+   16 for_stmt: ITER •
 
-    $default  reduce using rule 3 (temp)
+    $default  reduce using rule 16 (for_stmt)
 
 
 State 2
 
-    4 temp: UNTIL •
+   17 while_stmt: UNTIL •
 
-    $default  reduce using rule 4 (temp)
+    $default  reduce using rule 17 (while_stmt)
 
 
 State 3
 
-    5 temp: RETURN •
+   21 return_stmt: RETURN • exp_rhs
 
-    $default  reduce using rule 5 (temp)
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 47
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
 
 
 State 4
 
-    6 temp: REM •
+   52 inbuilt_fn: REAL •
 
-    $default  reduce using rule 6 (temp)
+    $default  reduce using rule 52 (inbuilt_fn)
 
 
 State 5
 
-    7 temp: NEQ •
+   53 inbuilt_fn: IMG •
 
-    $default  reduce using rule 7 (temp)
+    $default  reduce using rule 53 (inbuilt_fn)
 
 
 State 6
 
-    8 temp: OR •
+   54 inbuilt_fn: POW •
 
-    $default  reduce using rule 8 (temp)
+    $default  reduce using rule 54 (inbuilt_fn)
 
 
 State 7
 
-    9 temp: NEG •
+   55 inbuilt_fn: POLAR •
 
-    $default  reduce using rule 9 (temp)
+    $default  reduce using rule 55 (inbuilt_fn)
 
 
 State 8
 
-   10 temp: AND •
+   56 inbuilt_fn: CONJUGATE •
 
-    $default  reduce using rule 10 (temp)
+    $default  reduce using rule 56 (inbuilt_fn)
 
 
 State 9
 
-   11 temp: INT •
+   57 inbuilt_fn: MOD •
 
-    $default  reduce using rule 11 (temp)
+    $default  reduce using rule 57 (inbuilt_fn)
 
 
 State 10
 
-   12 temp: CINT •
+   58 inbuilt_fn: ARG •
 
-    $default  reduce using rule 12 (temp)
+    $default  reduce using rule 58 (inbuilt_fn)
 
 
 State 11
 
-   13 temp: DOUBLE •
+   59 inbuilt_fn: ANGLE •
 
-    $default  reduce using rule 13 (temp)
+    $default  reduce using rule 59 (inbuilt_fn)
 
 
 State 12
 
-   14 temp: CDOUBLE •
+   60 inbuilt_fn: DIST •
 
-    $default  reduce using rule 14 (temp)
+    $default  reduce using rule 60 (inbuilt_fn)
 
 
 State 13
 
-   15 temp: STR •
+   61 inbuilt_fn: CPRINT •
 
-    $default  reduce using rule 15 (temp)
+    $default  reduce using rule 61 (inbuilt_fn)
 
 
 State 14
 
-   16 temp: BIN •
+   62 inbuilt_fn: ROTATE •
 
-    $default  reduce using rule 16 (temp)
+    $default  reduce using rule 62 (inbuilt_fn)
 
 
 State 15
 
-   17 temp: REAL •
+   12 if_stmt: CHOICE • OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+   13        | CHOICE • OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
 
-    $default  reduce using rule 17 (temp)
+    OPEN_CIR_PAR  shift, and go to state 49
 
 
 State 16
 
-   18 temp: IMG •
+   63 inbuilt_fn: GET_LINE •
 
-    $default  reduce using rule 18 (temp)
+    $default  reduce using rule 63 (inbuilt_fn)
 
 
 State 17
 
-   19 temp: POW •
+   64 inbuilt_fn: IS_TRIANGLE •
 
-    $default  reduce using rule 19 (temp)
+    $default  reduce using rule 64 (inbuilt_fn)
 
 
 State 18
 
-   20 temp: POLAR •
+   65 inbuilt_fn: GET_CENTROID •
 
-    $default  reduce using rule 20 (temp)
+    $default  reduce using rule 65 (inbuilt_fn)
 
 
 State 19
 
-   21 temp: CONJUGATE •
+   66 inbuilt_fn: GET_CIRCUMCENTER •
 
-    $default  reduce using rule 21 (temp)
+    $default  reduce using rule 66 (inbuilt_fn)
 
 
 State 20
 
-   22 temp: MOD •
+   67 inbuilt_fn: GET_ORTHOCENTER •
 
-    $default  reduce using rule 22 (temp)
+    $default  reduce using rule 67 (inbuilt_fn)
 
 
 State 21
 
-   23 temp: ARG •
+   68 inbuilt_fn: GET_INCENTER •
 
-    $default  reduce using rule 23 (temp)
+    $default  reduce using rule 68 (inbuilt_fn)
 
 
 State 22
 
-   24 temp: ANGLE •
+   69 inbuilt_fn: GET_EXCENTER •
 
-    $default  reduce using rule 24 (temp)
+    $default  reduce using rule 69 (inbuilt_fn)
 
 
 State 23
 
-   25 temp: DIST •
+   18 decl_stmt: GET_AREA •
+   70 inbuilt_fn: GET_AREA •
 
-    $default  reduce using rule 25 (temp)
+    OPEN_CIR_PAR  reduce using rule 70 (inbuilt_fn)
+    $default      reduce using rule 18 (decl_stmt)
 
 
 State 24
 
-   26 temp: CPRINT •
+   71 inbuilt_fn: GET_PERIMETER •
 
-    $default  reduce using rule 26 (temp)
+    $default  reduce using rule 71 (inbuilt_fn)
 
 
 State 25
 
-   27 temp: ROTATE •
+   20 assign_stmt: ID • ASSIGN exp_rhs
+   50 fn_type: ID •
 
-    $default  reduce using rule 27 (temp)
+    ASSIGN  shift, and go to state 50
+
+    $default  reduce using rule 50 (fn_type)
 
 
 State 26
 
-   28 temp: CHOICE •
-
-    $default  reduce using rule 28 (temp)
-
-
-State 27
-
-   29 temp: ALT •
-
-    $default  reduce using rule 29 (temp)
-
-
-State 28
-
-   30 temp: DEFAULT •
-
-    $default  reduce using rule 30 (temp)
-
-
-State 29
-
-   31 temp: GET_LINE •
-
-    $default  reduce using rule 31 (temp)
-
-
-State 30
-
-   32 temp: IS_TRIANGLE •
-
-    $default  reduce using rule 32 (temp)
-
-
-State 31
-
-   33 temp: GET_CENTROID •
-
-    $default  reduce using rule 33 (temp)
-
-
-State 32
-
-   34 temp: GET_CIRCUMCENTER •
-
-    $default  reduce using rule 34 (temp)
-
-
-State 33
-
-   35 temp: GET_ORTHOCENTER •
-
-    $default  reduce using rule 35 (temp)
-
-
-State 34
-
-   36 temp: GET_INCENTER •
-
-    $default  reduce using rule 36 (temp)
-
-
-State 35
-
-   37 temp: GET_EXCENTER •
-
-    $default  reduce using rule 37 (temp)
-
-
-State 36
-
-   38 temp: GET_AREA •
-
-    $default  reduce using rule 38 (temp)
-
-
-State 37
-
-   39 temp: GET_PERIMETER •
-
-    $default  reduce using rule 39 (temp)
-
-
-State 38
-
-   40 temp: ID •
-
-    $default  reduce using rule 40 (temp)
-
-
-State 39
-
-   41 temp: SEMICOL •
-
-    $default  reduce using rule 41 (temp)
-
-
-State 40
-
-   42 temp: COMMA •
-
-    $default  reduce using rule 42 (temp)
-
-
-State 41
-
-   43 temp: COLON •
-
-    $default  reduce using rule 43 (temp)
-
-
-State 42
-
-   44 temp: QUOTE •
-
-    $default  reduce using rule 44 (temp)
-
-
-State 43
-
-   45 temp: GT •
-
-    $default  reduce using rule 45 (temp)
-
-
-State 44
-
-   46 temp: LT •
-
-    $default  reduce using rule 46 (temp)
-
-
-State 45
-
-   47 temp: EQ •
-
-    $default  reduce using rule 47 (temp)
-
-
-State 46
-
-   48 temp: NE •
-
-    $default  reduce using rule 48 (temp)
-
-
-State 47
-
-   49 temp: INC •
-
-    $default  reduce using rule 49 (temp)
-
-
-State 48
-
-   50 temp: DEC •
-
-    $default  reduce using rule 50 (temp)
-
-
-State 49
-
-   51 temp: ASSIGN •
-
-    $default  reduce using rule 51 (temp)
-
-
-State 50
-
-   52 temp: LE •
-
-    $default  reduce using rule 52 (temp)
-
-
-State 51
-
-   53 temp: GE •
-
-    $default  reduce using rule 53 (temp)
-
-
-State 52
-
-   54 temp: INT_NUM •
-
-    $default  reduce using rule 54 (temp)
-
-
-State 53
-
-   55 temp: DOUBLE_NUM •
-
-    $default  reduce using rule 55 (temp)
-
-
-State 54
-
-   56 temp: ARITH_OP •
-
-    $default  reduce using rule 56 (temp)
-
-
-State 55
-
-   57 temp: ACCESS_OP1 •
-
-    $default  reduce using rule 57 (temp)
-
-
-State 56
-
-   58 temp: ACCESS_OP2 •
-
-    $default  reduce using rule 58 (temp)
-
-
-State 57
-
-   59 temp: INN_PROD •
-
-    $default  reduce using rule 59 (temp)
-
-
-State 58
-
-   60 temp: OPEN_CIR_PAR •
-
-    $default  reduce using rule 60 (temp)
-
-
-State 59
-
-   61 temp: CLOSE_CIR_PAR •
-
-    $default  reduce using rule 61 (temp)
-
-
-State 60
-
-   62 temp: OPEN_CURLY_PAR •
-
-    $default  reduce using rule 62 (temp)
-
-
-State 61
-
-   63 temp: CLOSE_CURLY_PAR •
-
-    $default  reduce using rule 63 (temp)
-
-
-State 62
-
-   64 temp: OPEN_SQUARE_PAR •
-
-    $default  reduce using rule 64 (temp)
-
-
-State 63
-
-   65 temp: CLOSE_SQUARE_PAR •
-
-    $default  reduce using rule 65 (temp)
-
-
-State 64
-
-    0 $accept: S • $end
-
-    $end  shift, and go to state 66
-
-
-State 65
-
-    1 S: temp • S
+    4 stmts: OPEN_CIR_PAR • stmts CLOSE_CIR_PAR
 
     ITER              shift, and go to state 1
     UNTIL             shift, and go to state 2
     RETURN            shift, and go to state 3
-    REM               shift, and go to state 4
-    NEQ               shift, and go to state 5
-    OR                shift, and go to state 6
-    NEG               shift, and go to state 7
-    AND               shift, and go to state 8
-    INT               shift, and go to state 9
-    CINT              shift, and go to state 10
-    DOUBLE            shift, and go to state 11
-    CDOUBLE           shift, and go to state 12
-    STR               shift, and go to state 13
-    BIN               shift, and go to state 14
-    REAL              shift, and go to state 15
-    IMG               shift, and go to state 16
-    POW               shift, and go to state 17
-    POLAR             shift, and go to state 18
-    CONJUGATE         shift, and go to state 19
-    MOD               shift, and go to state 20
-    ARG               shift, and go to state 21
-    ANGLE             shift, and go to state 22
-    DIST              shift, and go to state 23
-    CPRINT            shift, and go to state 24
-    ROTATE            shift, and go to state 25
-    CHOICE            shift, and go to state 26
-    ALT               shift, and go to state 27
-    DEFAULT           shift, and go to state 28
-    GET_LINE          shift, and go to state 29
-    IS_TRIANGLE       shift, and go to state 30
-    GET_CENTROID      shift, and go to state 31
-    GET_CIRCUMCENTER  shift, and go to state 32
-    GET_ORTHOCENTER   shift, and go to state 33
-    GET_INCENTER      shift, and go to state 34
-    GET_EXCENTER      shift, and go to state 35
-    GET_AREA          shift, and go to state 36
-    GET_PERIMETER     shift, and go to state 37
-    ID                shift, and go to state 38
-    SEMICOL           shift, and go to state 39
-    COMMA             shift, and go to state 40
-    COLON             shift, and go to state 41
-    QUOTE             shift, and go to state 42
-    GT                shift, and go to state 43
-    LT                shift, and go to state 44
-    EQ                shift, and go to state 45
-    NE                shift, and go to state 46
-    INC               shift, and go to state 47
-    DEC               shift, and go to state 48
-    ASSIGN            shift, and go to state 49
-    LE                shift, and go to state 50
-    GE                shift, and go to state 51
-    INT_NUM           shift, and go to state 52
-    DOUBLE_NUM        shift, and go to state 53
-    ARITH_OP          shift, and go to state 54
-    ACCESS_OP1        shift, and go to state 55
-    ACCESS_OP2        shift, and go to state 56
-    INN_PROD          shift, and go to state 57
-    OPEN_CIR_PAR      shift, and go to state 58
-    CLOSE_CIR_PAR     shift, and go to state 59
-    OPEN_CURLY_PAR    shift, and go to state 60
-    CLOSE_CURLY_PAR   shift, and go to state 61
-    OPEN_SQUARE_PAR   shift, and go to state 62
-    CLOSE_SQUARE_PAR  shift, and go to state 63
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    CHOICE            shift, and go to state 15
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 23
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 25
+    OPEN_CIR_PAR      shift, and go to state 26
 
-    $default  reduce using rule 2 (S)
+    $default  reduce using rule 3 (stmts)
 
-    S     go to state 67
-    temp  go to state 65
+    stmts          go to state 51
+    stmt_types     go to state 29
+    if_stmt        go to state 30
+    for_stmt       go to state 31
+    while_stmt     go to state 32
+    decl_stmt      go to state 33
+    void_fn_calls  go to state 34
+    assign_stmt    go to state 35
+    return_stmt    go to state 36
+    fn_call        go to state 37
+    fn_type        go to state 38
+    inbuilt_fn     go to state 39
 
 
-State 66
+State 27
 
-    0 $accept: S $end •
+    0 $accept: program • $end
+
+    $end  shift, and go to state 52
+
+
+State 28
+
+    1 program: stmts •
+
+    $default  reduce using rule 1 (program)
+
+
+State 29
+
+    2 stmts: stmt_types • stmts
+
+    ITER              shift, and go to state 1
+    UNTIL             shift, and go to state 2
+    RETURN            shift, and go to state 3
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    CHOICE            shift, and go to state 15
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 23
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 25
+    OPEN_CIR_PAR      shift, and go to state 26
+
+    $default  reduce using rule 3 (stmts)
+
+    stmts          go to state 53
+    stmt_types     go to state 29
+    if_stmt        go to state 30
+    for_stmt       go to state 31
+    while_stmt     go to state 32
+    decl_stmt      go to state 33
+    void_fn_calls  go to state 34
+    assign_stmt    go to state 35
+    return_stmt    go to state 36
+    fn_call        go to state 37
+    fn_type        go to state 38
+    inbuilt_fn     go to state 39
+
+
+State 30
+
+    7 stmt_types: if_stmt •
+
+    $default  reduce using rule 7 (stmt_types)
+
+
+State 31
+
+    8 stmt_types: for_stmt •
+
+    $default  reduce using rule 8 (stmt_types)
+
+
+State 32
+
+    9 stmt_types: while_stmt •
+
+    $default  reduce using rule 9 (stmt_types)
+
+
+State 33
+
+    6 stmt_types: decl_stmt • SEMICOL
+
+    SEMICOL  shift, and go to state 54
+
+
+State 34
+
+   11 stmt_types: void_fn_calls • SEMICOL
+
+    SEMICOL  shift, and go to state 55
+
+
+State 35
+
+    5 stmt_types: assign_stmt • SEMICOL
+
+    SEMICOL  shift, and go to state 56
+
+
+State 36
+
+   10 stmt_types: return_stmt • SEMICOL
+
+    SEMICOL  shift, and go to state 57
+
+
+State 37
+
+   19 void_fn_calls: fn_call •
+
+    $default  reduce using rule 19 (void_fn_calls)
+
+
+State 38
+
+   46 fn_call: fn_type • OPEN_CIR_PAR fn_args CLOSE_CIR_PAR
+
+    OPEN_CIR_PAR  shift, and go to state 58
+
+
+State 39
+
+   51 fn_type: inbuilt_fn •
+
+    $default  reduce using rule 51 (fn_type)
+
+
+State 40
+
+   30 predicate: NEG • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 59
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 41
+
+   70 inbuilt_fn: GET_AREA •
+
+    $default  reduce using rule 70 (inbuilt_fn)
+
+
+State 42
+
+   34 exp_rhs: ID •
+   38        | ID • INC
+   39        | ID • DEC
+   44        | ID • OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR
+   50 fn_type: ID •
+
+    INC              shift, and go to state 60
+    DEC              shift, and go to state 61
+    OPEN_SQUARE_PAR  shift, and go to state 62
+
+    OPEN_CIR_PAR  reduce using rule 50 (fn_type)
+    $default      reduce using rule 34 (exp_rhs)
+
+
+State 43
+
+   35 exp_rhs: INT_NUM •
+   40        | INT_NUM • INC
+   41        | INT_NUM • DEC
+
+    INC  shift, and go to state 63
+    DEC  shift, and go to state 64
+
+    $default  reduce using rule 35 (exp_rhs)
+
+
+State 44
+
+   36 exp_rhs: DOUBLE_NUM •
+   42        | DOUBLE_NUM • INC
+   43        | DOUBLE_NUM • DEC
+
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+
+    $default  reduce using rule 36 (exp_rhs)
+
+
+State 45
+
+   31 exp_rhs: OPEN_CIR_PAR • exp_rhs CLOSE_CIR_PAR
+   45        | OPEN_CIR_PAR • exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 67
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 46
+
+   33 exp_rhs: predicate •
+
+    $default  reduce using rule 33 (exp_rhs)
+
+
+State 47
+
+   21 return_stmt: RETURN exp_rhs •
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR        shift, and go to state 68
+    AND       shift, and go to state 69
+    GT        shift, and go to state 70
+    LT        shift, and go to state 71
+    EQ        shift, and go to state 72
+    NE        shift, and go to state 73
+    LE        shift, and go to state 74
+    GE        shift, and go to state 75
+    ARITH_OP  shift, and go to state 76
+
+    $default  reduce using rule 21 (return_stmt)
+
+
+State 48
+
+   37 exp_rhs: fn_call •
+
+    $default  reduce using rule 37 (exp_rhs)
+
+
+State 49
+
+   12 if_stmt: CHOICE OPEN_CIR_PAR • predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+   13        | CHOICE OPEN_CIR_PAR • predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 77
+    exp_rhs     go to state 78
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 50
+
+   20 assign_stmt: ID ASSIGN • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 79
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 51
+
+    4 stmts: OPEN_CIR_PAR stmts • CLOSE_CIR_PAR
+
+    CLOSE_CIR_PAR  shift, and go to state 80
+
+
+State 52
+
+    0 $accept: program $end •
 
     $default  accept
 
 
+State 53
+
+    2 stmts: stmt_types stmts •
+
+    $default  reduce using rule 2 (stmts)
+
+
+State 54
+
+    6 stmt_types: decl_stmt SEMICOL •
+
+    $default  reduce using rule 6 (stmt_types)
+
+
+State 55
+
+   11 stmt_types: void_fn_calls SEMICOL •
+
+    $default  reduce using rule 11 (stmt_types)
+
+
+State 56
+
+    5 stmt_types: assign_stmt SEMICOL •
+
+    $default  reduce using rule 5 (stmt_types)
+
+
+State 57
+
+   10 stmt_types: return_stmt SEMICOL •
+
+    $default  reduce using rule 10 (stmt_types)
+
+
+State 58
+
+   46 fn_call: fn_type OPEN_CIR_PAR • fn_args CLOSE_CIR_PAR
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    $default  reduce using rule 49 (fn_args)
+
+    predicate   go to state 46
+    exp_rhs     go to state 81
+    fn_call     go to state 48
+    fn_args     go to state 82
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 59
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   30          | NEG exp_rhs •
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    $default  reduce using rule 30 (predicate)
+
+
+State 60
+
+   38 exp_rhs: ID INC •
+
+    $default  reduce using rule 38 (exp_rhs)
+
+
+State 61
+
+   39 exp_rhs: ID DEC •
+
+    $default  reduce using rule 39 (exp_rhs)
+
+
+State 62
+
+   44 exp_rhs: ID OPEN_SQUARE_PAR • exp_rhs CLOSE_SQUARE_PAR
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 83
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 63
+
+   40 exp_rhs: INT_NUM INC •
+
+    $default  reduce using rule 40 (exp_rhs)
+
+
+State 64
+
+   41 exp_rhs: INT_NUM DEC •
+
+    $default  reduce using rule 41 (exp_rhs)
+
+
+State 65
+
+   42 exp_rhs: DOUBLE_NUM INC •
+
+    $default  reduce using rule 42 (exp_rhs)
+
+
+State 66
+
+   43 exp_rhs: DOUBLE_NUM DEC •
+
+    $default  reduce using rule 43 (exp_rhs)
+
+
 State 67
 
-    1 S: temp S •
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   31 exp_rhs: OPEN_CIR_PAR exp_rhs • CLOSE_CIR_PAR
+   32        | exp_rhs • ARITH_OP exp_rhs
+   45        | OPEN_CIR_PAR exp_rhs • COMMA exp_rhs CLOSE_CIR_PAR
 
-    $default  reduce using rule 1 (S)
+    OR             shift, and go to state 68
+    AND            shift, and go to state 69
+    COMMA          shift, and go to state 84
+    GT             shift, and go to state 70
+    LT             shift, and go to state 71
+    EQ             shift, and go to state 72
+    NE             shift, and go to state 73
+    LE             shift, and go to state 74
+    GE             shift, and go to state 75
+    ARITH_OP       shift, and go to state 76
+    CLOSE_CIR_PAR  shift, and go to state 85
+
+
+State 68
+
+   29 predicate: exp_rhs OR • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 86
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 69
+
+   28 predicate: exp_rhs AND • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 87
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 70
+
+   22 predicate: exp_rhs GT • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 88
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 71
+
+   23 predicate: exp_rhs LT • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 89
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 72
+
+   24 predicate: exp_rhs EQ • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 90
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 73
+
+   25 predicate: exp_rhs NE • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 91
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 74
+
+   27 predicate: exp_rhs LE • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 92
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 75
+
+   26 predicate: exp_rhs GE • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 93
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 76
+
+   32 exp_rhs: exp_rhs ARITH_OP • exp_rhs
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 94
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 77
+
+   12 if_stmt: CHOICE OPEN_CIR_PAR predicate • CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+   13        | CHOICE OPEN_CIR_PAR predicate • CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+   33 exp_rhs: predicate •
+
+    CLOSE_CIR_PAR  shift, and go to state 95
+
+    $default  reduce using rule 33 (exp_rhs)
+
+
+State 78
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR        shift, and go to state 68
+    AND       shift, and go to state 69
+    GT        shift, and go to state 70
+    LT        shift, and go to state 71
+    EQ        shift, and go to state 72
+    NE        shift, and go to state 73
+    LE        shift, and go to state 74
+    GE        shift, and go to state 75
+    ARITH_OP  shift, and go to state 76
+
+
+State 79
+
+   20 assign_stmt: ID ASSIGN exp_rhs •
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR        shift, and go to state 68
+    AND       shift, and go to state 69
+    GT        shift, and go to state 70
+    LT        shift, and go to state 71
+    EQ        shift, and go to state 72
+    NE        shift, and go to state 73
+    LE        shift, and go to state 74
+    GE        shift, and go to state 75
+    ARITH_OP  shift, and go to state 76
+
+    $default  reduce using rule 20 (assign_stmt)
+
+
+State 80
+
+    4 stmts: OPEN_CIR_PAR stmts CLOSE_CIR_PAR •
+
+    $default  reduce using rule 4 (stmts)
+
+
+State 81
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+   47 fn_args: exp_rhs • COMMA fn_args
+   48        | exp_rhs •
+
+    OR        shift, and go to state 68
+    AND       shift, and go to state 69
+    COMMA     shift, and go to state 96
+    GT        shift, and go to state 70
+    LT        shift, and go to state 71
+    EQ        shift, and go to state 72
+    NE        shift, and go to state 73
+    LE        shift, and go to state 74
+    GE        shift, and go to state 75
+    ARITH_OP  shift, and go to state 76
+
+    $default  reduce using rule 48 (fn_args)
+
+
+State 82
+
+   46 fn_call: fn_type OPEN_CIR_PAR fn_args • CLOSE_CIR_PAR
+
+    CLOSE_CIR_PAR  shift, and go to state 97
+
+
+State 83
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+   44        | ID OPEN_SQUARE_PAR exp_rhs • CLOSE_SQUARE_PAR
+
+    OR                shift, and go to state 68
+    AND               shift, and go to state 69
+    GT                shift, and go to state 70
+    LT                shift, and go to state 71
+    EQ                shift, and go to state 72
+    NE                shift, and go to state 73
+    LE                shift, and go to state 74
+    GE                shift, and go to state 75
+    ARITH_OP          shift, and go to state 76
+    CLOSE_SQUARE_PAR  shift, and go to state 98
+
+
+State 84
+
+   45 exp_rhs: OPEN_CIR_PAR exp_rhs COMMA • exp_rhs CLOSE_CIR_PAR
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 46
+    exp_rhs     go to state 99
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 85
+
+   31 exp_rhs: OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR •
+
+    $default  reduce using rule 31 (exp_rhs)
+
+
+State 86
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   29          | exp_rhs OR exp_rhs •
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    $default  reduce using rule 29 (predicate)
+
+
+State 87
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   28          | exp_rhs AND exp_rhs •
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR  shift, and go to state 68
+
+    $default  reduce using rule 28 (predicate)
+
+
+State 88
+
+   22 predicate: exp_rhs • GT exp_rhs
+   22          | exp_rhs GT exp_rhs •
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR   shift, and go to state 68
+    AND  shift, and go to state 69
+    LT   shift, and go to state 71
+    EQ   shift, and go to state 72
+    NE   shift, and go to state 73
+    LE   shift, and go to state 74
+    GE   shift, and go to state 75
+
+    $default  reduce using rule 22 (predicate)
+
+
+State 89
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   23          | exp_rhs LT exp_rhs •
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR   shift, and go to state 68
+    AND  shift, and go to state 69
+    EQ   shift, and go to state 72
+    NE   shift, and go to state 73
+    LE   shift, and go to state 74
+    GE   shift, and go to state 75
+
+    $default  reduce using rule 23 (predicate)
+
+
+State 90
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   24          | exp_rhs EQ exp_rhs •
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR   shift, and go to state 68
+    AND  shift, and go to state 69
+    NE   shift, and go to state 73
+    LE   shift, and go to state 74
+    GE   shift, and go to state 75
+
+    $default  reduce using rule 24 (predicate)
+
+
+State 91
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   25          | exp_rhs NE exp_rhs •
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR   shift, and go to state 68
+    AND  shift, and go to state 69
+    LE   shift, and go to state 74
+    GE   shift, and go to state 75
+
+    $default  reduce using rule 25 (predicate)
+
+
+State 92
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   27          | exp_rhs LE exp_rhs •
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR   shift, and go to state 68
+    AND  shift, and go to state 69
+
+    $default  reduce using rule 27 (predicate)
+
+
+State 93
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   26          | exp_rhs GE exp_rhs •
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+
+    OR   shift, and go to state 68
+    AND  shift, and go to state 69
+    LE   shift, and go to state 74
+
+    $default  reduce using rule 26 (predicate)
+
+
+State 94
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+   32        | exp_rhs ARITH_OP exp_rhs •
+
+    OR   shift, and go to state 68
+    AND  shift, and go to state 69
+    GT   shift, and go to state 70
+    LT   shift, and go to state 71
+    EQ   shift, and go to state 72
+    NE   shift, and go to state 73
+    LE   shift, and go to state 74
+    GE   shift, and go to state 75
+
+    $default  reduce using rule 32 (exp_rhs)
+
+
+State 95
+
+   12 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR • OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+   13        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR • OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+
+    OPEN_CURLY_PAR  shift, and go to state 100
+
+
+State 96
+
+   47 fn_args: exp_rhs COMMA • fn_args
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    $default  reduce using rule 49 (fn_args)
+
+    predicate   go to state 46
+    exp_rhs     go to state 81
+    fn_call     go to state 48
+    fn_args     go to state 101
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 97
+
+   46 fn_call: fn_type OPEN_CIR_PAR fn_args CLOSE_CIR_PAR •
+
+    $default  reduce using rule 46 (fn_call)
+
+
+State 98
+
+   44 exp_rhs: ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR •
+
+    $default  reduce using rule 44 (exp_rhs)
+
+
+State 99
+
+   22 predicate: exp_rhs • GT exp_rhs
+   23          | exp_rhs • LT exp_rhs
+   24          | exp_rhs • EQ exp_rhs
+   25          | exp_rhs • NE exp_rhs
+   26          | exp_rhs • GE exp_rhs
+   27          | exp_rhs • LE exp_rhs
+   28          | exp_rhs • AND exp_rhs
+   29          | exp_rhs • OR exp_rhs
+   32 exp_rhs: exp_rhs • ARITH_OP exp_rhs
+   45        | OPEN_CIR_PAR exp_rhs COMMA exp_rhs • CLOSE_CIR_PAR
+
+    OR             shift, and go to state 68
+    AND            shift, and go to state 69
+    GT             shift, and go to state 70
+    LT             shift, and go to state 71
+    EQ             shift, and go to state 72
+    NE             shift, and go to state 73
+    LE             shift, and go to state 74
+    GE             shift, and go to state 75
+    ARITH_OP       shift, and go to state 76
+    CLOSE_CIR_PAR  shift, and go to state 102
+
+
+State 100
+
+   12 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR • stmt_types CLOSE_CURLY_PAR elif_stmt
+   13        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR • stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+
+    ITER              shift, and go to state 1
+    UNTIL             shift, and go to state 2
+    RETURN            shift, and go to state 3
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    CHOICE            shift, and go to state 15
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 23
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 25
+
+    stmt_types     go to state 103
+    if_stmt        go to state 30
+    for_stmt       go to state 31
+    while_stmt     go to state 32
+    decl_stmt      go to state 33
+    void_fn_calls  go to state 34
+    assign_stmt    go to state 35
+    return_stmt    go to state 36
+    fn_call        go to state 37
+    fn_type        go to state 38
+    inbuilt_fn     go to state 39
+
+
+State 101
+
+   47 fn_args: exp_rhs COMMA fn_args •
+
+    $default  reduce using rule 47 (fn_args)
+
+
+State 102
+
+   45 exp_rhs: OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR •
+
+    $default  reduce using rule 45 (exp_rhs)
+
+
+State 103
+
+   12 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types • CLOSE_CURLY_PAR elif_stmt
+   13        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types • CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+
+    CLOSE_CURLY_PAR  shift, and go to state 104
+
+
+State 104
+
+   12 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR • elif_stmt
+   13        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR • elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+
+    ALT  shift, and go to state 105
+
+    $default  reduce using rule 15 (elif_stmt)
+
+    elif_stmt  go to state 106
+
+
+State 105
+
+   14 elif_stmt: ALT • OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+
+    OPEN_CIR_PAR  shift, and go to state 107
+
+
+State 106
+
+   12 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt •
+   13        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt • DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+
+    DEFAULT  shift, and go to state 108
+
+    $default  reduce using rule 12 (if_stmt)
+
+
+State 107
+
+   14 elif_stmt: ALT OPEN_CIR_PAR • predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+
+    NEG               shift, and go to state 40
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 41
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 42
+    INT_NUM           shift, and go to state 43
+    DOUBLE_NUM        shift, and go to state 44
+    OPEN_CIR_PAR      shift, and go to state 45
+
+    predicate   go to state 109
+    exp_rhs     go to state 78
+    fn_call     go to state 48
+    fn_type     go to state 38
+    inbuilt_fn  go to state 39
+
+
+State 108
+
+   13 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT • OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+
+    OPEN_CURLY_PAR  shift, and go to state 110
+
+
+State 109
+
+   14 elif_stmt: ALT OPEN_CIR_PAR predicate • CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+   33 exp_rhs: predicate •
+
+    CLOSE_CIR_PAR  shift, and go to state 111
+
+    $default  reduce using rule 33 (exp_rhs)
+
+
+State 110
+
+   13 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR • stmt_types CLOSE_CURLY_PAR
+
+    ITER              shift, and go to state 1
+    UNTIL             shift, and go to state 2
+    RETURN            shift, and go to state 3
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    CHOICE            shift, and go to state 15
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 23
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 25
+
+    stmt_types     go to state 112
+    if_stmt        go to state 30
+    for_stmt       go to state 31
+    while_stmt     go to state 32
+    decl_stmt      go to state 33
+    void_fn_calls  go to state 34
+    assign_stmt    go to state 35
+    return_stmt    go to state 36
+    fn_call        go to state 37
+    fn_type        go to state 38
+    inbuilt_fn     go to state 39
+
+
+State 111
+
+   14 elif_stmt: ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR • OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+
+    OPEN_CURLY_PAR  shift, and go to state 113
+
+
+State 112
+
+   13 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types • CLOSE_CURLY_PAR
+
+    CLOSE_CURLY_PAR  shift, and go to state 114
+
+
+State 113
+
+   14 elif_stmt: ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR • stmt_types CLOSE_CURLY_PAR elif_stmt
+
+    ITER              shift, and go to state 1
+    UNTIL             shift, and go to state 2
+    RETURN            shift, and go to state 3
+    REAL              shift, and go to state 4
+    IMG               shift, and go to state 5
+    POW               shift, and go to state 6
+    POLAR             shift, and go to state 7
+    CONJUGATE         shift, and go to state 8
+    MOD               shift, and go to state 9
+    ARG               shift, and go to state 10
+    ANGLE             shift, and go to state 11
+    DIST              shift, and go to state 12
+    CPRINT            shift, and go to state 13
+    ROTATE            shift, and go to state 14
+    CHOICE            shift, and go to state 15
+    GET_LINE          shift, and go to state 16
+    IS_TRIANGLE       shift, and go to state 17
+    GET_CENTROID      shift, and go to state 18
+    GET_CIRCUMCENTER  shift, and go to state 19
+    GET_ORTHOCENTER   shift, and go to state 20
+    GET_INCENTER      shift, and go to state 21
+    GET_EXCENTER      shift, and go to state 22
+    GET_AREA          shift, and go to state 23
+    GET_PERIMETER     shift, and go to state 24
+    ID                shift, and go to state 25
+
+    stmt_types     go to state 115
+    if_stmt        go to state 30
+    for_stmt       go to state 31
+    while_stmt     go to state 32
+    decl_stmt      go to state 33
+    void_fn_calls  go to state 34
+    assign_stmt    go to state 35
+    return_stmt    go to state 36
+    fn_call        go to state 37
+    fn_type        go to state 38
+    inbuilt_fn     go to state 39
+
+
+State 114
+
+   13 if_stmt: CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR •
+
+    $default  reduce using rule 13 (if_stmt)
+
+
+State 115
+
+   14 elif_stmt: ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types • CLOSE_CURLY_PAR elif_stmt
+
+    CLOSE_CURLY_PAR  shift, and go to state 116
+
+
+State 116
+
+   14 elif_stmt: ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR • elif_stmt
+
+    ALT  shift, and go to state 105
+
+    $default  reduce using rule 15 (elif_stmt)
+
+    elif_stmt  go to state 117
+
+
+State 117
+
+   14 elif_stmt: ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt •
+
+    $default  reduce using rule 14 (elif_stmt)

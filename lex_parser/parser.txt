@@ -1,20 +1,6 @@
-main  :  {
-     a(3,4);
-     b(5,5),c(-101,100);
-     centroid;
+choice(a eq b){
     centriod = (a,b,c);
-    (centroid);
-    circumcente= (a,b,c);
-    (circumcenter);
-    orthocenter = (a,b,c);
-    (orthocenter);
-     ((centriod,circumcenter) eq (orthocenter,centroid)*2){
-        (1); 
-    }
-     {
-        (-1);
-    }
-    
-    
-     0;
+}
+alt (a eq c) {
+    centriod = (1, 5);
 }
