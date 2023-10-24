@@ -21,4 +21,34 @@ eqID: c
 punctuation: ,
 int: 5
 )punctuation: ;
+}reserved keyword: alt
+(ID: q
+eqID: c
+){ID: centriod
+=reserved keyword: get_centroid
+(int: 1
+punctuation: ,
+int: 5
+)punctuation: ;
+}reserved keyword: default
+{ID: centriod
+=reserved keyword: get_centroid
+(int: 1
+punctuation: ,
+int: 5
+)punctuation: ;
+}ID: my_centroid
+reserved keyword: cdouble
+punctuation: :
+reserved keyword: int
+ID: x
+{ID: centroid
+=(ID: c1
++ID: c2
++ID: c3
+)/int: 3
+punctuation: ;
+reserved keyword: return
+int: 10
+punctuation: ;
 }

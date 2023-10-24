@@ -4,3 +4,14 @@ choice(a eq b){
 alt (a eq c) {
     centriod = (1, 5);
 }
+alt (q eq c) {
+    centriod = (1, 5);
+}
+default {
+    centriod = (1, 5);
+}
+
+my_centroid  :  x {
+centroid = (c1+c2+c3)/3;
+ 10;
+}

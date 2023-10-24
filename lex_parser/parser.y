@@ -152,11 +152,11 @@ int ret_no;
 program : stmts {printf("Hello world\n");}
         ;
 stmts : stmt_types stmts
+      | func_stmt stmts
       | /* Epsilon */
-      | OPEN_CIR_PAR stmts CLOSE_CIR_PAR
       ;
 stmt_types : assign_stmt SEMICOL 
-           | decl_stmt SEMICOL
+           | decl_stmt
            | if_stmt 
            | for_stmt 
            | while_stmt 
@@ -164,12 +164,18 @@ stmt_types : assign_stmt SEMICOL
            | void_fn_calls SEMICOL
            ;
 
-if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
-        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR
+func_stmt : ID data_type COLON decl_stmt OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+
+data_type : INT | CINT | DOUBLE | CDOUBLE
+          ;
+
+/* if statement syntax */
+if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt
+        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
         // | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
         ;
-
-elif_stmt : ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+/* special case of else if statements */
+elif_stmt : ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt
           | /* Epsilon */
           ;
 
@@ -177,7 +183,7 @@ for_stmt: ITER
         ;
 while_stmt: UNTIL
           ;
-decl_stmt : GET_AREA { printf("Hello world 11\n"); }
+decl_stmt : INT ID { printf("Hello world 11\n"); }
           ;
 void_fn_calls : fn_call
               ;
