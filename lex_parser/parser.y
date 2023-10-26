@@ -214,9 +214,9 @@ fn_type: ID
        ;
 
 
-ITER:iter OPEN_CIR_PAR decl_stmt SEMICOL predicate SEMICOL exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+iter:ITER OPEN_CIR_PAR decl_stmt SEMICOL predicate SEMICOL exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
     ;
-UNTIL:until OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+until:UNTIL OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
      ;
 
 inbuilt_fn : real_fn
