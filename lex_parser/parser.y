@@ -239,7 +239,7 @@ inbuilt_fn : real_fn
            | get_excenter_fn
            | get_area_fn
            | get_perimeter_fn
-           //| show_fn
+//         | show_fn
           ;
 
 real_fn : REAL OPEN_CIR_PAR c_return CLOSE_CIR_PAR
