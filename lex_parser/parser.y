@@ -165,9 +165,9 @@ stmt_types : assign_stmt SEMICOL
            ;
 if_stmt : CHOICE
         ;
-for_stmt: ITER
+for_stmt: iter
         ;
-while_stmt: UNTIL
+while_stmt: until
           ;
 decl_stmt : GET_AREA {/*Note above 4 are wrtitten for testing only*/}
           ;
@@ -204,13 +204,13 @@ exp_rhs : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
         | OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR {/*This is doubt for a=(3,3) type*/}
         ;
 fn_call : fn_type OPEN_CIR_PAR fn_args CLOSE_CIR_PAR
+        | inbuilt_fn
         ;
 fn_args : exp_rhs COMMA fn_args
         | exp_rhs
         | /* Epsilon */
         ;
 fn_type: ID
-       | inbuilt_fn
        ;
 
 
@@ -241,45 +241,45 @@ inbuilt_fn : real_fn
            | get_perimeter_fn
           ;
 
-real_fn : REAL OPEN_CIR_PAR c_return CLOSE_CIR_PAR
+real_fn : REAL OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
      ;
-img_fn : IMG OPEN_CIR_PAR c_return CLOSE_CIR_PAR
+img_fn : IMG OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
     ;
-pow_fn : POW OPEN_CIR_PAR c_return COMMA c_return CLOSE_CIR_PAR
+pow_fn : POW OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
         ;
-polar_fn : POLAR OPEN_CIR_PAR c_return CLOSE_CIR_PAR
+polar_fn : POLAR OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
          ;
-conjugate_fn : CONJUGATE OPEN_CIR_PAR c_return CLOSE_CIR_PAR
+conjugate_fn : CONJUGATE OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
              ;
-mod_fn : MOD OPEN_CIR_PAR c_return CLOSE_CIR_PAR
+mod_fn : MOD OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
         ;
-arg_fn : ARG OPEN_CIR_PAR c_return CLOSE_CIR_PAR        
+arg_fn : ARG OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR        
        ;
-angle_fn : ANGLE OPEN_CIR_PAR c_return COMMA c_return CLOSE_CIR_PAR
+angle_fn : ANGLE OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
          ;
-dist_fn : DIST OPEN_CIR_PAR c_return COMMA c_return CLOSE_CIR_PAR 
+dist_fn : DIST OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
         ;
-cprint_fn : CPRINT OPEN_CIR_PAR c_return CLOSE_CIR_PAR
+cprint_fn : CPRINT OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
           ;
-rotate_fn : ROTATE OPEN_CIR_PAR c_return COMMA c_return COMMA exp_rhs CLOSE_CIR_PAR // doubt in this
+rotate_fn : ROTATE OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR // doubt in this
           ;
-get_line_fn : GET_LINE OPEN_CIR_PAR c_return COMMA c_return CLOSE_CIR_PAR// doubt in this
+get_line_fn : GET_LINE OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR // doubt in this
             ;
-is_triangle_fn : IS_TRIANGLE OPEN_CIR_PAR c_return COMMA c_return COMMA c_return CLOSE_CIR_PAR
+is_triangle_fn : IS_TRIANGLE OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
                ;
-get_centroid_fn : GET_CENTROID OPEN_CIR_PAR c_return COMMA c_return COMMA c_return CLOSE_CIR_PAR
+get_centroid_fn : GET_CENTROID OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
                 ;
-get_circumcenter_fn : GET_CIRCUMCENTER OPEN_CIR_PAR c_return COMMA c_return COMMA c_return CLOSE_CIR_PAR
+get_circumcenter_fn : GET_CIRCUMCENTER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
                     ;
-get_orthocenter_fn : GET_ORTHOCENTER OPEN_CIR_PAR c_return COMMA c_return COMMA c_return CLOSE_CIR_PAR 
+get_orthocenter_fn : GET_ORTHOCENTER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                    ;
-get_incenter_fn : GET_INCENTER OPEN_CIR_PAR c_return COMMA c_return COMMA c_return CLOSE_CIR_PAR 
+get_incenter_fn : GET_INCENTER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                 ;
-get_excenter_fn : GET_EXCENTER OPEN_CIR_PAR c_return COMMA c_return COMMA c_return CLOSE_CIR_PAR 
+get_excenter_fn : GET_EXCENTER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                 ;
-get_area_fn : GET_AREA OPEN_CIR_PAR c_return COMMA c_return COMMA c_return CLOSE_CIR_PAR 
+get_area_fn : GET_AREA OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
             ;
-get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR c_return COMMA c_return COMMA c_return CLOSE_CIR_PAR 
+get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                  ;
 // show_fn : SHOW OPEN_CIR_PAR show_arg CLOSE_CIR_PAR
 //         ;
@@ -287,18 +287,18 @@ get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR c_return COMMA c_return COMMA c_re
 //          | ID
 //          | INT_NUM
 //          | DOUBLE_NUM
-//          | c_return
+//          | exp_rhs
 
-c_return : ID
-         |pow_fn
-         |conjugate_fn
-         |rotate_fn
-         |get_centroid_fn
-         |get_circumcenter_fn
-         |get_orthocenter_fn
-         |get_incenter_fn
-         |get_excenter_fn
-         ;
+// exp_rhs : exp_rhs
+        //  |pow_fn
+        //  |conjugate_fn
+        //  |rotate_fn
+        //  |get_centroid_fn
+        //  |get_circumcenter_fn
+        //  |get_orthocenter_fn
+        //  |get_incenter_fn
+        //  |get_excenter_fn
+        //  ;
 
 
 %%
@@ -317,7 +317,7 @@ int main()
   ret_no=0;
   arr=(char *)calloc(1000,sizeof(char));
   int t;
-  printf("Enter test case number: ");
+//   printf("Enter test case number: ");
   // scanf("%d",&t);
   char input_file[100];
   char token_file[100];
@@ -333,7 +333,7 @@ int main()
       printf("Error opening file s\n");
       return 0;
   }
-  fprintf(token_fp,"Name: Yoligi Govinda Rohith\nID: CS21BTECH11062\nInput file: public_test_%d.clike\n",t);
+//   fprintf(token_fp,"Name: Yoligi Govinda Rohith\nID: CS21BTECH11062\nInput file: public_test_%d.clike\n",t);
   yyparse();
 //   printf("Syntactically correct!\n");
   fclose(token_fp);
