@@ -14,7 +14,8 @@ digit [0-9]
 id {letter}({letter}|{digit}|"_")*
 int_num -?{digit}+
 
-double_num -?{digit}+(\.{digit}+) 
+double_num -?{digit}+(\.{digit}+)
+string \"([^\\\n]|(\\.))*?\" 
 
 %%
 "//".* {/*To address comments*/}
@@ -311,6 +312,12 @@ double_num -?{digit}+(\.{digit}+)
     fprintf(token_fp,"double: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
     return DOUBLE_NUM;
+    }
+{string} {
+    //to print string
+    fprintf(token_fp,"string: %s\n",yytext);
+    fprintf(parsed_fp,"%s",yytext);
+    return STRING;
     }
 
 ";" {//Punctuations
