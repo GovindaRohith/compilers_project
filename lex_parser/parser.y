@@ -281,24 +281,7 @@ get_area_fn : GET_AREA OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CI
             ;
 get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                  ;
-// show_fn : SHOW OPEN_CIR_PAR show_arg CLOSE_CIR_PAR
-//         ;
-// show_arg : STRING
-//          | ID
-//          | INT_NUM
-//          | DOUBLE_NUM
-//          | exp_rhs
 
-// exp_rhs : exp_rhs
-        //  |pow_fn
-        //  |conjugate_fn
-        //  |rotate_fn
-        //  |get_centroid_fn
-        //  |get_circumcenter_fn
-        //  |get_orthocenter_fn
-        //  |get_incenter_fn
-        //  |get_excenter_fn
-        //  ;
 
 
 %%
