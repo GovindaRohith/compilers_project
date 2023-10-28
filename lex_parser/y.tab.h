@@ -67,56 +67,57 @@ extern int yydebug;
     DOUBLE = 268,                  /* DOUBLE  */
     CDOUBLE = 269,                 /* CDOUBLE  */
     STR = 270,                     /* STR  */
-    BIN = 271,                     /* BIN  */
-    REAL = 272,                    /* REAL  */
-    IMG = 273,                     /* IMG  */
-    POW = 274,                     /* POW  */
-    POLAR = 275,                   /* POLAR  */
-    CONJUGATE = 276,               /* CONJUGATE  */
-    MOD = 277,                     /* MOD  */
-    ARG = 278,                     /* ARG  */
-    ANGLE = 279,                   /* ANGLE  */
-    DIST = 280,                    /* DIST  */
-    CPRINT = 281,                  /* CPRINT  */
-    ROTATE = 282,                  /* ROTATE  */
-    CHOICE = 283,                  /* CHOICE  */
-    ALT = 284,                     /* ALT  */
-    DEFAULT = 285,                 /* DEFAULT  */
-    GET_LINE = 286,                /* GET_LINE  */
-    IS_TRIANGLE = 287,             /* IS_TRIANGLE  */
-    GET_CENTROID = 288,            /* GET_CENTROID  */
-    GET_CIRCUMCENTER = 289,        /* GET_CIRCUMCENTER  */
-    GET_ORTHOCENTER = 290,         /* GET_ORTHOCENTER  */
-    GET_INCENTER = 291,            /* GET_INCENTER  */
-    GET_EXCENTER = 292,            /* GET_EXCENTER  */
-    GET_AREA = 293,                /* GET_AREA  */
-    GET_PERIMETER = 294,           /* GET_PERIMETER  */
-    ID = 295,                      /* ID  */
-    SEMICOL = 296,                 /* SEMICOL  */
-    COMMA = 297,                   /* COMMA  */
-    COLON = 298,                   /* COLON  */
-    QUOTE = 299,                   /* QUOTE  */
-    GT = 300,                      /* GT  */
-    LT = 301,                      /* LT  */
-    EQ = 302,                      /* EQ  */
-    NE = 303,                      /* NE  */
-    INC = 304,                     /* INC  */
-    DEC = 305,                     /* DEC  */
-    ASSIGN = 306,                  /* ASSIGN  */
-    LE = 307,                      /* LE  */
-    GE = 308,                      /* GE  */
-    INT_NUM = 309,                 /* INT_NUM  */
-    DOUBLE_NUM = 310,              /* DOUBLE_NUM  */
-    ARITH_OP = 311,                /* ARITH_OP  */
-    ACCESS_OP1 = 312,              /* ACCESS_OP1  */
-    ACCESS_OP2 = 313,              /* ACCESS_OP2  */
-    INN_PROD = 314,                /* INN_PROD  */
-    OPEN_CIR_PAR = 315,            /* OPEN_CIR_PAR  */
-    CLOSE_CIR_PAR = 316,           /* CLOSE_CIR_PAR  */
-    OPEN_CURLY_PAR = 317,          /* OPEN_CURLY_PAR  */
-    CLOSE_CURLY_PAR = 318,         /* CLOSE_CURLY_PAR  */
-    OPEN_SQUARE_PAR = 319,         /* OPEN_SQUARE_PAR  */
-    CLOSE_SQUARE_PAR = 320         /* CLOSE_SQUARE_PAR  */
+    STRING = 271,                  /* STRING  */
+    BIN = 272,                     /* BIN  */
+    REAL = 273,                    /* REAL  */
+    IMG = 274,                     /* IMG  */
+    POW = 275,                     /* POW  */
+    POLAR = 276,                   /* POLAR  */
+    CONJUGATE = 277,               /* CONJUGATE  */
+    MOD = 278,                     /* MOD  */
+    ARG = 279,                     /* ARG  */
+    ANGLE = 280,                   /* ANGLE  */
+    DIST = 281,                    /* DIST  */
+    CPRINT = 282,                  /* CPRINT  */
+    ROTATE = 283,                  /* ROTATE  */
+    CHOICE = 284,                  /* CHOICE  */
+    ALT = 285,                     /* ALT  */
+    DEFAULT = 286,                 /* DEFAULT  */
+    GET_LINE = 287,                /* GET_LINE  */
+    IS_TRIANGLE = 288,             /* IS_TRIANGLE  */
+    GET_CENTROID = 289,            /* GET_CENTROID  */
+    GET_CIRCUMCENTER = 290,        /* GET_CIRCUMCENTER  */
+    GET_ORTHOCENTER = 291,         /* GET_ORTHOCENTER  */
+    GET_INCENTER = 292,            /* GET_INCENTER  */
+    GET_EXCENTER = 293,            /* GET_EXCENTER  */
+    GET_AREA = 294,                /* GET_AREA  */
+    GET_PERIMETER = 295,           /* GET_PERIMETER  */
+    ID = 296,                      /* ID  */
+    SEMICOL = 297,                 /* SEMICOL  */
+    COMMA = 298,                   /* COMMA  */
+    COLON = 299,                   /* COLON  */
+    QUOTE = 300,                   /* QUOTE  */
+    GT = 301,                      /* GT  */
+    LT = 302,                      /* LT  */
+    EQ = 303,                      /* EQ  */
+    NE = 304,                      /* NE  */
+    INC = 305,                     /* INC  */
+    DEC = 306,                     /* DEC  */
+    ASSIGN = 307,                  /* ASSIGN  */
+    LE = 308,                      /* LE  */
+    GE = 309,                      /* GE  */
+    INT_NUM = 310,                 /* INT_NUM  */
+    DOUBLE_NUM = 311,              /* DOUBLE_NUM  */
+    ARITH_OP = 312,                /* ARITH_OP  */
+    ACCESS_OP1 = 313,              /* ACCESS_OP1  */
+    ACCESS_OP2 = 314,              /* ACCESS_OP2  */
+    INN_PROD = 315,                /* INN_PROD  */
+    OPEN_CIR_PAR = 316,            /* OPEN_CIR_PAR  */
+    CLOSE_CIR_PAR = 317,           /* CLOSE_CIR_PAR  */
+    OPEN_CURLY_PAR = 318,          /* OPEN_CURLY_PAR  */
+    CLOSE_CURLY_PAR = 319,         /* CLOSE_CURLY_PAR  */
+    OPEN_SQUARE_PAR = 320,         /* OPEN_SQUARE_PAR  */
+    CLOSE_SQUARE_PAR = 321         /* CLOSE_SQUARE_PAR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -138,56 +139,57 @@ extern int yydebug;
 #define DOUBLE 268
 #define CDOUBLE 269
 #define STR 270
-#define BIN 271
-#define REAL 272
-#define IMG 273
-#define POW 274
-#define POLAR 275
-#define CONJUGATE 276
-#define MOD 277
-#define ARG 278
-#define ANGLE 279
-#define DIST 280
-#define CPRINT 281
-#define ROTATE 282
-#define CHOICE 283
-#define ALT 284
-#define DEFAULT 285
-#define GET_LINE 286
-#define IS_TRIANGLE 287
-#define GET_CENTROID 288
-#define GET_CIRCUMCENTER 289
-#define GET_ORTHOCENTER 290
-#define GET_INCENTER 291
-#define GET_EXCENTER 292
-#define GET_AREA 293
-#define GET_PERIMETER 294
-#define ID 295
-#define SEMICOL 296
-#define COMMA 297
-#define COLON 298
-#define QUOTE 299
-#define GT 300
-#define LT 301
-#define EQ 302
-#define NE 303
-#define INC 304
-#define DEC 305
-#define ASSIGN 306
-#define LE 307
-#define GE 308
-#define INT_NUM 309
-#define DOUBLE_NUM 310
-#define ARITH_OP 311
-#define ACCESS_OP1 312
-#define ACCESS_OP2 313
-#define INN_PROD 314
-#define OPEN_CIR_PAR 315
-#define CLOSE_CIR_PAR 316
-#define OPEN_CURLY_PAR 317
-#define CLOSE_CURLY_PAR 318
-#define OPEN_SQUARE_PAR 319
-#define CLOSE_SQUARE_PAR 320
+#define STRING 271
+#define BIN 272
+#define REAL 273
+#define IMG 274
+#define POW 275
+#define POLAR 276
+#define CONJUGATE 277
+#define MOD 278
+#define ARG 279
+#define ANGLE 280
+#define DIST 281
+#define CPRINT 282
+#define ROTATE 283
+#define CHOICE 284
+#define ALT 285
+#define DEFAULT 286
+#define GET_LINE 287
+#define IS_TRIANGLE 288
+#define GET_CENTROID 289
+#define GET_CIRCUMCENTER 290
+#define GET_ORTHOCENTER 291
+#define GET_INCENTER 292
+#define GET_EXCENTER 293
+#define GET_AREA 294
+#define GET_PERIMETER 295
+#define ID 296
+#define SEMICOL 297
+#define COMMA 298
+#define COLON 299
+#define QUOTE 300
+#define GT 301
+#define LT 302
+#define EQ 303
+#define NE 304
+#define INC 305
+#define DEC 306
+#define ASSIGN 307
+#define LE 308
+#define GE 309
+#define INT_NUM 310
+#define DOUBLE_NUM 311
+#define ARITH_OP 312
+#define ACCESS_OP1 313
+#define ACCESS_OP2 314
+#define INN_PROD 315
+#define OPEN_CIR_PAR 316
+#define CLOSE_CIR_PAR 317
+#define OPEN_CURLY_PAR 318
+#define CLOSE_CURLY_PAR 319
+#define OPEN_SQUARE_PAR 320
+#define CLOSE_SQUARE_PAR 321
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

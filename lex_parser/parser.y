@@ -169,7 +169,7 @@ for_stmt: iter
         ;
 while_stmt: until
           ;
-decl_stmt : GET_AREA {/*Note above 4 are wrtitten for testing only*/}
+decl_stmt : var_decl {/*Note above 4 are wrtitten for testing only*/}
           ;
 void_fn_calls : fn_call
               ;
@@ -282,7 +282,66 @@ get_area_fn : GET_AREA OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CI
 get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                  ;
 
+var_decl : real_decl
+         | comp_decl
+         ;
+real_decl : INT int_part
+          | DOUBLE double_part
+          ;
+int_part : int_id_type
+         | int_id_type COMMA int_part
+         ;
+int_id_type : ID
+            | ID ASSIGN INT_NUM
+            | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+            | ID OPEN_CIR_PAR INT_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+            ;
+double_part : double_id_type
+            | double_id_type COMMA double_part
+            ;
+double_id_type : ID
+               | ID ASSIGN DOUBLE_NUM
+               | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+               | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+               ;
+comp_decl : CINT cint_part
+          | CDOUBLE cdouble_part
+          ;
+cint_part : cint_id_type
+          | cint_id_type COMMA cint_part
+          ;
+cint_id_type : ID
+             | ID OPEN_CIR_PAR INT_NUM CLOSE_CIR_PAR
+             | ID OPEN_CIR_PAR INT_NUM COMMA INT_NUM CLOSE_CIR_PAR
+             | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+             | ID OPEN_CIR_PAR INT_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+             | ID OPEN_CIR_PAR INT_NUM COMMA INT_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+             ;
+cdouble_part : cdouble_id_type
+            | cdouble_id_type COMMA cdouble_part
+            ;
+cdouble_id_type : ID 
+                | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR
+                | ID OPEN_CIR_PAR DOUBLE_NUM COMMA DOUBLE_NUM CLOSE_CIR_PAR
+                | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+                | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+                | ID OPEN_CIR_PAR DOUBLE_NUM COMMA DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+                ;
 
+/*for function*/
+//argument : T L
+//          ;
+//T : INT
+//  | CINT
+//  | DOUBLE
+//  | CDOUBLE
+//  ;
+//L : L_list
+//  | L_list COMMA L
+//  ;
+//L_list : ID
+//       | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+//       ;
 
 %%
 #include "lex.yy.c"

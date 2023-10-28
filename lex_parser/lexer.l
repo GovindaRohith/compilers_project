@@ -14,7 +14,7 @@ digit [0-9]
 id {letter}({letter}|{digit}|"_")*
 int_num -?{digit}+
 
-double_num -?{digit}+(\.{digit}+)
+double_num -?{digit}+(\.{digit}+)?
 string \"([^\\\n]|(\\.))*?\" 
 
 %%

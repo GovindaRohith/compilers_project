@@ -1,9 +1,5 @@
-    centriod = (a,b,c);
-    (centroid);
-    circumcente= ((a,b,c),(a,b,c),c);
-    (circumcenter);
-    orthocenter = (a,b,c);
-    (orthocenter);
-    
-    
-     0;
+ a(3,4);
+ b(5,5),c(-101,100)[9];
+ a,d[9], b = 3;
+ a, b[23], c = 45.9;
+ r(3.45, 5.67)[23];

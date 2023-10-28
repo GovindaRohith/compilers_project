@@ -1,9 +1,5 @@
-    centriod = get_centroid(a,b,c);
-    cprint(centroid);
-    circumcente= get_circumcenter(get_centroid(a,b,c),get_orthocenter(a,b,c),c);
-    cprint(circumcenter);
-    orthocenter = get_orthocenter(a,b,c);
-    cprint(orthocenter);
-    //circum centriod orthocenter
-    //      2        1
-    return 0;
+cint a(3,4);
+cint b(5,5),c(-101,100)[9];
+int a,d[9], b = 3;
+double a, b[23], c = 45.9;
+cdouble r(3.45, 5.67)[23];
