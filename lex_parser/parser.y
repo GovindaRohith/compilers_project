@@ -149,8 +149,8 @@ int ret_no;
 //         | OPEN_SQUARE_PAR
 //         | CLOSE_SQUARE_PAR
 //         ;
-program : stmts {printf("Hello world\n");}
-        | func_stmt program
+program : func_stmt program
+        | func_stmt
         ;
 
 stmts : stmt_types stmts
