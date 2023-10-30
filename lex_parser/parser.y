@@ -150,9 +150,10 @@ int ret_no;
 //         | CLOSE_SQUARE_PAR
 //         ;
 program : stmts {printf("Hello world\n");}
+        | func_stmt program
         ;
+
 stmts : stmt_types stmts
-      | func_stmt stmts
       | /* Epsilon */
       ;
 stmt_types : assign_stmt SEMICOL 
