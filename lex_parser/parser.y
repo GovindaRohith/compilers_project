@@ -164,7 +164,7 @@ stmt_types : assign_stmt SEMICOL
            | return_stmt SEMICOL  
            | void_fn_calls SEMICOL    
            ;
-func_stmt : ID data_type COLON argument OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR
+func_stmt : ID data_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR
 stmts1 : stmt_types stmts1
         | /* epsilon */
         ;
