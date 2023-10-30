@@ -234,8 +234,21 @@ fn_args : exp_rhs COMMA fn_args
 fn_type: ID
        ;
 
+iter_fir_stmt: decl_stmt
+             |assign_stmt
+             |inc_stmt
+             |/*epsilon*/
+             ;
+iter_sec_stmt:predicate
+             |/*epsilon*/
+             ;
+iter_thir_stmt:assign_stmt
+              |inc_stmt
+              |/*epsilon*/
+              ;
 
-iter:ITER OPEN_CIR_PAR decl_stmt SEMICOL predicate SEMICOL exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+
+iter:ITER OPEN_CIR_PAR iter_fir_stmt SEMICOL predicate SEMICOL iter_thir_stsmt CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
     ;
 until:UNTIL OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
      ;
