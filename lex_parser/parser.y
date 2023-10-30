@@ -164,7 +164,7 @@ stmt_types : assign_stmt SEMICOL
            | return_stmt SEMICOL  
            | void_fn_calls SEMICOL    
            ;
-func_stmt : ID data_type COLON decl_stmt OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR
+func_stmt : ID data_type COLON argument OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR
 stmts1 : stmt_types stmts1
         | /* epsilon */
         ;
@@ -348,19 +348,19 @@ cdouble_id_type : ID
                 ;
 
 /*for function*/
-//argument : T L
-//          ;
-//T : INT
-//  | CINT
-//  | DOUBLE
-//  | CDOUBLE
-//  ;
-//L : L_list
-//  | L_list COMMA L
-//  ;
-//L_list : ID
-//       | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-//       ;
+argument : T L
+         ;
+T : INT
+ | CINT
+ | DOUBLE
+ | CDOUBLE
+ ;
+L : L_list
+ | L_list COMMA L
+ ;
+L_list : ID
+      | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+      ;
 
 %%
 #include "lex.yy.c"
