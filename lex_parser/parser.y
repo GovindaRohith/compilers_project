@@ -150,7 +150,7 @@ int ret_no;
 //         | CLOSE_SQUARE_PAR
 //         ;
 program : func_stmt program
-        | func_stmt
+        | /*Epsilon*/
         ;
 
 stmts : stmt_types stmts
