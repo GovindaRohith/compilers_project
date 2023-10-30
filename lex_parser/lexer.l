@@ -177,7 +177,7 @@ string \"([^\\\n]|(\\.))*?\"
 
    [>] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s\n", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
       return GT;
    }
 
