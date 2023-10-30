@@ -301,6 +301,9 @@ get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rh
 var_decl : real_decl
          | comp_decl
          ;
+data_types : INT_NUM
+           | DOUBLE_NUM
+           ;
 real_decl : INT int_part
           | DOUBLE double_part
           ;
@@ -316,9 +319,9 @@ double_part : double_id_type
             | double_id_type COMMA double_part
             ;
 double_id_type : ID
-               | ID ASSIGN DOUBLE_NUM
+               | ID ASSIGN data_types
                | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-               | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+               | ID OPEN_CIR_PAR data_types CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
                ;
 comp_decl : CINT cint_part
           | CDOUBLE cdouble_part
@@ -337,11 +340,11 @@ cdouble_part : cdouble_id_type
             | cdouble_id_type COMMA cdouble_part
             ;
 cdouble_id_type : ID 
-                | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR
-                | ID OPEN_CIR_PAR DOUBLE_NUM COMMA DOUBLE_NUM CLOSE_CIR_PAR
+                | ID OPEN_CIR_PAR data_types CLOSE_CIR_PAR
+                | ID OPEN_CIR_PAR data_types COMMA data_types CLOSE_CIR_PAR
                 | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-                | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-                | ID OPEN_CIR_PAR DOUBLE_NUM COMMA DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+                | ID OPEN_CIR_PAR data_types CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+                | ID OPEN_CIR_PAR data_types COMMA data_types CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
                 ;
 
 /*for function*/
