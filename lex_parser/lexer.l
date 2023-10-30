@@ -27,6 +27,14 @@ string \"([^\\\n]|(\\.))*?\"
  fprintf(parsed_fp,"%s",yytext);
  return MOD;
 }
+".r++" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return REAL_INC;
+}
+".i++" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return IMAG_INC;
+}
 "iter" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
     return ITER;

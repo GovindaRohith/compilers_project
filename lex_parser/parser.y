@@ -71,6 +71,8 @@ int ret_no;
 %token CLOSE_CURLY_PAR
 %token OPEN_SQUARE_PAR
 %token CLOSE_SQUARE_PAR
+%token REAL_INC
+%token IMAG_INC
 %left ARITH_OP
 %left GT
 %left LT
@@ -163,6 +165,7 @@ stmt_types : assign_stmt SEMICOL
            | while_stmt 
            | return_stmt SEMICOL  
            | void_fn_calls SEMICOL    
+           | inc_stmt SEMICOL 
            ;
 func_stmt : ID data_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
 
@@ -178,6 +181,11 @@ if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE
 elif_stmt : ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt
           | /* Epsilon */
           ;
+inc_stmt : ID REAL_INC
+         | ID IMAG_INC
+         | ID INC
+         | ID DEC
+         ;
 for_stmt: iter
         ;
 while_stmt: until
