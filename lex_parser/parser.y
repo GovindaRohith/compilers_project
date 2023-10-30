@@ -159,8 +159,8 @@ stmts : stmt_types stmts
 stmt_types : assign_stmt SEMICOL 
            | decl_stmt SEMICOL
            | if_stmt
-           | for_stmt 
-           | while_stmt 
+           | iter
+           | until 
            | return_stmt SEMICOL  
            | void_fn_calls SEMICOL    
            ;
@@ -181,10 +181,10 @@ if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts1 CLOS
 elif_stmt : ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR elif_stmt
           | /* Epsilon */
           ;
-for_stmt: iter
-        ;
-while_stmt: until
-          ;
+//for_stmt: iter
+//  ;
+//while_stmt: until
+//         ;
 decl_stmt : var_decl {/*Note above 4 are wrtitten for testing only*/}
           ;
 void_fn_calls : fn_call
