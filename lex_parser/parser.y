@@ -159,32 +159,29 @@ stmts : stmt_types stmts
 stmt_types : assign_stmt SEMICOL 
            | decl_stmt SEMICOL
            | if_stmt
-           | iter
-           | until 
+           | for_stmt 
+           | while_stmt 
            | return_stmt SEMICOL  
            | void_fn_calls SEMICOL    
            ;
-func_stmt : ID data_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR
-stmts1 : stmt_types stmts1
-        | /* epsilon */
-        ;
+func_stmt : ID data_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
 
 data_type : INT | CINT | DOUBLE | CDOUBLE
           ;
 
 /* if statement syntax */
-if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR elif_stmt
-        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR
+if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt
+        | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt DEFAULT OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
         // | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
         ;
 /* special case of else if statements */
-elif_stmt : ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts1 CLOSE_CURLY_PAR elif_stmt
+elif_stmt : ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt
           | /* Epsilon */
           ;
-//for_stmt: iter
-//  ;
-//while_stmt: until
-//         ;
+for_stmt: iter
+        ;
+while_stmt: until
+          ;
 decl_stmt : var_decl {/*Note above 4 are wrtitten for testing only*/}
           ;
 void_fn_calls : fn_call
@@ -229,10 +226,8 @@ fn_args : exp_rhs COMMA fn_args
 fn_type: ID
        ;
 
-iter_fir_arg:decl_stmt
-            | assign_stmt
-            ;
-iter:ITER OPEN_CIR_PAR iter_fir_arg SEMICOL predicate SEMICOL exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+
+iter:ITER OPEN_CIR_PAR decl_stmt SEMICOL predicate SEMICOL exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
     ;
 until:UNTIL OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
      ;
@@ -351,7 +346,7 @@ cdouble_id_type : ID
 
 /*for function*/
 argument : T L
-        | /* Epsilon */
+         |
          ;
 T : INT
  | CINT
