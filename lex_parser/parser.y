@@ -248,7 +248,7 @@ iter_thir_stmt:assign_stmt
               ;
 
 
-iter:ITER OPEN_CIR_PAR iter_fir_stmt SEMICOL predicate SEMICOL iter_thir_stsmt CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+iter:ITER OPEN_CIR_PAR iter_fir_stmt SEMICOL iter_sec_stmt SEMICOL iter_thir_stsmt CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
     ;
 until:UNTIL OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
      ;
