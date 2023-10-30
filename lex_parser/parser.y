@@ -229,8 +229,10 @@ fn_args : exp_rhs COMMA fn_args
 fn_type: ID
        ;
 
-
-iter:ITER OPEN_CIR_PAR decl_stmt SEMICOL predicate SEMICOL exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+iter_fir_arg:decl_stmt
+            | assign_stmt
+            ;
+iter:ITER OPEN_CIR_PAR iter_fir_arg SEMICOL predicate SEMICOL exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
     ;
 until:UNTIL OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
      ;
@@ -349,6 +351,7 @@ cdouble_id_type : ID
 
 /*for function*/
 argument : T L
+        | /* Epsilon */
          ;
 T : INT
  | CINT
