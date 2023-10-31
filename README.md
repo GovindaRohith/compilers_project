@@ -4,7 +4,7 @@ export ZONE=us-central1-b
 
 
 
-AIzaSyBQFlcPuV05iPonpvMmS3O4osXRm3Z0wVs
+pp
 
 git pull origin main
 
