@@ -117,7 +117,9 @@ extern int yydebug;
     OPEN_CURLY_PAR = 318,          /* OPEN_CURLY_PAR  */
     CLOSE_CURLY_PAR = 319,         /* CLOSE_CURLY_PAR  */
     OPEN_SQUARE_PAR = 320,         /* OPEN_SQUARE_PAR  */
-    CLOSE_SQUARE_PAR = 321         /* CLOSE_SQUARE_PAR  */
+    CLOSE_SQUARE_PAR = 321,        /* CLOSE_SQUARE_PAR  */
+    REAL_INC = 322,                /* REAL_INC  */
+    IMAG_INC = 323                 /* IMAG_INC  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -190,6 +192,8 @@ extern int yydebug;
 #define CLOSE_CURLY_PAR 319
 #define OPEN_SQUARE_PAR 320
 #define CLOSE_SQUARE_PAR 321
+#define REAL_INC 322
+#define IMAG_INC 323
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

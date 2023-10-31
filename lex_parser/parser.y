@@ -32,6 +32,7 @@ int ret_no;
 %token ANGLE
 %token DIST
 %token CPRINT
+%token PRINT
 %token ROTATE
 %token CHOICE
 %token ALT
@@ -260,6 +261,7 @@ inbuilt_fn : real_fn
            | get_excenter_fn
            | get_area_fn
            | get_perimeter_fn
+           | print_fn
           ;
 
 real_fn : REAL OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
@@ -302,7 +304,8 @@ get_area_fn : GET_AREA OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CI
             ;
 get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                  ;
-
+print_fn : PRINT  
+         ;
 var_decl : real_decl
          | comp_decl
          ;

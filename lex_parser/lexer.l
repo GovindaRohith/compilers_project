@@ -101,6 +101,10 @@ string \"([^\\\n]|(\\.))*?\"
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return ANGLE;
 }
+"print" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return PRINT;
+}
 "dist" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return DIST;

@@ -410,14 +410,14 @@ A sample code snippet is shown below:
 \section{Built-in functions}
 \subsection{Inbuilt complex functions:}
 \begin{itemize}
-    \item \texttt{ real double : cdouble c}: Returns the real part of the complex number \texttt{c}.
+    \item \texttt{ real double : (cdouble c)}: Returns the real part of the complex number \texttt{c}.
     \item \texttt{img double : (cdouble c)}: Returns the imaginary part of the complex number \texttt{c}.
     \item \texttt{ pow cdouble : (cdouble base,double exponent)}: Returns the complex number ${(base)}^{(exponent)}$. This is done by using De Moivre's formula.
     \item \texttt{ polar void :(cdouble c)}: Prints the polar form of a complex number \texttt{c}. Given a complex number $c=a+ib$ the polar form looks $c=r(e^{i \theta })$ (Where $\theta$ is the argument of the complex number and $r$ is the modulus of the complex number).
     \item \texttt{conjugate cdouble : (cdouble c)}: Returns the conjugate of the complex number \texttt{c}. Given a complex number $c=a+ib$ the conjugate looks like $c=a-ib$.
-    \item  \texttt{mod double : (cdouble c)}: Returns the modulus of the complex number \texttt{c}. Given a complex number $c=a+ib$ the modulus looks like $c=\sqrt{a^2+b^2}$.
+    \item \texttt{mod double : (cdouble c)}: Returns the modulus of the complex number \texttt{c}. Given a complex number $c=a+ib$ the modulus looks like $c=\sqrt{a^2+b^2}$.
     \item \texttt{arg double :(cdouble c)}: Returns the argument of the complex number \texttt{c}. Given a complex number $c=a+ib$ the argument looks like $c=\tan^{-1}(\frac{b}{a})$.
-    \item  \texttt{angle double : (cdouble c1,cdouble c2)}: Returns the angle between the complex numbers \texttt{c1} and \texttt{c2}. Given two complex numbers $c_1=a_1+b_1i$ and $c_2=a_2+b_2i$ the angle between them looks like $c=\tan^{-1}(\frac{b_2-b_1}{a_2-a_1})$.
+    \item \texttt{angle double : (cdouble c1,cdouble c2)}: Returns the angle between the complex numbers \texttt{c1} and \texttt{c2}. Given two complex numbers $c_1=a_1+b_1i$ and $c_2=a_2+b_2i$ the angle between them looks like $c=\tan^{-1}(\frac{b_2-b_1}{a_2-a_1})$.
     \item \texttt{dist double : (cdouble c1,cdouble c2)}: Returns the distance between the complex numbers \texttt{c1} and \texttt{c2}. Given two complex numbers $c_1=a_1+b_1i$ and $c_2=a_2+b_2i$ the distance between them looks like $c=\sqrt{(a_2-a_1)^2+(b_2-b_1)^2}$.
     \item \texttt{ cprint void: (cdouble c)}: Prints the complex number \texttt{c} in the form $a+ib$.
 \end{itemize}
@@ -441,7 +441,7 @@ A sample code snippet is shown below:
     \label{ex_program_1}
     \centering
     \begin{BVerbatim}
-my_centroid cdouble : cdouble c1,cdouble c2,cdouble c3  {
+my_centroid cdouble : (cdouble c1,cdouble c2,cdouble c3)  {
     cdouble centroid;
     centroid = (c1+c2+c3)/3;
     return centroid;
