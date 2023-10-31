@@ -304,9 +304,9 @@ dist_fn : DIST OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
         ;
 cprint_fn : CPRINT OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
           ;
-rotate_fn : ROTATE OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
+rotate_fn : ROTATE OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR // doubt in this
           ;
-get_line_fn : GET_LINE OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
+get_line_fn : GET_LINE OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR // doubt in this
             ;
 is_triangle_fn : IS_TRIANGLE OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
                ;
@@ -324,10 +324,6 @@ get_area_fn : GET_AREA OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CI
             ;
 get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                  ;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
 print_arg : exp_rhs
           | STRING
           | STRING COMMA print_arg
@@ -385,16 +381,11 @@ cdouble_id_type : ID
                 ;
 
 /*for function*/
-<<<<<<< HEAD
 argument : argument_list 
          | argument_list COMMA argument
          ;
 argument_list : T L
          |
-=======
-argument : T L
-         |/*epsilon*/
->>>>>>> origin/main
          ;
 T : INT
  | CINT
@@ -439,7 +430,7 @@ int main()
   }
 //   fprintf(token_fp,"Name: Yoligi Govinda Rohith\nID: CS21BTECH11062\nInput file: public_test_%d.clike\n",t);
   yyparse();
-//   printf("Syntactically correct!\n");
+  printf("Syntactically correct!\n");
   fclose(token_fp);
   fclose(parsed_fp);
   return 0;
