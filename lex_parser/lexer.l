@@ -15,11 +15,7 @@ id {letter}({letter}|{digit}|"_")*
 int_num -?{digit}+
 
 double_num -?{digit}+(\.{digit}+)?
-<<<<<<< HEAD
-string \"(.*)+\"
-=======
 string \"([^\"]*)\"
->>>>>>> origin/main
 
 %%
 "//".* {/*To address comments*/}
