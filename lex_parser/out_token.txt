@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Name: Yoligi Govinda Rohith
 ID: CS21BTECH11062
 Input file: public_test_0.clike
@@ -52,3 +53,48 @@ reserved keyword: return
 int: 10
 punctuation: ;
 }
+=======
+reserved keyword: cint
+ID: a
+(int: 3
+punctuation: ,
+int: 4
+)punctuation: ;
+reserved keyword: cint
+ID: b
+(int: 5
+punctuation: ,
+int: 5
+)punctuation: ,
+ID: c
+(int: -101
+punctuation: ,
+int: 100
+)[int: 9
+]punctuation: ;
+reserved keyword: int
+ID: a
+punctuation: ,
+ID: d
+[int: 9
+]punctuation: ,
+ID: b
+=int: 3
+punctuation: ;
+reserved keyword: double
+ID: a
+punctuation: ,
+ID: b
+[int: 23
+]punctuation: ,
+ID: c
+=double: 45.9
+punctuation: ;
+reserved keyword: cdouble
+ID: r
+(double: 3.45
+punctuation: ,
+double: 5.67
+)[int: 23
+]punctuation: ;
+>>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387

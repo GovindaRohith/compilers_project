@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 choice(a eq b){
     centriod = get_centroid(a,b,c);
 }
@@ -15,3 +16,10 @@ my_centroid cdouble : int x {
 centroid = (c1+c2+c3)/3;
 return 10;
 }
+=======
+cint a(3,4);
+cint b(5,5),c(-101,100)[9];
+int a,d[9], b = 3;
+double a, b[23], c = 45.9;
+cdouble r(3.45, 5.67)[23];
+>>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
