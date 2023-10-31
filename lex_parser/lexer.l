@@ -15,7 +15,7 @@ id {letter}({letter}|{digit}|"_")*
 int_num -?{digit}+
 
 double_num -?{digit}+(\.{digit}+)?
-string \"([^\\\n]|(\\.))*?\" 
+string \"(.*)+\"
 
 %%
 "//".* {/*To address comments*/}
