@@ -1,62 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-Name: Yoligi Govinda Rohith
-ID: CS21BTECH11062
-Input file: public_test_0.clike
-reserved keyword: choice
-(ID: a
-eqID: b
-){ID: centriod
-=reserved keyword: get_centroid
-(ID: a
-punctuation: ,
-ID: b
-punctuation: ,
-ID: c
-)punctuation: ;
-}reserved keyword: alt
-(ID: a
-eqID: c
-){ID: centriod
-=reserved keyword: get_centroid
-(int: 1
-punctuation: ,
-int: 5
-)punctuation: ;
-}reserved keyword: alt
-(ID: q
-eqID: c
-){ID: centriod
-=reserved keyword: get_centroid
-(int: 1
-punctuation: ,
-int: 5
-)punctuation: ;
-}reserved keyword: default
-{ID: centriod
-=reserved keyword: get_centroid
-(int: 1
-punctuation: ,
-int: 5
-)punctuation: ;
-}ID: my_centroid
-reserved keyword: cdouble
-punctuation: :
-reserved keyword: int
-ID: x
-{ID: centroid
-=(ID: c1
-+ID: c2
-+ID: c3
-)/int: 3
-punctuation: ;
-reserved keyword: return
-int: 10
-punctuation: ;
-}
-=======
-reserved keyword: cint
-=======
 ID: my_dist
 reserved keyword: cdouble
 punctuation: :
@@ -70,7 +11,6 @@ reserved keyword: pow
 special symbol: (
 reserved keyword: pow
 special symbol: (
->>>>>>> origin/main
 ID: a
 punctuation: ,
 int: 2
@@ -309,12 +249,6 @@ ID: my_incentre
 special symbol: (
 ID: A
 punctuation: ,
-<<<<<<< HEAD
-double: 5.67
-)[int: 23
-]punctuation: ;
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 ID: B
 punctuation: ,
 ID: C
@@ -345,4 +279,3 @@ special symbol: )
 punctuation: ;
 special symbol: }
 special symbol: }
->>>>>>> origin/main

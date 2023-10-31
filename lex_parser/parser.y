@@ -86,11 +86,7 @@ int ret_no;
 %left NEG
 %%
 // S : temp S
-<<<<<<< HEAD
-//   | /Epsilon/
-=======
 //   | /*Epsilon*/
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
 //   ;
 // temp :  ITER
 //         | UNTIL

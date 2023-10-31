@@ -436,25 +436,25 @@ static const flex_int16_t yy_base[234] =
       234,  246,   37,   17,  229,   38,  246,  246,  223,  246,
       222,    0,  246,  246,   19,  207,   29,   26,  199,  209,
        29,  199,  207,  194,   32,   40,  191,  196,  246,  246,
-      227,  225,  246,  246,  246,   61,  220,  219,    0,  213,
-      246,  246,    0,  184,   49,  195,  188,  186,  185,  185,
-      184,  179,  189,  176,  173,    0,  173,  184,  171,  189,
-      183,  183,   44,    0,   44,  177,   56,  166,  167,  164,
-      196,  195,    0,  189,    0,    0,  168,    0,    0,  158,
-      168,  157,  165,  165,  172,  153,  169,  170,    0,    0,
+      227,  225,  224,  246,  246,   61,  219,  218,    0,  212,
+      246,  246,    0,  183,   49,  194,  187,  185,  184,  184,
+      183,  178,  188,  175,  172,    0,  172,  183,  170,  188,
+      182,  182,   44,    0,   44,  176,   56,  165,  166,  163,
+      195,  194,    0,  188,    0,    0,  167,    0,    0,  157,
+      167,  156,  164,  164,  171,  152,  168,  169,    0,    0,
 
-      150,  151,    0,    0,    0,  166,    0,  153,  154,    0,
-      144,  162,    0,  153,  246,  246,  156,  158,  156,    0,
-      138,  144,  136,    0,  144,   75,  137,    0,  136,  133,
-        0,  134,  131,  138,    0,  137,  142,  139,  126,  133,
-      138,  125,   53,  119,  127,  130,  121,  132,  127,    0,
-        0,  122,  129,    0,  128,    0,  131,    0,  112,    0,
-      125,  116,  111,  124,  123,  112,  105,  106,  121,    0,
-        0,    0,  102,    0,  119,  100,  115,  112,  111,  110,
-      106,  104,   99,  106,    0,   93,   89,   95,   94,    0,
-       92,   93,   97,    0,   89,   90,   82,   81,   96,   93,
+      149,  150,    0,    0,    0,  165,    0,  152,  153,    0,
+      143,  161,    0,  152,  246,  246,  155,  157,  155,    0,
+      137,  143,  135,    0,  143,   75,  136,    0,  135,  132,
+        0,  133,  130,  137,    0,  136,  141,  138,  125,  132,
+      137,  124,   53,  118,  126,  129,  120,  131,  126,    0,
+        0,  121,  128,    0,  127,    0,  130,    0,  111,    0,
+      124,  115,  110,  123,  122,  111,  104,  105,  120,    0,
+        0,    0,  101,    0,  118,   99,  114,  111,  110,  109,
+      105,  103,   98,  105,    0,   92,   88,   94,   93,    0,
+       91,   92,   96,    0,   88,   89,   81,   80,   95,   92,
 
-       86,   86,   85,   82,   80,   78,   63,   76,   75,   72,
+       84,   83,   85,   82,   80,   78,   63,   76,   75,   72,
        57,   56,   59,   66,    0,    0,   57,    0,    0,   50,
        50,   47,   59,    0,   58,   44,   42,    0,    0,  246,
       112,   58,  115
@@ -466,7 +466,7 @@ static const flex_int16_t yy_def[234] =
       230,  230,  230,  230,  230,  230,  230,  230,  230,  230,
       230,  232,  230,  230,  232,  232,  232,  232,  232,  232,
       232,  232,  232,  232,  232,  232,  232,  232,  230,  230,
-      230,  231,  230,  230,  230,  230,  230,  230,  233,  230,
+      230,  231,  231,  230,  230,  230,  230,  230,  233,  230,
       230,  230,  232,  232,  232,  232,  232,  232,  232,  232,
       232,  232,  232,  232,  232,  232,  232,  232,  232,  232,
       232,  232,  232,  232,  232,  232,  232,  232,  232,  232,
@@ -504,19 +504,19 @@ static const flex_int16_t yy_nxt[293] =
       223,  222,  221,  220,  219,  218,  111,  142,  217,  143,
 
       216,  144,  215,  214,  213,  145,  212,  146,  211,  210,
-      147,  148,   42,   42,   42,   83,  209,   83,  208,  207,
-      206,  205,  204,  203,  202,  201,  200,  199,  198,  197,
-      196,  195,  194,  193,  192,  191,  190,  189,  188,  187,
-      186,  185,  184,  183,  182,  181,  180,  179,  178,  177,
-      176,  175,  174,  173,  172,  171,  170,  169,  168,  167,
-      166,  165,  164,  161,  160,  159,  158,  157,  156,  155,
-      154,  153,  152,  151,  150,  149,  141,  140,  139,  138,
-      137,  136,  135,  134,  133,  132,  131,  130,  129,  128,
-      127,  126,  125,  124,  123,  122,  121,  120,  119,  118,
+      147,  148,   42,  209,   42,   83,  208,   83,  207,  206,
+      205,  204,  203,  202,  201,  200,  199,  198,  197,  196,
+      195,  194,  193,  192,  191,  190,  189,  188,  187,  186,
+      185,  184,  183,  182,  181,  180,  179,  178,  177,  176,
+      175,  174,  173,  172,  171,  170,  169,  168,  167,  166,
+      165,  164,  161,  160,  159,  158,  157,  156,  155,  154,
+      153,  152,  151,  150,  149,  141,  140,  139,  138,  137,
+      136,  135,  134,  133,  132,  131,  130,  129,  128,  127,
+      126,  125,  124,  123,  122,  121,  120,  119,  118,  117,
 
-      117,   84,  116,  115,  114,  113,  112,  108,  103,  102,
-      101,  100,   99,   98,   97,   96,   95,   94,   93,   92,
-       91,   90,   89,   88,   85,   84,   82,   81,   43,   41,
+       84,  116,  115,  114,  113,  112,  108,  103,  102,  101,
+      100,   99,   98,   97,   96,   95,   94,   93,   92,   91,
+       90,   89,   88,   85,   84,   82,   81,   43,   43,   41,
        80,   79,   74,   73,   72,   67,   66,   57,   52,   51,
        49,   44,   43,   41,  230,    3,  230,  230,  230,  230,
       230,  230,  230,  230,  230,  230,  230,  230,  230,  230,
@@ -541,19 +541,19 @@ static const flex_int16_t yy_chk[293] =
       220,  217,  214,  213,  212,  211,   77,  126,  210,  126,
 
       209,  126,  208,  207,  206,  126,  205,  126,  204,  203,
-      126,  126,  231,  231,  231,  233,  202,  233,  201,  200,
-      199,  198,  197,  196,  195,  193,  192,  191,  189,  188,
-      187,  186,  184,  183,  182,  181,  180,  179,  178,  177,
-      176,  175,  173,  169,  168,  167,  166,  165,  164,  163,
-      162,  161,  159,  157,  155,  153,  152,  149,  148,  147,
-      146,  145,  144,  142,  141,  140,  139,  138,  137,  136,
-      134,  133,  132,  130,  129,  127,  125,  123,  122,  121,
-      119,  118,  117,  114,  112,  111,  109,  108,  106,  102,
-      101,   98,   97,   96,   95,   94,   93,   92,   91,   90,
+      126,  126,  231,  202,  231,  233,  201,  233,  200,  199,
+      198,  197,  196,  195,  193,  192,  191,  189,  188,  187,
+      186,  184,  183,  182,  181,  180,  179,  178,  177,  176,
+      175,  173,  169,  168,  167,  166,  165,  164,  163,  162,
+      161,  159,  157,  155,  153,  152,  149,  148,  147,  146,
+      145,  144,  142,  141,  140,  139,  138,  137,  136,  134,
+      133,  132,  130,  129,  127,  125,  123,  122,  121,  119,
+      118,  117,  114,  112,  111,  109,  108,  106,  102,  101,
+       98,   97,   96,   95,   94,   93,   92,   91,   90,   87,
 
-       87,   84,   82,   81,   80,   79,   78,   76,   72,   71,
-       70,   69,   68,   67,   65,   64,   63,   62,   61,   60,
-       59,   58,   57,   56,   54,   50,   48,   47,   42,   41,
+       84,   82,   81,   80,   79,   78,   76,   72,   71,   70,
+       69,   68,   67,   65,   64,   63,   62,   61,   60,   59,
+       58,   57,   56,   54,   50,   48,   47,   43,   42,   41,
        38,   37,   34,   33,   32,   30,   29,   26,   21,   19,
        15,   11,    7,    6,    3,  230,  230,  230,  230,  230,
       230,  230,  230,  230,  230,  230,  230,  230,  230,  230,
@@ -1069,7 +1069,6 @@ YY_RULE_SETUP
 #line 122 "lexer.l"
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
- fprintf(parsed_fp,"%s",yytext);
  return CHOICE;
 }
 	YY_BREAK
@@ -1078,38 +1077,20 @@ YY_RULE_SETUP
 #line 127 "lexer.l"
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
- fprintf(parsed_fp,"%s",yytext);
  return ALT;
 }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 121 "lexer.l"
-=======
-#line 120 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 132 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
- fprintf(parsed_fp,"%s",yytext);
  return DEFAULT;
 }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 127 "lexer.l"
-=======
-#line 125 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 137 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return GET_LINE;
@@ -1117,15 +1098,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 132 "lexer.l"
-=======
-#line 130 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 142 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return IS_TRIANGLE;
@@ -1133,15 +1106,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 137 "lexer.l"
-=======
-#line 135 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 147 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return GET_CENTROID;
@@ -1149,15 +1114,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 142 "lexer.l"
-=======
-#line 140 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 152 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return GET_CIRCUMCENTER;
@@ -1165,15 +1122,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 147 "lexer.l"
-=======
-#line 145 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 157 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return GET_ORTHOCENTER;
@@ -1181,15 +1130,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 152 "lexer.l"
-=======
-#line 150 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 162 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return GET_INCENTER;
@@ -1197,15 +1138,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 157 "lexer.l"
-=======
-#line 155 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 167 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return GET_EXCENTER;
@@ -1213,15 +1146,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 162 "lexer.l"
-=======
-#line 160 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 172 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return GET_AREA;
@@ -1229,92 +1154,24 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 167 "lexer.l"
-=======
-#line 165 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 177 "lexer.l"
->>>>>>> origin/main
 {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return GET_PERIMETER;
 }
 	YY_BREAK
-<<<<<<< HEAD
-case 36:
-YY_RULE_SETUP
-<<<<<<< HEAD
-#line 172 "lexer.l"
-=======
-#line 170 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-{
-    fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
-      return GT;
-   }
-	YY_BREAK
-case 37:
-YY_RULE_SETUP
-<<<<<<< HEAD
-#line 178 "lexer.l"
-=======
-#line 176 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-{
-    fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
-    return LT;
-   }
-	YY_BREAK
-case 38:
-=======
 case 39:
->>>>>>> origin/main
 YY_RULE_SETUP
-<<<<<<< HEAD
-#line 184 "lexer.l"
-=======
 #line 182 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
 {
     fprintf(parsed_fp, "%s", yytext);
-<<<<<<< HEAD
-    fprintf(token_fp, "%s", yytext);
-    return EQ;
-   }
-	YY_BREAK
-case 39:
-YY_RULE_SETUP
-<<<<<<< HEAD
-#line 190 "lexer.l"
-=======
-#line 188 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-{
-    fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
-    return NE;
-=======
     fprintf(token_fp, "operator: %s\n", yytext);
       return GT;
->>>>>>> origin/main
    }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 196 "lexer.l"
-=======
-#line 194 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 188 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1323,15 +1180,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 202 "lexer.l"
-=======
-#line 200 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 194 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1340,15 +1189,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 208 "lexer.l"
-=======
-#line 206 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 200 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1357,15 +1198,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 214 "lexer.l"
-=======
-#line 212 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 206 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1374,15 +1207,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 220 "lexer.l"
-=======
-#line 218 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 212 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1391,15 +1216,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 226 "lexer.l"
-=======
-#line 224 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 218 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1408,15 +1225,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 232 "lexer.l"
-=======
-#line 230 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 224 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1425,15 +1234,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 238 "lexer.l"
-=======
-#line 236 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 230 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1442,15 +1243,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 244 "lexer.l"
-=======
-#line 242 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 236 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1459,15 +1252,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 250 "lexer.l"
-=======
-#line 248 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 242 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1476,15 +1261,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 256 "lexer.l"
-=======
-#line 254 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 248 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1493,15 +1270,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 262 "lexer.l"
-=======
-#line 260 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 254 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1510,15 +1279,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 268 "lexer.l"
-=======
-#line 266 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 260 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "operator: %s\n", yytext);
@@ -1527,15 +1288,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 274 "lexer.l"
-=======
-#line 272 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 266 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "special symbol: %s\n", yytext);
@@ -1544,15 +1297,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 280 "lexer.l"
-=======
-#line 278 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 272 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "special symbol: %s\n", yytext);
@@ -1561,15 +1306,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 286 "lexer.l"
-=======
-#line 284 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 278 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "special symbol: %s\n", yytext);
@@ -1578,15 +1315,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 292 "lexer.l"
-=======
-#line 290 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 284 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(parsed_fp, "%s", yytext);
     fprintf(token_fp, "special symbol: %s\n", yytext);
@@ -1595,13 +1324,6 @@ YY_RULE_SETUP
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 299 "lexer.l"
-=======
-#line 297 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 290 "lexer.l"
 {
     fprintf(parsed_fp, "%s", yytext);
@@ -1630,7 +1352,6 @@ YY_RULE_SETUP
 case 60:
 YY_RULE_SETUP
 #line 309 "lexer.l"
->>>>>>> origin/main
 {
     //to print ID's
     fprintf(token_fp,"ID: %s\n",yytext);
@@ -1640,15 +1361,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 306 "lexer.l"
-=======
-#line 304 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 316 "lexer.l"
->>>>>>> origin/main
 {
     //to print int
     fprintf(token_fp,"int: %s\n",yytext);
@@ -1658,15 +1371,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 312 "lexer.l"
-=======
-#line 310 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 322 "lexer.l"
->>>>>>> origin/main
 {
     //to print double
     fprintf(token_fp,"double: %s\n",yytext);
@@ -1675,19 +1380,8 @@ YY_RULE_SETUP
     }
 	YY_BREAK
 case 63:
-<<<<<<< HEAD
-=======
-/* rule 63 can match eol */
->>>>>>> origin/main
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 319 "lexer.l"
-=======
-#line 316 "lexer.l"
-=======
 #line 328 "lexer.l"
->>>>>>> origin/main
 {
     //to print string
     fprintf(token_fp,"string: %s\n",yytext);
@@ -1697,12 +1391,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-<<<<<<< HEAD
-#line 323 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 335 "lexer.l"
->>>>>>> origin/main
 {//Punctuations
     fprintf(token_fp,"punctuation: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
@@ -1711,15 +1400,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 324 "lexer.l"
-=======
-#line 328 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 340 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(token_fp,"punctuation: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
@@ -1728,15 +1409,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 329 "lexer.l"
-=======
-#line 333 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 345 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(token_fp,"punctuation: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
@@ -1745,15 +1418,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 334 "lexer.l"
-=======
-#line 338 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 350 "lexer.l"
->>>>>>> origin/main
 {
     fprintf(token_fp,"punctuation: %s\n",yytext);
     fprintf(parsed_fp,"%s",yytext);
@@ -1762,28 +1427,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 340 "lexer.l"
-ECHO;
-	YY_BREAK
-#line 1392 "lex.yy.c"
-=======
-#line 344 "lexer.l"
-ECHO;
-	YY_BREAK
-#line 1404 "lex.yy.c"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 356 "lexer.l"
 ECHO;
 	YY_BREAK
-<<<<<<< HEAD
 #line 1434 "lex.yy.c"
-=======
-#line 1435 "lex.yy.c"
->>>>>>> origin/main
->>>>>>> origin/main
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2788,18 +2435,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#line 340 "lexer.l"
-=======
-#line 344 "lexer.l"
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
-=======
 #line 356 "lexer.l"
->>>>>>> origin/main
 
 
 int yywrap() 
  { 
     
  } 
+
