@@ -8,6 +8,7 @@ int ret_no;
 %}
 
 %token ITER
+%token PRINT
 %token UNTIL
 %token RETURN
 %token REM
@@ -32,7 +33,6 @@ int ret_no;
 %token ANGLE
 %token DIST
 %token CPRINT
-%token PRINT
 %token ROTATE
 %token CHOICE
 %token ALT
@@ -168,10 +168,16 @@ stmt_types : assign_stmt SEMICOL
            | void_fn_calls SEMICOL    
            | inc_stmt SEMICOL 
            ;
-func_stmt : ID data_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+func_stmt : ID d_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+
+d_type : data_type data_type_arr
+       ;
 
 data_type : INT | CINT | DOUBLE | CDOUBLE
           ;
+data_type_arr : OPEN_SQUARE_PAR CLOSE_SQUARE_PAR
+              | /* epsilon*/
+              ;
 
 /* if statement syntax */
 if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt
@@ -196,6 +202,7 @@ decl_stmt : var_decl {/*Note above 4 are wrtitten for testing only*/}
 void_fn_calls : fn_call
               ;
 assign_stmt : ID ASSIGN exp_rhs
+            | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR ASSIGN exp_rhs
             ;
 return_stmt : RETURN exp_rhs
             ;
@@ -249,7 +256,7 @@ iter_thir_stmt:assign_stmt
               ;
 
 
-iter:ITER OPEN_CIR_PAR iter_fir_stmt SEMICOL iter_sec_stmt SEMICOL iter_thir_stsmt CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+iter:ITER OPEN_CIR_PAR iter_fir_stmt SEMICOL iter_sec_stmt SEMICOL iter_thir_stmt CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
     ;
 until:UNTIL OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
      ;
@@ -317,7 +324,12 @@ get_area_fn : GET_AREA OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CI
             ;
 get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                  ;
-print_fn : PRINT  
+print_arg : exp_rhs
+          | STRING
+          | STRING COMMA print_arg
+          | exp_rhs COMMA print_arg
+          ;
+print_fn : PRINT OPEN_CIR_PAR print_arg CLOSE_CIR_PAR
          ;
 var_decl : real_decl
          | comp_decl
@@ -332,7 +344,7 @@ int_part : int_id_type
          | int_id_type COMMA int_part
          ;
 int_id_type : ID
-            | ID ASSIGN INT_NUM
+            | ID ASSIGN exp_rhs
             | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
             | ID OPEN_CIR_PAR INT_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
             ;
@@ -340,7 +352,7 @@ double_part : double_id_type
             | double_id_type COMMA double_part
             ;
 double_id_type : ID
-               | ID ASSIGN data_types
+               | ID ASSIGN exp_rhs
                | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
                | ID OPEN_CIR_PAR data_types CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
                ;
@@ -369,7 +381,10 @@ cdouble_id_type : ID
                 ;
 
 /*for function*/
-argument : T L
+argument : argument_list 
+         | argument_list COMMA argument
+         ;
+argument_list : T L
          |
          ;
 T : INT
@@ -377,12 +392,9 @@ T : INT
  | DOUBLE
  | CDOUBLE
  ;
-L : L_list
- | L_list COMMA L
- ;
-L_list : ID
-      | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-      ;
+L : ID
+  | ID OPEN_SQUARE_PAR CLOSE_SQUARE_PAR
+  ;
 
 %%
 #include "lex.yy.c"
