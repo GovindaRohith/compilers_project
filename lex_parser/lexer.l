@@ -15,7 +15,7 @@ id {letter}({letter}|{digit}|"_")*
 int_num -?{digit}+
 
 double_num -?{digit}+(\.{digit}+)?
-string \"([^\\\n]|(\\.))*?\" 
+string \"([^\"]*)\"
 
 %%
 "//".* {/*To address comments*/}
@@ -26,6 +26,14 @@ string \"([^\\\n]|(\\.))*?\"
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  fprintf(parsed_fp,"%s",yytext);
  return MOD;
+}
+".r++" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return REAL_INC;
+}
+".i++" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return IMAG_INC;
 }
 "iter" {
     fprintf(token_fp,"reserved keyword: %s\n",yytext);
@@ -92,6 +100,10 @@ string \"([^\\\n]|(\\.))*?\"
 "angle" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
  return ANGLE;
+}
+"print" {
+    fprintf(token_fp,"reserved keyword: %s\n",yytext);
+    return PRINT;
 }
 "dist" {
  fprintf(token_fp,"reserved keyword: %s\n",yytext);
@@ -172,127 +184,127 @@ string \"([^\\\n]|(\\.))*?\"
 
    [>] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
       return GT;
    }
 
    [<] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return LT;
    }
 
    "eq" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return EQ;
    }
 
    "neq" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return NE;
    }
 
    "++" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return INC;
    }
 
    "--" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return DEC;
    }
 
    "rem" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return REM;
    }
 
    "and" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return AND;
    }
 
    "or" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return OR;
    }
 
    "neg" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return NEG;
    }
 
    "=" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return ASSIGN;
    }
 
    "<=" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return LE;
    }
 
    ">=" {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return GE;
    }
 
    [*/+-] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "operator: %s\n", yytext);
     return ARITH_OP;
    }
 
    "." {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "special symbol: %s\n", yytext);
     return ACCESS_OP2;
    }
 
    [(] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "special symbol: %s\n", yytext);
     return OPEN_CIR_PAR;
    }
 
    [)] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "special symbol: %s\n", yytext);
     return CLOSE_CIR_PAR;
    }
 
    [{] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "special symbol: %s\n", yytext);
     return OPEN_CURLY_PAR;
    }
 
    [}] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "special symbol: %s\n", yytext);
     return CLOSE_CURLY_PAR;
    }
 
    [[] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "special symbol: %s\n", yytext);
     return OPEN_SQUARE_PAR;
    }
 
    []] {
     fprintf(parsed_fp, "%s", yytext);
-    fprintf(token_fp, "%s", yytext);
+    fprintf(token_fp, "special symbol: %s\n", yytext);
     return CLOSE_SQUARE_PAR;
    }
 

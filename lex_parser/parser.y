@@ -8,6 +8,7 @@ int ret_no;
 %}
 
 %token ITER
+%token PRINT
 %token UNTIL
 %token RETURN
 %token REM
@@ -71,6 +72,8 @@ int ret_no;
 %token CLOSE_CURLY_PAR
 %token OPEN_SQUARE_PAR
 %token CLOSE_SQUARE_PAR
+%token REAL_INC
+%token IMAG_INC
 %left ARITH_OP
 %left GT
 %left LT
@@ -153,26 +156,32 @@ int ret_no;
 //         | OPEN_SQUARE_PAR
 //         | CLOSE_SQUARE_PAR
 //         ;
-program : stmts {printf("Hello world\n");}
+program : func_stmt program
+        | /*Epsilon*/
         ;
+
 stmts : stmt_types stmts
-<<<<<<< HEAD
-      | func_stmt stmts
       | /* Epsilon */
       ;
 stmt_types : assign_stmt SEMICOL 
-           | decl_stmt
-           | if_stmt 
+           | decl_stmt SEMICOL
+           | if_stmt
            | for_stmt 
            | while_stmt 
            | return_stmt SEMICOL  
-           | void_fn_calls SEMICOL
+           | void_fn_calls SEMICOL    
+           | inc_stmt SEMICOL 
            ;
+func_stmt : ID d_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
 
-func_stmt : ID data_type COLON decl_stmt OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+d_type : data_type data_type_arr
+       ;
 
 data_type : INT | CINT | DOUBLE | CDOUBLE
           ;
+data_type_arr : OPEN_SQUARE_PAR CLOSE_SQUARE_PAR
+              | /* epsilon*/
+              ;
 
 /* if statement syntax */
 if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt
@@ -183,36 +192,21 @@ if_stmt : CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE
 elif_stmt : ALT OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt
           | /* Epsilon */
           ;
-
-for_stmt: ITER
-        ;
-while_stmt: UNTIL
-          ;
-decl_stmt : INT ID { printf("Hello world 11\n"); }
-=======
-      | /* Epsilon */
-      | OPEN_CIR_PAR stmts CLOSE_CIR_PAR
-      ;
-stmt_types : assign_stmt SEMICOL 
-           | decl_stmt SEMICOL
-           | if_stmt SEMICOL
-           | for_stmt 
-           | while_stmt 
-           | return_stmt SEMICOL  
-           | void_fn_calls SEMICOL    
-           ;
-if_stmt : CHOICE
-        ;
+inc_stmt : ID REAL_INC
+         | ID IMAG_INC
+         | ID INC
+         | ID DEC
+         ;
 for_stmt: iter
         ;
 while_stmt: until
           ;
 decl_stmt : var_decl {/*Note above 4 are wrtitten for testing only*/}
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
           ;
 void_fn_calls : fn_call
               ;
 assign_stmt : ID ASSIGN exp_rhs
+            | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR ASSIGN exp_rhs
             ;
 return_stmt : RETURN exp_rhs
             ;
@@ -243,45 +237,30 @@ exp_rhs : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
         | OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR {/*This is doubt for a=(3,3) type*/}
         ;
 fn_call : fn_type OPEN_CIR_PAR fn_args CLOSE_CIR_PAR
-<<<<<<< HEAD
-=======
         | inbuilt_fn
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
         ;
 fn_args : exp_rhs COMMA fn_args
         | exp_rhs
         | /* Epsilon */
         ;
 fn_type: ID
-<<<<<<< HEAD
-       | inbuilt_fn
-       ;
-inbuilt_fn : REAL
-           | IMG
-           | POW
-           | POLAR
-           | CONJUGATE
-           | MOD
-           | ARG
-           | ANGLE
-           | DIST
-           | CPRINT
-           | ROTATE
-           | GET_LINE
-           | IS_TRIANGLE
-           | GET_CENTROID
-           | GET_CIRCUMCENTER
-           | GET_ORTHOCENTER
-           | GET_INCENTER
-           | GET_EXCENTER
-           | GET_AREA
-           | GET_PERIMETER
-          ;
-=======
        ;
 
+iter_fir_stmt: decl_stmt
+             |assign_stmt
+             |inc_stmt
+             |/*epsilon*/
+             ;
+iter_sec_stmt:predicate
+             |/*epsilon*/
+             ;
+iter_thir_stmt:assign_stmt
+              |inc_stmt
+              |/*epsilon*/
+              ;
 
-iter:ITER OPEN_CIR_PAR decl_stmt SEMICOL predicate SEMICOL exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
+
+iter:ITER OPEN_CIR_PAR iter_fir_stmt SEMICOL iter_sec_stmt SEMICOL iter_thir_stmt CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
     ;
 until:UNTIL OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR
      ;
@@ -306,6 +285,7 @@ inbuilt_fn : real_fn
            | get_excenter_fn
            | get_area_fn
            | get_perimeter_fn
+           | print_fn
           ;
 
 real_fn : REAL OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
@@ -348,10 +328,19 @@ get_area_fn : GET_AREA OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CI
             ;
 get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                  ;
-
+print_arg : exp_rhs
+          | STRING
+          | STRING COMMA print_arg
+          | exp_rhs COMMA print_arg
+          ;
+print_fn : PRINT OPEN_CIR_PAR print_arg CLOSE_CIR_PAR
+         ;
 var_decl : real_decl
          | comp_decl
          ;
+data_types : INT_NUM
+           | DOUBLE_NUM
+           ;
 real_decl : INT int_part
           | DOUBLE double_part
           ;
@@ -359,7 +348,7 @@ int_part : int_id_type
          | int_id_type COMMA int_part
          ;
 int_id_type : ID
-            | ID ASSIGN INT_NUM
+            | ID ASSIGN exp_rhs
             | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
             | ID OPEN_CIR_PAR INT_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
             ;
@@ -367,9 +356,9 @@ double_part : double_id_type
             | double_id_type COMMA double_part
             ;
 double_id_type : ID
-               | ID ASSIGN DOUBLE_NUM
+               | ID ASSIGN exp_rhs
                | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-               | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+               | ID OPEN_CIR_PAR data_types CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
                ;
 comp_decl : CINT cint_part
           | CDOUBLE cdouble_part
@@ -388,29 +377,29 @@ cdouble_part : cdouble_id_type
             | cdouble_id_type COMMA cdouble_part
             ;
 cdouble_id_type : ID 
-                | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR
-                | ID OPEN_CIR_PAR DOUBLE_NUM COMMA DOUBLE_NUM CLOSE_CIR_PAR
+                | ID OPEN_CIR_PAR data_types CLOSE_CIR_PAR
+                | ID OPEN_CIR_PAR data_types COMMA data_types CLOSE_CIR_PAR
                 | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-                | ID OPEN_CIR_PAR DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-                | ID OPEN_CIR_PAR DOUBLE_NUM COMMA DOUBLE_NUM CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+                | ID OPEN_CIR_PAR data_types CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
+                | ID OPEN_CIR_PAR data_types COMMA data_types CLOSE_CIR_PAR OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
                 ;
 
 /*for function*/
-//argument : T L
-//          ;
-//T : INT
-//  | CINT
-//  | DOUBLE
-//  | CDOUBLE
-//  ;
-//L : L_list
-//  | L_list COMMA L
-//  ;
-//L_list : ID
-//       | ID OPEN_SQUARE_PAR INT_NUM CLOSE_SQUARE_PAR
-//       ;
+argument : argument_list 
+         | argument_list COMMA argument
+         ;
+argument_list : T L
+         |
+         ;
+T : INT
+ | CINT
+ | DOUBLE
+ | CDOUBLE
+ ;
+L : ID
+  | ID OPEN_SQUARE_PAR CLOSE_SQUARE_PAR
+  ;
 
->>>>>>> becfebbd709c45e7362d27ccbdcf94e75b929387
 %%
 #include "lex.yy.c"
 
@@ -445,7 +434,7 @@ int main()
   }
 //   fprintf(token_fp,"Name: Yoligi Govinda Rohith\nID: CS21BTECH11062\nInput file: public_test_%d.clike\n",t);
   yyparse();
-//   printf("Syntactically correct!\n");
+  printf("Syntactically correct!\n");
   fclose(token_fp);
   fclose(parsed_fp);
   return 0;

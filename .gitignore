@@ -3,3 +3,5 @@ spec/specification.log
 spec/specification.out
 spec/specification.synctex.gz
 spec/specification.toc
+spec/specification_unzipped.synctex
+lex_parser/a.out
