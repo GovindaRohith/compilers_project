@@ -297,9 +297,9 @@ dist_fn : DIST OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
         ;
 cprint_fn : CPRINT OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR
           ;
-rotate_fn : ROTATE OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR // doubt in this
+rotate_fn : ROTATE OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
           ;
-get_line_fn : GET_LINE OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR // doubt in this
+get_line_fn : GET_LINE OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
             ;
 is_triangle_fn : IS_TRIANGLE OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR
                ;
@@ -317,7 +317,13 @@ get_area_fn : GET_AREA OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CI
             ;
 get_perimeter_fn : GET_PERIMETER OPEN_CIR_PAR exp_rhs COMMA exp_rhs COMMA exp_rhs CLOSE_CIR_PAR 
                  ;
-print_fn : PRINT  
+
+print_arg : exp_rhs
+          | STRING
+          | STRING COMMA print_arg
+          | exp_rhs COMMA print_arg
+          ;
+print_fn : PRINT OPEN_CIR_PAR print_arg CLOSE_CIR_PAR
          ;
 var_decl : real_decl
          | comp_decl
@@ -370,7 +376,7 @@ cdouble_id_type : ID
 
 /*for function*/
 argument : T L
-         |
+         |/*epsilon*/
          ;
 T : INT
  | CINT
