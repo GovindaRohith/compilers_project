@@ -184,7 +184,10 @@ all_exp_rhs : exp_rhs { $<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>1;
                         $<exp_rhs_attr.type>$=$<exp_rhs_attr.type>2;
                         }
             ;
-
+for_stmt: iter
+        ;
+while_stmt: until
+          ;
 return_stmt : RETURN exp_rhs{if($<exp_rhs_attr.data_type>2==return_type.first && $<exp_rhs_attr.type>2 == return_type.second){}
                              else{
                                         yyerror("return type mismatch");
