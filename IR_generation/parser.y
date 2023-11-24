@@ -636,6 +636,50 @@ exp_rhs : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR {$<exp_rhs_attr.data_type>$=$<exp_r
         
         ;
 
+fn_call : ID OPEN_CIR_PAR fn_args CLOSE_CIR_PAR{
+                                                pair<short int,bool>temp;
+                                                temp=check_func_call ($1,argmnt_chck_list);
+                                                
+                                                if(temp.first==-1){
+                                                        yyerror("function not declared");
+                                                }
+                                                else if(temp.first==-2){
+                                                        yyerror("arguments not matched");
+                                                }
+                                                else{
+                                                        $<exp_rhs_attr.data_type>$=temp.first;
+                                                        $<exp_rhs_attr.type>$=temp.second;
+                                                }
+                                                argmnt_chck_list.clear();
+
+                                                char*temporary1=string_to_char("(");
+                                                char*temporary2=string_to_char(")");
+                                                $<exp_rhs_attr.name>$=concater($1,temporary1,$<exp_rhs_attr.name>3,temporary2);
+                                                }
+        
+        ;
+fn_args : all_exp_rhs COMMA fn_args{pair<short int,bool> temp;
+                    temp.first=$<exp_rhs_attr.data_type>1;
+                    temp.second=$<exp_rhs_attr.type>1;
+                    // cout<<temp.first<<"qwerty"<<temp.second<<endl;
+                    argmnt_chck_list.push_back(temp);
+                    char *temporary=string_to_char(",");
+                    $<exp_rhs_attr.name>$=concater($<exp_rhs_attr.name>1,temporary,$<exp_rhs_attr.name>3);
+                    }
+        | all_exp_rhs{pair<short int,bool> temp;
+                    temp.first=$<exp_rhs_attr.data_type>1;
+                    temp.second=$<exp_rhs_attr.type>1;
+                    // cout<<temp.first<<"qwerty"<<temp.second<<endl;
+                    argmnt_chck_list.push_back(temp);
+                    $<exp_rhs_attr.name>$=$<exp_rhs_attr.name>1;
+                    }
+                
+        | /* Epsilon */{char*temporary=string_to_char(")");
+                         temporary[0]=' ';
+                        $<exp_rhs_attr.name>$=temporary;}
+        
+        ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
