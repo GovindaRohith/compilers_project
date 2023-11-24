@@ -506,7 +506,13 @@ iter:iter_header OPEN_CIR_PAR iter_fir_stmt SEMICOL iter_sec_stmt SEMICOL iter_t
     ;
 until: until_header OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR {delete_loc_sym_tab_map();scope--;}
      ;
-
+print_arg : all_exp_rhs
+          | STRING
+          | STRING COMMA print_arg
+          | all_exp_rhs COMMA print_arg
+          ;
+print_fn : PRINT OPEN_CIR_PAR print_arg CLOSE_CIR_PAR {$$=0;}
+         ;
 var_decl : real_decl
          | comp_decl
          ;
