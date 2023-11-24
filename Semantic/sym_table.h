@@ -75,3 +75,24 @@ args *search_id_loc_sym_tab(string name, int scope_no) // searches the name in t
     // cout<<"Hello world"<<endl;
     return NULL;
 }
+bool comp_assign_checker(short int first, short int second, bool third, bool fourth) 
+{
+    cout << first << "-" << second << "-" << third << "-" << fourth << endl;
+    if (third != fourth)
+    {
+        // cout<<"qwertyuiop"<<endl;
+        return false;
+    }
+    if (first == 1 || first == 3 || first == 5)
+    {
+        if (second == 1 || second == 3 || second == 5)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return true;
+}
