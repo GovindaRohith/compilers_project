@@ -1,4 +1,3 @@
-
 # To run the script make sure you place your input code in ./test_case directory with file name <anything>.cplex
 
 Now head to directory where the files are present and run the command
