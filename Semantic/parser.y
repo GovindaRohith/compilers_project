@@ -96,6 +96,42 @@ stmt_types : assign_stmt SEMICOL
            ;
   
 
+func_stmt : func_info OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR {
+                                                            delete_loc_sym_tab_map();
+                                                            delete_loc_sym_tab_map();
+                                                            scope=0;
+                                                            }
+          ;
+func_info:func_name d_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR{ 
+                                                                        if(!search_fn_sym_tab($1)){                                                                              
+                                                                                return_type.first=$2.ret_datatype;
+                                                                                return_type.second=$2.ret_type_bool;
+                                                                                insert_fn_sym_tab($1,return_type,argmnt_list);
+                                                                                scope++;
+                                                                                create_loc_sym_tab_map();
+                                                                                insert_param_into_loc(argmnt_list);
+                                                                                argmnt_list.clear();
+                                                                                scope++;
+                                                                                create_loc_sym_tab_map();
+                                                                        }
+                                                                        else{
+                                                                                yyerror("Function already declared");
+                                                                        }
+                                                                    }
+        ;
+func_name: ID  {$$=$1;}
+     ;
+d_type : data_type data_type_arr { $<ret_type.ret_type_bool>$=$2;
+                                   $<ret_type.ret_datatype>$=$1;
+                              }
+       ;
+
+return_stmt : RETURN exp_rhs{if($<exp_rhs_attr.data_type>2==return_type.first && $<exp_rhs_attr.type>2 == return_type.second){}
+                             else{
+                                        yyerror("return type mismatch");
+                             }   }
+            ;
+
 predicate : exp_rhs GT exp_rhs {
                                     if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
                                     else {
