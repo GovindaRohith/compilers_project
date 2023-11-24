@@ -96,3 +96,19 @@ bool comp_assign_checker(short int first, short int second, bool third, bool fou
     }
     return true;
 }
+FILE *convert_str(char *strc)
+{
+    string str1(strc);
+
+    if (str1.size() >= 6)
+    {
+        str1.resize(str1.size() - 6);
+    }
+
+    str1 += "_token.txt";
+
+    const char *cstr = str1.c_str();
+    cout << cstr << endl;
+    FILE *fp = fopen(cstr, "w");
+    return fp;
+}
