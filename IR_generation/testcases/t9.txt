@@ -3,9 +3,6 @@
 fib void : (double a) {
     choice (a eq 1) {
         return;
-
-
-
     }
     default {
         //return fib(a-(1,1))+fib(a-(2,2));
