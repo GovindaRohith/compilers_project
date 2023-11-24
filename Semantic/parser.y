@@ -126,6 +126,12 @@ d_type : data_type data_type_arr { $<ret_type.ret_type_bool>$=$2;
                               }
        ;
 
+data_type :VOID{$$=0;}| INT {$$=1; } | CINT {$$=2; } | DOUBLE {$$=3; } | CDOUBLE {$$=4; }
+          ;
+data_type_arr : OPEN_SQUARE_PAR CLOSE_SQUARE_PAR {$$=true;}
+              | /* epsilon*/ {$$=false;}
+              ;
+
 /* if statement syntax */
 if_stmt_scope1 : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR { scope++; create_loc_sym_tab_map(); }
                ;
@@ -397,6 +403,38 @@ exp_rhs : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR {$<exp_rhs_attr.data_type>$=$<exp_r
                                                             $<exp_rhs_attr.type>$=false;
                                                             }
         
+        ;
+
+fn_call : ID OPEN_CIR_PAR fn_args CLOSE_CIR_PAR{
+                                                pair<short int,bool>temp;
+                                                temp=check_func_call ($1,argmnt_chck_list);
+                                                
+                                                if(temp.first==-1){
+                                                        yyerror("function not declared");
+                                                }
+                                                else if(temp.first==-2){
+                                                        yyerror("arguments not matched");
+                                                }
+                                                else{
+                                                        $<exp_rhs_attr.data_type>$=temp.first;
+                                                        $<exp_rhs_attr.type>$=temp.second;
+                                                }
+                                                argmnt_chck_list.clear();
+                                                }
+        
+        ;
+fn_args : all_exp_rhs COMMA fn_args{pair<short int,bool> temp;
+                    temp.first=$<exp_rhs_attr.data_type>1;
+                    temp.second=$<exp_rhs_attr.type>1;
+                    argmnt_chck_list.push_back(temp);
+                    }
+        | all_exp_rhs{pair<short int,bool> temp;
+                    temp.first=$<exp_rhs_attr.data_type>1;
+                    temp.second=$<exp_rhs_attr.type>1;
+                    argmnt_chck_list.push_back(temp);
+                    }
+                
+        | /* Epsilon */
         ;
 
 iter_fir_stmt: decl_stmt
