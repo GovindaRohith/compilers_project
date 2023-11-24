@@ -146,6 +146,45 @@ elif_stmt : ALT if_stmt_scope1 OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt { 
 else_stmt : DEFAULT OPEN_CURLY_PAR { scope++; create_loc_sym_tab_map(); }
            ;
 
+inc_stmt : inc_stmt_lhs inc_stmt_rhs {if($1!=2 && $1!=4) yyerror("invalid operation");}
+         | inc_stmt_lhs INC {if($1!=1 && $1!=3 && $1!=5) yyerror("invalid operation");}
+         | inc_stmt_lhs DEC {if($1!=1 && $1!=3 && $1!=5) yyerror("invalid operation");}
+         ;
+inc_stmt_rhs : REAL_INC | IMAG_INC | REAL_DEC | IMAG_DEC
+             ;
+inc_stmt_lhs:ID { args* sp;
+                sp=search_id_loc_sym_tab($1,scope);
+                if(!sp) yyerror("variable not declared");
+                  if(sp->dat_type.second == 0){
+                        $$=sp->dat_type.first;
+                  }
+                  else yyerror("invalid operation");
+                //   $<exp_rhs_attr.type>$=false;
+                }
+            | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR { 
+                                                        if($<exp_rhs_attr.data_type>3==1 || $<exp_rhs_attr.data_type>3==5){
+                                                            args* sp=new args;
+                                                            sp=search_id_loc_sym_tab($1,scope);
+                                                            if(!sp) yyerror("variable not declared");
+                                                            else{
+                                                                if(sp->dat_type.second == 0){
+                                                                $$=sp->dat_type.first;
+                                                                }
+                                                                else yyerror("invalid operation");
+                                                            }
+                                                        }
+                                                        else yyerror("Array index must be integer");
+                                                        }
+            ;
+
+all_exp_rhs : exp_rhs { $<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>1;
+                        $<exp_rhs_attr.type>$=$<exp_rhs_attr.type>1;
+                        }
+            | MINUS exp_rhs { $<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>2;
+                        $<exp_rhs_attr.type>$=$<exp_rhs_attr.type>2;
+                        }
+            ;
+
 return_stmt : RETURN exp_rhs{if($<exp_rhs_attr.data_type>2==return_type.first && $<exp_rhs_attr.type>2 == return_type.second){}
                              else{
                                         yyerror("return type mismatch");
