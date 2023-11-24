@@ -287,6 +287,60 @@ assign_stmt : exp_lhs ASSIGN assign_rhs{
                                         }
             ;
 
+exp_lhs : ID { args* sp=new args;
+               sp=search_id_loc_sym_tab($1,scope);
+               if(!sp) yyerror("variable not declared");
+               $<exp_lhs_attr.data_type>$=sp->dat_type.first;
+               $<exp_lhs_attr.type>$=sp->dat_type.second;
+                $<exp_lhs_attr.name>$=$1;
+                // fprintf(cpp_fp,"%s",$1);
+                
+             }
+        | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR{ args* sp=new args;
+                if($<exp_rhs_attr.data_type>3   !=1){
+                        yyerror("Array index must be integer");
+                }
+                sp=search_id_loc_sym_tab($1,scope);
+                if(!sp) yyerror("variable not declared");
+                $<exp_lhs_attr.data_type>$=sp->dat_type.first;
+                $<exp_lhs_attr.type>$=false;
+                char*temporary1=string_to_char("[");
+                char*temporary2=string_to_char("]");
+                $<exp_lhs_attr.name>$=concater($1,temporary1,$<exp_rhs_attr.name>3,temporary2);
+                // fprintf(cpp_fp,"]");
+                
+             }
+        ;
+assign_rhs : exp_rhs {$<assign_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>1;
+                        $<assign_rhs_attr.type>$=$<exp_rhs_attr.type>1;
+                        // fprintf(cpp_fp,"%s",$<exp_rhs_attr.name>1);
+                        // fprintf(cpp_fp,"hello");
+                        // cout<<"qwerty-=-=-=-"<<$<exp_rhs_attr.name>1<<endl;
+                        $<assign_rhs_attr.name>$=$<exp_rhs_attr.name>1;
+                        // string a($<exp_rhs_attr.name>1);
+                        // cout<<"YES"<<(int)a[0]<<endl;
+                        }
+           | MINUS exp_rhs {$<assign_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>2;
+                        $<assign_rhs_attr.type>$=$<exp_rhs_attr.type>2;
+                        char *temp=string_to_char("-");
+                        $<assign_rhs_attr.name>$=concater(temp,$<exp_rhs_attr.name>2);
+                        }
+           ;
+        
+return_stmt : RETURN exp_rhs{if($<exp_rhs_attr.data_type>2==return_type.first && $<exp_rhs_attr.type>2 == return_type.second){}
+                             else{
+                                        yyerror("return type mismatch");
+                             }  
+                             fprintf(cpp_fp,"return %s;",$<exp_rhs_attr.name>2);
+                              }
+            |RETURN{if(return_type.first==0 && return_type.second==false){}
+                    else{
+                        yyerror("return type mismatch");
+                    }
+                    fprintf(cpp_fp,"return;");
+                    }
+            ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
