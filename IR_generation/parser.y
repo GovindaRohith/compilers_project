@@ -116,6 +116,78 @@ stmt_types : assign_stmt SEMICOL
            | print_fn SEMICOL 
            ;
 
+func_stmt : func_info OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR {
+                                                            delete_loc_sym_tab_map();
+                                                            delete_loc_sym_tab_map();
+                                                            scope=0;
+                                                            fprintf(cpp_fp,"}\n");
+                                                            }
+          ;
+func_info:func_name d_type COLON OPEN_CIR_PAR argument CLOSE_CIR_PAR{ 
+                                                                        if(!search_fn_sym_tab($1)){ 
+                                                                                if(string($1)=="main"){
+                                                                                    if($<d_type_arg.ret_datatype>2!=1){
+                                                                                      yyerror("main function must return int");
+                                                                                    }
+                                                                                    else if($<d_type_arg.ret_type_bool>2!=false){
+                                                                                      yyerror("main function must return int");
+                                                                                    }
+                                                                                    else if(argmnt_list.size()!=0){
+                                                                                      yyerror("main should not have parameters");
+                                                                                    }
+                                                                                    main_check=1;
+                                                                                    // cout<<"main_checkkerrrrrrrr insert"<<main_check<<endl;
+                                                                                }    
+                                                                                // cout<<scope<<"scope"<<endl;                                                                          
+                                                                                return_type.first=$2.ret_datatype;
+                                                                                return_type.second=$2.ret_type_bool;
+                                                                                insert_fn_sym_tab($1,return_type,argmnt_list);
+                                                                                scope++;
+                                                                                create_loc_sym_tab_map();
+                                                                                insert_param_into_loc(argmnt_list);
+                                                                                argmnt_list.clear();
+                                                                                scope++;
+                                                                                create_loc_sym_tab_map();
+                                                                        }
+                                                                        else{
+                                                                                yyerror("Function already declared");
+                                                                        }
+                                                                        fprintf(cpp_fp,"%s %s(%s) {\n",$<d_type_arg.name>2, $1, $5);
+
+                                                                    }   
+                                                                    
+        ;
+func_name: ID  {$$=$1;}
+     ;
+d_type : data_type data_type_arr { $<d_type_arg.ret_type_bool>$=$2;
+                                   $<d_type_arg.ret_datatype>$=$1;
+                                   char *dtype;
+                                        if($1 == 0)
+                                        dtype = string_to_char("void ");
+                                        else if($1 == 1)
+                                        dtype = string_to_char("int ");
+                                        else if($1 == 2)
+                                        dtype = string_to_char("pair<int, int> ");
+                                        else if($1 == 3)
+                                        dtype = string_to_char("double ");
+                                        else if($1 == 4)
+                                        dtype = string_to_char("pair<double,double> ");
+                                    if($2 == true){
+                                        char*temp1=string_to_char("*");
+                                        $<d_type_arg.name>$=concater(dtype,temp1);
+                                    }
+                                    else{
+                                        $<d_type_arg.name>$=dtype;
+                                    }
+                              }
+       ;
+
+data_type :VOID{$$=0;  }| INT {$$=1; } | CINT {$$=2; } | DOUBLE {$$=3; } | CDOUBLE {$$=4; }
+          ;
+data_type_arr : OPEN_SQUARE_PAR CLOSE_SQUARE_PAR {$$=true;}
+              | /* epsilon*/ {$$=false;}
+              ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
