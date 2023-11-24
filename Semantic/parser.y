@@ -188,6 +188,8 @@ for_stmt: iter
         ;
 while_stmt: until
           ;
+decl_stmt : var_decl {/*Note above 4 are wrtitten for testing only*/}
+          ;
 return_stmt : RETURN exp_rhs{if($<exp_rhs_attr.data_type>2==return_type.first && $<exp_rhs_attr.type>2 == return_type.second){}
                              else{
                                         yyerror("return type mismatch");
