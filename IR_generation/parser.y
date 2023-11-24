@@ -707,6 +707,16 @@ until: until_header OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR {fprintf(cpp_fp,"}");
                                                             delete_loc_sym_tab_map();scope--;}
      ;
 
+print_arg : all_exp_rhs{fprintf(cpp_fp,"%s",$<exp_rhs_attr.name>1);}
+          | STRING{fprintf(cpp_fp,"%s",$1);}
+          | print_arg COMMA STRING{fprintf(cpp_fp,"<<%s",$3);}
+          | print_arg COMMA all_exp_rhs{fprintf(cpp_fp,"<<%s",$<exp_rhs_attr.name>3);}
+          ;
+print_fn : print_header CLOSE_CIR_PAR {$$=0; fprintf(cpp_fp,"<<endl;");}
+         ;
+print_header: PRINT OPEN_CIR_PAR print_arg
+            ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
