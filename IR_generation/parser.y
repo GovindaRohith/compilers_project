@@ -102,7 +102,19 @@ int p_check=0;
 program : func_stmt program
         | /*Epsilon*/
         ;
-
+stmts : stmt_types stmts
+      | /* Epsilon */
+      ;
+stmt_types : assign_stmt SEMICOL 
+           | decl_stmt SEMICOL
+           | if_stmt
+           | for_stmt 
+           | while_stmt 
+           | return_stmt SEMICOL  
+           | void_fn_calls SEMICOL    
+           | inc_stmt SEMICOL{fprintf(cpp_fp,";");}
+           | print_fn SEMICOL 
+           ;
 
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
