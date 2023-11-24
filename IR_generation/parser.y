@@ -717,6 +717,498 @@ print_fn : print_header CLOSE_CIR_PAR {$$=0; fprintf(cpp_fp,"<<endl;");}
 print_header: PRINT OPEN_CIR_PAR print_arg
             ;
 
+var_decl : real_decl 
+         | comp_decl
+         ;
+
+real_decl : INT int_part { fprintf(cpp_fp,"int %s;", $2); 
+                            /* for printing complex number declarations */
+                            fprintf(cpp_fp,"%s\n",global_int);
+                            char *global_int = string_to_char("");
+                        } 
+          | DOUBLE double_part { fprintf(cpp_fp,"double %s;", $2);
+                                /* for printing complex number declarations */
+                                fprintf(cpp_fp,"%s\n",global_double);
+                                char *global_double = string_to_char("");
+                              }
+          ;
+
+int_part : int_id_type { $$ = $<datatype_arg.name1>1; }
+         | int_id_type COMMA int_part { char*temporary1=string_to_char(", ");
+                                        $$ = concater($<datatype_arg.name1>1, temporary1, $3); }
+         ;
+int_id_type : ID { 
+                   if(search_loc_sym_tab_scope($1,scope)){
+                          yyerror("Variable already declared");
+                     }
+                     else{
+                        char a[3] = "No";
+                          insert_loc_sym_tab($1,1,false,true,scope,0,"No");
+                   }
+                  $<datatype_arg.name1>$ = $1;
+                 }
+            | ID ASSIGN all_exp_rhs { 
+                         if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                        }
+                        else{
+                                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5 ) && $<exp_rhs_attr.type>3 == false)
+                                {
+                                   insert_loc_sym_tab($1,1,false,true,scope,0,"No");
+                                }
+                                else {
+                                        yyerror("Invalid assignment");
+                                }
+                         }
+                         char*temporary1=string_to_char(" = ");                                        
+                         $<datatype_arg.name1>$ = concater($1, temporary1, $<exp_rhs_attr.name>3);                                                      
+                         
+            }
+            | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR { 
+                                if((($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5)) && $<exp_rhs_attr.type>3==false){
+                                        if(search_loc_sym_tab_scope($1,scope)){
+                                            // cout<<"qwertyu"<<endl;
+                                            yyerror("Variable already declared");
+                                    }
+                                    else{
+                                            // cout<<"qwertyu"<<endl;
+                                            insert_loc_sym_tab($1,1,true,true,scope,0,"No");
+                                    }
+                                }
+                                else{
+                                        yyerror("Array index must be integer");
+                                }
+                                char*temporary1=string_to_char("*");
+                                $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                                int n = atoi($<exp_rhs_attr.name>3);
+                                int length = snprintf(nullptr, 0, "\n%s = new int(%d);", $1, n); 
+                                char* temporary = (char*)malloc(length + 1);
+                                snprintf(temporary, length + 1, "\n%s = new int(%d);", $1, n);
+                                global_int = concater(global_int, temporary);      
+            }
+            | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                                    if(($<exp_rhs_attr.data_type>6 == 1 || $<exp_rhs_attr.data_type>6 == 5) && $<exp_rhs_attr.type>6==false){
+                                        if(search_loc_sym_tab_scope($1,scope)){
+                                                yyerror("Variable already declared");
+                                        }
+                                        else{
+                                                insert_loc_sym_tab($1,1,true,true,scope,0,"No");
+                                        }
+                                    }
+                                    else{
+                                            yyerror("Array index must be integer");
+                                    }
+                                }
+                                else{
+                                        yyerror("Initialization value must be integer");
+                                } 
+
+                                char*temporary1=string_to_char("*");
+                                $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                                int n = atoi($<exp_rhs_attr.name>6);
+                                int length = snprintf(nullptr, 0, "\n%s = new int(%d);\nfor(int i = 0; i < %d; i++){\n%s[i] = %s;\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3); 
+                                char* temporary = (char*)malloc(length + 1);
+                                snprintf(temporary, length + 1, "\n%s = new int(%d);\nfor(int i = 0; i < %d; i++){\n%s[i] = %s;\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3);
+                                global_int = concater(global_int, temporary);                    
+            }                   
+            ;
+double_part : double_id_type { $$ = $<datatype_arg.name1>1; }
+            | double_id_type COMMA double_part { char*temporary1=string_to_char(", ");
+                                                 $$ = concater($<datatype_arg.name1>1, temporary1, $3); }
+            ;
+double_id_type : ID {
+                        if(search_loc_sym_tab_scope($1,scope)){
+                               yyerror("Variable already declared");
+                          }
+                          else{
+                             char a[3] = "No";
+                             insert_loc_sym_tab($1,3,false,true,scope,0,"No");
+                        }  
+                        $<datatype_arg.name1>$ = $1;      
+                        }
+               | ID ASSIGN all_exp_rhs { 
+                                     if(search_loc_sym_tab_scope($1,scope)){
+                                             yyerror("Variable already declared");
+                                     }
+                                     else{  
+                                            if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3 == false)
+                                             {
+                                                insert_loc_sym_tab($1,3,false,true,scope,0,"No");
+                                             }
+                                             else {
+                                                     
+                                                     yyerror("Invalid assignment");
+                                             }
+                                     }
+                                     char*temporary1=string_to_char(" = ");                                        
+                                     $<datatype_arg.name1>$ = concater($1, temporary1, $<exp_rhs_attr.name>3);
+                                }
+               | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                        if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                            if(search_loc_sym_tab_scope($1,scope)){
+                                    yyerror("Variable already declared");
+                            }
+                            else{
+                                    insert_loc_sym_tab($1,3,true,true,scope,0,"No");
+                            }
+                        }
+                        char*temporary1=string_to_char("*");
+                        $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                        int n = atoi($<exp_rhs_attr.name>3);
+                        int length = snprintf(nullptr, 0, "\n%s = new double(%d);", $1, n); 
+                        char* temporary = (char*)malloc(length + 1);
+                        snprintf(temporary, length + 1, "\n%s = new double(%d);", $1, n);
+                        global_double = concater(global_double, temporary); 
+
+               }
+               | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                            if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                                if(($<exp_rhs_attr.data_type>6 == 1 || $<exp_rhs_attr.data_type>6 == 5) && $<exp_rhs_attr.type>6==false){
+                                    if(search_loc_sym_tab_scope($1,scope)){
+                                        yyerror("Variable already declared");
+                                    }
+                                    else{
+                                        insert_loc_sym_tab($1,3,true,true,scope,0,"No");
+                                    }
+                                }
+                                else{
+                                        yyerror("Array index must be integer");
+                                }
+                            }
+                            else{
+                                    yyerror("Initialization value must be integer or real");
+                                }
+                                char*temporary1=string_to_char("*");
+                                $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                                int n = atoi($<exp_rhs_attr.name>6);
+                                int length = snprintf(nullptr, 0, "\n%s = new double(%d);\nfor(int i = 0; i < %d; i++){\n%s[i] = %s;\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3); 
+                                char* temporary = (char*)malloc(length + 1);
+                                snprintf(temporary, length + 1, "\n%s = new double(%d);\nfor(int i = 0; i < %d; i++){\n%s[i] = %s;\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3);
+                                global_double = concater(global_double, temporary);  
+                }
+               ;
+comp_decl : CINT cint_part { fprintf(cpp_fp,"pair<int, int> %s;", $2); 
+                            /* for printing complex number declarations */
+                            fprintf(cpp_fp,"%s\n",global_cint);
+                            global_cint = string_to_char("");
+                        }
+          | CDOUBLE cdouble_part { fprintf(cpp_fp,"pair<double, double> %s;", $2); 
+                            /* for printing complex number declarations */
+                            fprintf(cpp_fp,"%s\n",global_cdouble);
+                            global_cdouble = string_to_char("");
+                        }
+          ;
+cint_part : cint_id_type { $$ = $<datatype_arg.name1>1; }
+          | cint_id_type COMMA cint_part { char*temporary1=string_to_char(", ");
+                                            $$ = concater($<datatype_arg.name1>1, temporary1, $3); }
+          ;
+cint_id_type : ID {
+                   if(search_loc_sym_tab_scope($1,scope)){
+                          yyerror("Variable already declared");
+                     }
+                     else{
+                        char a[3] = "No";
+                        insert_loc_sym_tab($1,2,false,true,scope,0,"No");
+                   }   
+                   $<datatype_arg.name1>$ = $1; 
+                }
+             | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR {
+                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                   if(search_loc_sym_tab_scope($1,scope)){
+                          yyerror("Variable already declared");
+                     }
+                     else{
+                        char a[3] = "No";
+                        insert_loc_sym_tab($1,2,false,true,scope,0,"No");
+                   } 
+                }
+                else{
+                        yyerror("Initialization value must be integer");
+                }
+                char*temporary1=string_to_char(" {0,");
+                char*temporary2=string_to_char("}");
+                $<datatype_arg.name1>$ = concater($1, temporary1, $<exp_rhs_attr.name>3, temporary2); 
+             }
+             | ID OPEN_CIR_PAR all_exp_rhs COMMA all_exp_rhs CLOSE_CIR_PAR {
+                   if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                    if(($<exp_rhs_attr.data_type>5 == 1 || $<exp_rhs_attr.data_type>5 == 3 || $<exp_rhs_attr.data_type>5 == 5) && $<exp_rhs_attr.type>5==false){
+                        if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                            }
+                            else{
+                                char a[3] = "No";
+                                insert_loc_sym_tab($1,2,false,true,scope,0,"No");
+                        }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer");
+                    }
+                   } 
+                     else{
+                            yyerror("Initialization value must be integer");
+                     }
+                    char*temporary1=string_to_char(" {");
+                    char*temporary2=string_to_char(", ");
+                    char*temporary3=string_to_char("}");
+                    char*temporary4 = concater($1, temporary1, $<exp_rhs_attr.name>3, temporary2);
+                    $<datatype_arg.name1>$ = concater(temporary4, $<exp_rhs_attr.name>5, temporary3);
+             }          
+             | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                    if(search_loc_sym_tab_scope($1,scope)){
+                            yyerror("Variable already declared");
+                    }
+                    else{
+                            insert_loc_sym_tab($1,2,true,true,scope,0,"No");
+                    }
+                }
+                else{
+                        yyerror("Array index must be integer");
+                } 
+                char*temporary1=string_to_char("*");
+                $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                int n = atoi($<exp_rhs_attr.name>3);
+                int length = snprintf(nullptr, 0, "\n%s = new pair<int, int>[%d];", $1, n); 
+                char* temporary = (char*)malloc(length + 1);
+                snprintf(temporary, length + 1, "\n%s = new pair<int, int>[%d];", $1, n);
+                global_cint = concater(global_cint, temporary);  
+             }
+             | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                    if(($<exp_rhs_attr.data_type>6 == 1 || $<exp_rhs_attr.data_type>6 == 5) && $<exp_rhs_attr.type>6==false){
+                                if(search_loc_sym_tab_scope($1,scope)){
+                                        yyerror("Variable already declared");
+                                }
+                                else{
+                                        insert_loc_sym_tab($1,2,true,true,scope,0,"No");
+                                }     
+                    }
+                    else{
+                            yyerror("Array index must be integer");
+                    }
+                }  
+                else{
+                        yyerror("Initialization value must be integer");
+                }    
+                char*temporary1=string_to_char("*");
+                $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                int n = atoi($<exp_rhs_attr.name>6);
+                int length = snprintf(nullptr, 0, "\n%s = new pair<int, int>[%d];\nfor(int i = 0; i < %d; i++){\n%s[i] = {0, %s};\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3); 
+                char* temporary = (char*)malloc(length + 1);
+                snprintf(temporary, length + 1, "\n%s = new pair<int, int>[%d];\nfor(int i = 0; i < %d; i++){\n%s[i] = {0, %s};\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3);
+                global_cint = concater(global_cint, temporary);
+             }
+             | ID OPEN_CIR_PAR all_exp_rhs COMMA all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(($<exp_rhs_attr.data_type>5 == 1 || $<exp_rhs_attr.data_type>5 == 5 || $<exp_rhs_attr.data_type>5 == 3) && $<exp_rhs_attr.type>5==false){
+                            if(($<exp_rhs_attr.data_type>8 == 1 || $<exp_rhs_attr.data_type>8 == 5) && $<exp_rhs_attr.type>8==false){
+                                if(search_loc_sym_tab_scope($1,scope)){
+                                        yyerror("Variable already declared");
+                                }
+                                else{
+                                        insert_loc_sym_tab($1,2,true,true,scope,0,"No");
+                                }
+                            }
+                            else{
+                                    yyerror("Array index must be integer");
+                            }
+                        }
+                        else{
+                                yyerror("Initialization value must be integer");
+                        }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer");
+                    }
+                    char*temporary1=string_to_char("*");
+                    $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                    int n = atoi($<exp_rhs_attr.name>8);
+                    int length = snprintf(nullptr, 0, "\n%s = new pair<int, int>[%d];\nfor(int i = 0; i < %d; i++){\n%s[i] = {%s, %s};\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3, $<exp_rhs_attr.name>5); 
+                    char* temporary = (char*)malloc(length + 1);
+                    snprintf(temporary, length + 1, "\n%s = new pair<int, int>[%d];\nfor(int i = 0; i < %d; i++){\n%s[i] = {%s, %s};\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3, $<exp_rhs_attr.name>5);
+                    global_cint = concater(global_cint, temporary);
+             }
+             | ID ASSIGN all_exp_rhs { 
+                                     if(search_loc_sym_tab_scope($1,scope)){
+                                             yyerror("Variable already declared");
+                                     }
+                                     else{   
+                                            if(($<exp_rhs_attr.data_type>3 == 2) && $<exp_rhs_attr.type>3 == false)
+                                             {
+                                                insert_loc_sym_tab($1,2,false,true,scope,0,"No");
+                                             }
+                                             else {   
+                                                yyerror("Invalid assignment");
+                                             }
+                                     }
+                                    char*temporary1=string_to_char(" = ");                                        
+                                    $<datatype_arg.name1>$ = concater($1, temporary1, $<exp_rhs_attr.name>3);
+                                }
+
+             ;
+cdouble_part : cdouble_id_type { $$ = $<datatype_arg.name1>1; }
+            | cdouble_id_type COMMA cdouble_part { char*temporary1=string_to_char(", ");
+                                                   $$ = concater($<datatype_arg.name1>1, temporary1, $3); }
+            ;
+cdouble_id_type : ID {
+                   if(search_loc_sym_tab_scope($1,scope)){
+                          yyerror("Variable already declared");
+                     }
+                     else{
+                        char a[3] = "No";
+                        insert_loc_sym_tab($1,4,false,true,scope,0,"No");
+                   }  
+                   $<datatype_arg.name1>$ = $1;   
+                }
+                | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                            }
+                            else{
+                                char a[3] = "No";
+                                insert_loc_sym_tab($1,4,false,true,scope,0,"No");
+                        }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer or real");
+                    }
+                    char*temporary1=string_to_char(" {0,");
+                    char*temporary2=string_to_char("}");
+                    $<datatype_arg.name1>$ = concater($1, temporary1, $<exp_rhs_attr.name>3, temporary2); 
+                }
+                | ID OPEN_CIR_PAR all_exp_rhs COMMA all_exp_rhs CLOSE_CIR_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(($<exp_rhs_attr.data_type>5 == 1 || $<exp_rhs_attr.data_type>5 == 3 || $<exp_rhs_attr.data_type>5 == 5) && $<exp_rhs_attr.type>5==false){
+                            if(search_loc_sym_tab_scope($1,scope)){
+                                    yyerror("Variable already declared");
+                                }
+                                else{
+                                    char a[3] = "No";
+                                    insert_loc_sym_tab($1,4,false,true,scope,0,"No");
+                            }
+                        }
+                        else{
+                                yyerror("Initialization value must be integer or real");
+                        }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer or real");
+                    }
+                    char*temporary1=string_to_char(" {");
+                    char*temporary2=string_to_char(", ");
+                    char*temporary3=string_to_char("}");
+                    char*temporary4 = concater($1, temporary1, $<exp_rhs_attr.name>3, temporary2);
+                    $<datatype_arg.name1>$ = concater(temporary4, $<exp_rhs_attr.name>5, temporary3);
+                }
+                | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                            }
+                            else{
+                                char a[3] = "No";
+                                insert_loc_sym_tab($1,4,true,true,scope,0,"No");
+                        }
+                    }
+                    else{
+                            yyerror("Array index must be integer");
+                    }
+                    char*temporary1=string_to_char("*");
+                    $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                    int n = atoi($<exp_rhs_attr.name>3);
+                    int length = snprintf(nullptr, 0, "\n%s = new pair<double, double>[%d];", $1, n); 
+                    char* temporary = (char*)malloc(length + 1);
+                    snprintf(temporary, length + 1, "\n%s = new pair<double, double>[%d];", $1, n);
+                    global_cdouble = concater(global_cdouble, temporary); 
+                }
+                | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                       if(($<exp_rhs_attr.data_type>6 == 1 || $<exp_rhs_attr.data_type>6 == 5) && $<exp_rhs_attr.type>6==false){ 
+                            if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                            }
+                            else{
+                            char a[3] = "No";
+                            insert_loc_sym_tab($1,4,true,true,scope,0,"No");
+                            }
+                       }
+                          else{
+                             yyerror("Array index must be integer");
+                          }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer or real");
+                    }
+                    char*temporary1=string_to_char("*");
+                    $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                    int n = atoi($<exp_rhs_attr.name>6);
+                    int length = snprintf(nullptr, 0, "\n%s = new pair<double, double>[%d];\nfor(int i = 0; i < %d; i++){\n%s[i] = {0, %s};\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3); 
+                    char* temporary = (char*)malloc(length + 1);
+                    snprintf(temporary, length + 1, "\n%s = new pair<double, double>[%d];\nfor(int i = 0; i < %d; i++){\n%s[i] = {0, %s};\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3);
+                    global_cdouble = concater(global_cdouble, temporary);
+                }
+                | ID OPEN_CIR_PAR all_exp_rhs COMMA all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                  if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(($<exp_rhs_attr.data_type>5 == 1 || $<exp_rhs_attr.data_type>5 == 3 || $<exp_rhs_attr.data_type>5 == 5) && $<exp_rhs_attr.type>5==false){
+                            if(($<exp_rhs_attr.data_type>8 == 1 || $<exp_rhs_attr.data_type>8 == 5) && $<exp_rhs_attr.type>8==false){
+                                if(search_loc_sym_tab_scope($1,scope)){
+                                    yyerror("Variable already declared");
+                                }
+                                else{
+                                    char a[3] = "No";
+                                    insert_loc_sym_tab($1,4,true,true,scope,0,"No");
+                                }
+                            }
+                            else{
+                                    yyerror("Array index must be integer");
+                            }
+                        }
+                        else{
+                                yyerror("Initialization value must be integer or real");
+                        }
+                  }
+                    else{
+                                yyerror("Initialization value must be integer or real");
+                    }
+                    char*temporary1=string_to_char("*");
+                    $<datatype_arg.name1>$ = concater(temporary1, $1);
+
+                    int n = atoi($<exp_rhs_attr.name>8);
+                    int length = snprintf(nullptr, 0, "\n%s = new pair<double, double>[%d];\nfor(int i = 0; i < %d; i++){\n%s[i] = {%s, %s};\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3, $<exp_rhs_attr.name>5); 
+                    char* temporary = (char*)malloc(length + 1);
+                    snprintf(temporary, length + 1, "\n%s = new pair<double, double>[%d];\nfor(int i = 0; i < %d; i++){\n%s[i] = {%s, %s};\n}\n", $1, n, n, $1, $<exp_rhs_attr.name>3, $<exp_rhs_attr.name>5);
+                    global_cdouble = concater(global_cdouble, temporary);    
+                }
+                | ID ASSIGN all_exp_rhs { 
+                                     if(search_loc_sym_tab_scope($1,scope)){
+                                             yyerror("Variable already declared");
+                                     }
+                                     else{   
+                                             if(($<exp_rhs_attr.data_type>3 == 2 || $<exp_rhs_attr.data_type>3 == 4) && $<exp_rhs_attr.type>3 == false)
+                                             {
+                                                insert_loc_sym_tab($1,4,false,true,scope,0,"No");
+                                             }
+                                             else {
+                                                     
+                                                yyerror("Invalid assignment");
+                                             }
+                                     }
+                                    char*temporary1=string_to_char(" = ");                                        
+                                    $<datatype_arg.name1>$ = concater($1, temporary1, $<exp_rhs_attr.name>3);
+                                }
+                ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
