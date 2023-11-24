@@ -264,6 +264,29 @@ all_exp_rhs : exp_rhs { $<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>1;
                         }
             ;
 
+for_stmt: iter
+        ;
+while_stmt: until
+          ;
+decl_stmt : var_decl {/*Note above 4 are wrtitten for testing only*/}
+          ;
+void_fn_calls : fn_call{fprintf(cpp_fp,"%s;",$<exp_rhs_attr.name>1);}
+              ;
+// assign_g: ASSIGN {fprintf(cpp_fp,"=");}
+//         ;
+/* */
+assign_stmt : exp_lhs ASSIGN assign_rhs{
+                                        if(!comp_assign_checker($<exp_lhs_attr.data_type>1,$<assign_rhs_attr.data_type>3,$<exp_lhs_attr.type>1,$<assign_rhs_attr.type>3)){
+                                                yyerror("Type mismatch");
+                                        }
+                                        else{
+                                                fprintf(cpp_fp,"%s",$<exp_lhs_attr.name>1);
+                                                fprintf(cpp_fp," = ");
+                                                fprintf(cpp_fp,"%s;",$<assign_rhs_attr.name>3);
+                                        }
+                                        }
+            ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
