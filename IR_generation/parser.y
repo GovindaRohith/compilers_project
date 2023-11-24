@@ -188,6 +188,82 @@ data_type_arr : OPEN_SQUARE_PAR CLOSE_SQUARE_PAR {$$=true;}
               | /* epsilon*/ {$$=false;}
               ;
 
+if_stmt_scope1 : CHOICE OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR { 
+                                            scope++;
+                                            create_loc_sym_tab_map(); 
+                                            cout<<"qwerty===="<<$<exp_rhs_attr.name>3<<endl;
+                                            fprintf(cpp_fp,"if(%s) {\n",$<exp_rhs_attr.name>3);
+                                        }
+               ;
+elseif_stmt_scope1 : ALT OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR OPEN_CURLY_PAR{ 
+                                            scope++;
+                                            create_loc_sym_tab_map(); 
+
+                                            fprintf(cpp_fp,"else if(%s) {\n",$<exp_rhs_attr.name>3);
+                                        }
+               ;
+if_body: stmts CLOSE_CURLY_PAR{ scope--; delete_loc_sym_tab_map(); fprintf(cpp_fp,"}");}
+            ;
+if_stmt :  if_stmt_scope1 if_body elif_stmt {  }
+        |  if_stmt_scope1 if_body elif_stmt else_stmt stmts CLOSE_CURLY_PAR {delete_loc_sym_tab_map();scope--;
+                                                                                        fprintf(cpp_fp,"}");}
+        // | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+        ;
+/* special case of else if statements */
+elif_stmt : elseif_stmt_scope1 if_body elif_stmt //{delete_loc_sym_tab_map();}// delete_loc_sym_tab_map(); }
+          | /* Epsilon */
+          ;
+else_stmt : DEFAULT OPEN_CURLY_PAR { scope++; create_loc_sym_tab_map(); 
+                                    fprintf(cpp_fp,"else{\n");}
+           ;
+           /*roh */
+inc_stmt : inc_stmt_lhs inc_stmt_rhs {if($1!=2 && $1!=4) yyerror("invalid operation");}
+         | inc_stmt_lhs INC {if($1!=1 && $1!=3 && $1!=5) yyerror("invalid operation");  fprintf(cpp_fp,"++");}
+         | inc_stmt_lhs DEC {if($1!=1 && $1!=3 && $1!=5) yyerror("invalid operation");  fprintf(cpp_fp,"--");}
+         ;
+inc_stmt_rhs : REAL_INC {fprintf(cpp_fp,".first++");}
+            | IMAG_INC {fprintf(cpp_fp,".second++");}
+            | REAL_DEC {fprintf(cpp_fp,".first--");}
+            | IMAG_DEC {fprintf(cpp_fp,".second--");}
+             ;
+inc_stmt_lhs:ID { args* sp;
+                sp=search_id_loc_sym_tab($1,scope);
+                if(!sp) yyerror("variable not declared");
+                  if(sp->dat_type.second == 0){
+                        $$=sp->dat_type.first;
+                  }
+                  else yyerror("invalid operation");
+                //   $<exp_rhs_attr.type>$=false;
+                fprintf(cpp_fp,"%s",$1);
+                }
+            | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR { 
+                                                        if($<exp_rhs_attr.data_type>3==1 || $<exp_rhs_attr.data_type>3==5){
+                                                            args* sp=new args;
+                                                            sp=search_id_loc_sym_tab($1,scope);
+                                                            if(!sp) yyerror("variable not declared");
+                                                            else{
+                                                                if(sp->dat_type.second == 0){
+                                                                $$=sp->dat_type.first;
+                                                                }
+                                                                else yyerror("invalid operation");
+                                                            }
+                                                        }
+                                                        else yyerror("Array index must be integer");
+                                                        fprintf(cpp_fp,"%s[%s]",$1,$<exp_rhs_attr.name>3);
+                                                        }
+            ;
+
+all_exp_rhs : exp_rhs { $<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>1;
+                        $<exp_rhs_attr.type>$=$<exp_rhs_attr.type>1;
+                        $<exp_rhs_attr.name>$=$<exp_rhs_attr.name>1;
+                        }
+            | MINUS exp_rhs { $<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>2;
+                        $<exp_rhs_attr.type>$=$<exp_rhs_attr.type>2;
+                        char*temporary=string_to_char("-");
+                        $<exp_rhs_attr.name>$=concater(temporary,$<exp_rhs_attr.name>2);
+                        }
+            ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
