@@ -112,3 +112,37 @@ FILE *convert_str(char *strc)
     FILE *fp = fopen(cstr, "w");
     return fp;
 }
+bool only_real_comp(short int left, short int right)// checks wheather the comparision is between real numbers
+{
+    // applicable only for <,>,<=,>=
+    if (left == 1 || left == 3 || left == 5)
+    {
+        // only int,double,bool
+        if (right == 1 || right == 3 || right == 5)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return false;
+}
+bool same_type_comp(short int left, short int right) // checks wheather the comparision is between same type
+{
+    if (only_real_comp(left, right))
+        return true; // implies both are real numbers;
+    if (left == right)
+        return true;
+    // left should be always more
+    if (left == 4 || right == 2)
+    {
+        return true;
+    }
+    if (left == 2 || right == 4)
+    {
+        return true;
+    }
+    return false;
+}
