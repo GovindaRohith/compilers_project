@@ -341,6 +341,301 @@ return_stmt : RETURN exp_rhs{if($<exp_rhs_attr.data_type>2==return_type.first &&
                     }
             ;
 
+predicate : exp_rhs GT exp_rhs {
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        if(only_real_comp($<exp_rhs_attr.data_type>1,$<exp_rhs_attr.data_type>3)){
+                                            $<pred_struct.data_type>$=5;
+                                            char*tempy=string_to_char(">");
+                                            $<pred_struct.name>$=concater($<exp_rhs_attr.name>1,tempy,$<exp_rhs_attr.name>3);
+                                        }
+                                        else{
+                                            yyerror("Invalid datatypes for comparison, expected both to be real numbers but found complex numbers");
+                                        }
+                                    }
+                                    }
+          | exp_rhs LT exp_rhs{
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        if(only_real_comp($<exp_rhs_attr.data_type>1,$<exp_rhs_attr.data_type>3)){
+                                            $<pred_struct.data_type>$=5;
+                                            char*tempy=string_to_char("<");
+                                            $<pred_struct.name>$=concater($<exp_rhs_attr.name>1,tempy,$<exp_rhs_attr.name>3);
+                                        }
+                                        else{
+                                            yyerror("Invalid datatypes for comparison, expected both to be real numbers but found complex numbers");
+                                        }
+                                    }
+                                    }
+          | exp_rhs EQ exp_rhs{
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        if(same_type_comp($<exp_rhs_attr.data_type>1,$<exp_rhs_attr.data_type>3)){
+                                            $<pred_struct.data_type>$=5;
+                                            char*tempy=string_to_char("==");
+                                            $<pred_struct.name>$=concater($<exp_rhs_attr.name>1,tempy,$<exp_rhs_attr.name>3);
+                                        }
+                                        else{
+                                            yyerror("Invalid datatypes for comparison, expected both to be real numbers or both complex numbers");
+                                        }
+                                    }
+                                    }
+          | exp_rhs NE exp_rhs{
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        if(same_type_comp($<exp_rhs_attr.data_type>1,$<exp_rhs_attr.data_type>3)){
+                                            $<pred_struct.data_type>$=5;
+                                            char*tempy=string_to_char("!=");
+                                            $<pred_struct.name>$=concater($<exp_rhs_attr.name>1,tempy,$<exp_rhs_attr.name>3);
+                                        }
+                                        else{
+                                            yyerror("Invalid datatypes for comparison, expected both to be real numbers or both complex numbers");
+                                        }
+                                    }
+                                    }
+          | exp_rhs GE exp_rhs{     
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        if(only_real_comp($<exp_rhs_attr.data_type>1,$<exp_rhs_attr.data_type>3)){
+                                            $<pred_struct.data_type>$=5;
+                                            char*tempy=string_to_char(">=");
+                                            $<pred_struct.name>$=concater($<exp_rhs_attr.name>1,tempy,$<exp_rhs_attr.name>3);
+                                        }
+                                        else{
+                                            yyerror("Invalid datatypes for comparison, expected both to be real numbers but found complex numbers");
+                                        }
+                                    }
+                                    }
+          | exp_rhs LE exp_rhs{
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        if(only_real_comp($<exp_rhs_attr.data_type>1,$<exp_rhs_attr.data_type>3)){
+                                            $<pred_struct.data_type>$=5;
+
+                                            char*tempy=string_to_char("<=");
+                                            $<pred_struct.name>$=concater($<exp_rhs_attr.name>1,tempy,$<exp_rhs_attr.name>3);
+                                        }
+                                        else{
+                                            yyerror("Invalid datatypes for comparison, expected both to be real numbers but found complex numbers");
+                                        }
+                                    }
+                                    }
+          | exp_rhs AND exp_rhs{
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        if(same_type_comp($<exp_rhs_attr.data_type>1,$<exp_rhs_attr.data_type>3)){
+                                            $<pred_struct.data_type>$=5;
+                                            char*tempy=string_to_char("&&");
+                                            $<pred_struct.name>$=concater($<exp_rhs_attr.name>1,tempy,$<exp_rhs_attr.name>3);
+                                        }
+                                        else{
+                                            yyerror("Invalid datatypes for comparison, expected both to be real numbers or both complex numbers");
+                                        }
+                                    }
+                                    }
+          | exp_rhs OR exp_rhs{
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        if(same_type_comp($<exp_rhs_attr.data_type>1,$<exp_rhs_attr.data_type>3)){
+                                            $<pred_struct.data_type>$=5;
+                                            char*tempy=string_to_char("||");
+                                            $<pred_struct.name>$=concater($<exp_rhs_attr.name>1,tempy,$<exp_rhs_attr.name>3);
+                                        }
+                                        else{
+                                            yyerror("Invalid datatypes for comparison, expected both to be real numbers or both complex numbers");
+                                        }
+                                    }
+                                    }
+          | NEG exp_rhs{
+                                    if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
+                                    else {
+                                        $<pred_struct.data_type>$=$<exp_rhs_attr.data_type>2;
+                                        char*tempy=string_to_char("!");
+                                        $<pred_struct.name>$=concater(tempy,$<exp_rhs_attr.name>2);
+                                    }
+                                    }
+          ;
+
+exp_rhs : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR {$<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>2;
+                                                $<exp_rhs_attr.type>$=$<exp_rhs_attr.type>2;
+                                                char*temp1=string_to_char("(");
+                                                char*temp2=string_to_char(")");
+                                                $<exp_rhs_attr.name>$=concater(temp1, $<exp_rhs_attr.name>2,temp2);
+                                                }
+        | OPEN_CIR_PAR MINUS exp_rhs CLOSE_CIR_PAR {$<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>3;
+                                                $<exp_rhs_attr.type>$=$<exp_rhs_attr.type>3;
+                                                char*temp1=string_to_char("(");
+                                                char*temp2=string_to_char(")");
+                                                $<exp_rhs_attr.name>$=concater(temp1,$2, $<exp_rhs_attr.name>3,temp2);
+                                                }
+        | exp_rhs ARITH_OP exp_rhs {
+                                        if($<exp_rhs_attr.data_type>1==0 || $<exp_rhs_attr.data_type>1==6 || $<exp_rhs_attr.data_type>3==0 || $<exp_rhs_attr.data_type>3==6)
+                                        {
+                                            yyerror("invalid operation");
+                                        }
+                                        else if($<exp_rhs_attr.type>1==1 || $<exp_rhs_attr.type>3==1){
+                                            yyerror("invalid operation");
+                                        }
+                                        else{
+                                            if($<exp_rhs_attr.data_type>1==4 || $<exp_rhs_attr.data_type>3==4)
+                                            {
+                                                $<exp_rhs_attr.data_type>$=4;
+                                            }
+                                            else if(($<exp_rhs_attr.data_type>1==2 && $<exp_rhs_attr.data_type>3==3)||($<exp_rhs_attr.data_type>1==3 && $<exp_rhs_attr.data_type>3==2)){
+                                                $<exp_rhs_attr.data_type>$=4;
+                                            }
+                                            else if(($<exp_rhs_attr.data_type>1==2)||($<exp_rhs_attr.data_type>3==2)){
+                                                $<exp_rhs_attr.data_type>$=2;
+                                            }
+                                            else if(($<exp_rhs_attr.data_type>1==3)||($<exp_rhs_attr.data_type>3==3)){
+                                                $<exp_rhs_attr.data_type>$=3;
+                                            }    
+                                            else{
+                                                $<exp_rhs_attr.data_type>$=1;
+                                            }
+
+                                        }
+                                        $<exp_rhs_attr.name>$=concater($<exp_rhs_attr.name>1,$2,$<exp_rhs_attr.name>3);
+                                        $<exp_rhs_attr.type>$=false;
+                                        // cout<<$<exp_rhs_attr.name>$<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"<<endl;
+                                }
+        | exp_rhs MINUS exp_rhs {       cout<<$<exp_rhs_attr.name>1<<" asas "<<$<exp_rhs_attr.name>3<<endl;
+                                        if($<exp_rhs_attr.data_type>1==0 || $<exp_rhs_attr.data_type>1==6 || $<exp_rhs_attr.data_type>3==0 || $<exp_rhs_attr.data_type>3==6)
+                                        {
+                                            yyerror("invalid operation");
+                                        }
+                                        else if($<exp_rhs_attr.type>1==1 || $<exp_rhs_attr.type>3==1){
+                                            yyerror("invalid operation");
+                                        }
+                                        else{
+                                            if($<exp_rhs_attr.data_type>1==4 || $<exp_rhs_attr.data_type>3==4)
+                                            {
+                                                $<exp_rhs_attr.data_type>$=4;
+                                            }
+                                            else if(($<exp_rhs_attr.data_type>1==2 && $<exp_rhs_attr.data_type>3==3)||($<exp_rhs_attr.data_type>1==3 && $<exp_rhs_attr.data_type>3==2)){
+                                                $<exp_rhs_attr.data_type>$=4;
+                                            }
+                                            else if(($<exp_rhs_attr.data_type>1==2)||($<exp_rhs_attr.data_type>3==2)){
+                                                $<exp_rhs_attr.data_type>$=2;
+                                            }
+                                            else if(($<exp_rhs_attr.data_type>1==3)||($<exp_rhs_attr.data_type>3==3)){
+                                                $<exp_rhs_attr.data_type>$=3;
+                                            }    
+                                            else{
+                                                $<exp_rhs_attr.data_type>$=1;
+                                            }
+                                        }
+                                        $<exp_rhs_attr.name>$=concater($<exp_rhs_attr.name>1,$2,$<exp_rhs_attr.name>3);
+                                        // cout<<"string of the nation"<<$<exp_rhs_attr.name>$<<endl;
+                                        // cout<<$<exp_rhs_attr.name>$<<"[[[[[]]]]]"<<endl;
+                                        $<exp_rhs_attr.type>$=false;
+                                    }
+        | predicate {$<exp_rhs_attr.data_type>$=5;
+                        $<exp_rhs_attr.type>$=false;
+                        $<exp_rhs_attr.name>$=$<pred_struct.name>1;
+                        cout<<"checkking error"<<$<exp_rhs_attr.name>$<<endl;
+                        }
+        | ID { 
+                // cout<<$1<<"-=-"<<endl;
+                args* sp=new args;
+                sp=search_id_loc_sym_tab($1,scope);
+                // cout << "++++++ "<<sp<<endl;
+                if(!sp) yyerror("variable not declared");
+                $<exp_rhs_attr.data_type>$=sp->dat_type.first;
+                $<exp_rhs_attr.type>$=sp->dat_type.second;
+                // fprintf(cpp_fp,"%s",$1);
+                $<exp_rhs_attr.name>$=$1;
+                }
+        | INT_NUM {$<exp_rhs_attr.data_type>$=1;
+                        $<exp_rhs_attr.type>$=false;
+                        // fprintf(cpp_fp,"%s",$1);
+                        $<exp_rhs_attr.name>$=$1;
+                        }
+        
+        | DOUBLE_NUM {$<exp_rhs_attr.data_type>$=3; 
+                        $<exp_rhs_attr.type>$=false;
+                        // fprintf(cpp_fp,"%s",$1);
+                        $<exp_rhs_attr.name>$=$1;
+                        }
+        | fn_call {$<exp_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>1;
+                        $<exp_rhs_attr.type>$=$<exp_rhs_attr.type>1;
+                        $<exp_rhs_attr.name>$=$<exp_rhs_attr.name>1;
+                        }
+        | ID INC {  args* sp;
+                sp=search_id_loc_sym_tab($1,scope);
+                  if(sp->dat_type.second == 0){
+                        $<exp_rhs_attr.data_type>$=sp->dat_type.first;
+                  }
+                  else yyerror("invalid operation");
+                  $<exp_rhs_attr.type>$=false; 
+                //   fprintf(cpp_fp,"%s++",$1);
+                    char*temporary=string_to_char("+");
+                    $<exp_rhs_attr.name>$=concater($1,temporary,temporary);
+                  }
+
+        | ID DEC {args* sp;
+                sp=search_id_loc_sym_tab($1,scope);
+                  if(sp->dat_type.second == 0){
+                        $<exp_rhs_attr.data_type>$=sp->dat_type.first;
+                  }
+                  else yyerror("invalid operation");
+                  $<exp_rhs_attr.type>$=false;
+                    char*temporary=string_to_char("-");
+                    $<exp_rhs_attr.name>$=concater($1,temporary,temporary);
+                  }
+        | INT_NUM INC {$<exp_rhs_attr.data_type>$=1;
+                        $<exp_rhs_attr.type>$=false;
+                        char*temporary=string_to_char("+");
+                        $<exp_rhs_attr.name>$=concater($1,temporary,temporary);
+                        
+                        }
+        | INT_NUM DEC {$<exp_rhs_attr.data_type>$=1;
+                        $<exp_rhs_attr.type>$=false;
+                        char*temporary=string_to_char("-");
+                        $<exp_rhs_attr.name>$=concater($1,temporary,temporary);
+                        }
+        | DOUBLE_NUM INC {$<exp_rhs_attr.data_type>$=3;
+                            $<exp_rhs_attr.type>$=false;
+                        char*temporary=string_to_char("+");
+                        $<exp_rhs_attr.name>$=concater($1,temporary,temporary);
+                            }
+        | DOUBLE_NUM DEC {$<exp_rhs_attr.data_type>$=3;
+                        $<exp_rhs_attr.type>$=false;
+                        char*temporary=string_to_char("-");
+                        $<exp_rhs_attr.name>$=concater($1,temporary,temporary);
+                        }
+        | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR { //cout<<$1<<"-=--"<<scope<<endl;
+                                                        if($<exp_rhs_attr.data_type>3!=1){
+                                                            yyerror("Not integer");
+                                                        }
+                                                        args* sp;
+                                                        sp=search_id_loc_sym_tab($1,scope);
+                                                        if(sp->dat_type.second == 1){
+                                                            $<exp_rhs_attr.data_type>$=sp->dat_type.first;
+                                                        }
+                                                        else yyerror("invalid operation");
+                                                        $<exp_rhs_attr.type>$=false;
+                                                        char*temporary1=string_to_char("[");
+                                                        char*temporary2=string_to_char("]");
+                                                        $<exp_rhs_attr.name>$=concater($1,temporary1,$<exp_rhs_attr.name>3,temporary2);
+                                                        }
+        | OPEN_CIR_PAR exp_rhs COMMA exp_rhs CLOSE_CIR_PAR {if($<exp_rhs_attr.data_type>2 != 6 && $<exp_rhs_attr.data_type>4 != 6){
+                                                              if(($<exp_rhs_attr.data_type>2 == 3 || $<exp_rhs_attr.data_type>2 == 4) || ($<exp_rhs_attr.data_type>4 == 3 || $<exp_rhs_attr.data_type>4 == 4)) $<exp_rhs_attr.data_type>$ = 4;
+                                                              else $<exp_rhs_attr.data_type>$ = 2;
+                                                            }
+                                                            else{
+                                                                yyerror("invalid operation");
+                                                            }
+                                                            $<exp_rhs_attr.type>$=false;
+                                                            char*temporary1=string_to_char("{");
+                                                            char*temporary2=string_to_char(",");
+                                                            char*temporary3=string_to_char("}");
+                                                            $<exp_rhs_attr.name>$=concater(temporary1,$<exp_rhs_attr.name>2,temporary2,$<exp_rhs_attr.name>4,temporary3);
+
+                                                            }
+        
+        ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
