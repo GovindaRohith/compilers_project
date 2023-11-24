@@ -51,3 +51,27 @@ void insert_loc_sym_tab(string name, short int data_type, bool type, bool par_va
 
     cout << name << "-" << data_type << "-" << type << "-" << par_var << "-" << scope << endl;
 }
+args *search_id_loc_sym_tab(string name, int scope_no) // searches the name in the local symbol table in each and every scope.
+{
+    cout << "search_id_loc_sym_tab--" << name << scope_no << endl;
+    args *temp = new args;
+    //  print_loc_sym_tab();
+
+    while (scope_no > 0)
+    {
+        // cout<<"scope_no="<<scope_no<<endl;
+        // cout<<"*************"<<endl;
+        if (loc_sym_tab[scope_no - 1].find(name) != loc_sym_tab[scope_no - 1].end())
+        {
+            //     cout<<"*************"<<endl;
+            temp->name = loc_sym_tab[scope_no - 1][name].name;
+            temp->dat_type.first = loc_sym_tab[scope_no - 1][name].data_type;
+            temp->dat_type.second = loc_sym_tab[scope_no - 1][name].type;
+            return temp;
+        }
+
+        scope_no--;
+    }
+    // cout<<"Hello world"<<endl;
+    return NULL;
+}
