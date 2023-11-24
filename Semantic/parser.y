@@ -126,11 +126,56 @@ d_type : data_type data_type_arr { $<ret_type.ret_type_bool>$=$2;
                               }
        ;
 
+/* if statement syntax */
+if_stmt_scope1 : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR { scope++; create_loc_sym_tab_map(); }
+               ;
+if_stmt : CHOICE if_stmt_scope1 OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt { delete_loc_sym_tab_map();scope--; }
+        | CHOICE if_stmt_scope1 OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt else_stmt stmts CLOSE_CURLY_PAR {delete_loc_sym_tab_map();scope--;}
+        // | CHOICE OPEN_CIR_PAR predicate CLOSE_CIR_PAR OPEN_CURLY_PAR stmt_types CLOSE_CURLY_PAR elif_stmt
+        ;
+/* special case of else if statements */
+elif_stmt : ALT if_stmt_scope1 OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR elif_stmt { delete_loc_sym_tab_map();scope--; }
+          | /* Epsilon */
+          ;
+else_stmt : DEFAULT OPEN_CURLY_PAR { scope++; create_loc_sym_tab_map(); }
+           ;
+
 return_stmt : RETURN exp_rhs{if($<exp_rhs_attr.data_type>2==return_type.first && $<exp_rhs_attr.type>2 == return_type.second){}
                              else{
                                         yyerror("return type mismatch");
                              }   }
             ;
+
+assign_stmt : exp_lhs ASSIGN assign_rhs{
+                                        if(!comp_assign_checker($<exp_lhs_attr.data_type>1,$<assign_rhs_attr.data_type>3,$<exp_lhs_attr.type>1,$<assign_rhs_attr.type>3)){
+                                                yyerror("Type mismatch");
+                                        }
+                                        }
+            ;
+exp_lhs : ID { args* sp=new args;
+               sp=search_id_loc_sym_tab($1,scope);
+               if(!sp) yyerror("variable not declared");
+               $<exp_lhs_attr.data_type>$=sp->dat_type.first;
+               $<exp_lhs_attr.type>$=sp->dat_type.second;
+             }
+        | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR{ args* sp=new args;
+                if($<exp_rhs_attr.data_type>3!=1){
+                        yyerror("Array index must be integer");
+                }
+                sp=search_id_loc_sym_tab($1,scope);
+                if(!sp) yyerror("variable not declared");
+                $<exp_lhs_attr.data_type>$=sp->dat_type.first;
+                $<exp_lhs_attr.type>$=false;
+             }
+        ;
+assign_rhs : exp_rhs {$<assign_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>1;
+                        $<assign_rhs_attr.type>$=$<exp_rhs_attr.type>1;
+                        }
+           | MINUS exp_rhs {$<assign_rhs_attr.data_type>$=$<exp_rhs_attr.data_type>2;
+                        $<assign_rhs_attr.type>$=$<exp_rhs_attr.type>2;
+                        }
+           ;
+        
 
 predicate : exp_rhs GT exp_rhs {
                                     if($<exp_rhs_attr.type>1==true) yyerror("Expected ID but found array");
@@ -353,6 +398,31 @@ exp_rhs : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR {$<exp_rhs_attr.data_type>$=$<exp_r
                                                             }
         
         ;
+
+iter_fir_stmt: decl_stmt
+             |assign_stmt
+             |inc_stmt
+             |/*epsilon*/
+             ;
+iter_sec_stmt:predicate
+             |/*epsilon*/
+             ;
+iter_thir_stmt:assign_stmt
+              |inc_stmt 
+              |/*epsilon*/
+              ;
+
+iter_header:ITER {create_loc_sym_tab_map();scope++;}
+          ;
+
+until_header:UNTIL OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR {create_loc_sym_tab_map();scope++;}
+            ;
+     ;
+iter:iter_header OPEN_CIR_PAR iter_fir_stmt SEMICOL iter_sec_stmt SEMICOL iter_thir_stmt CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR {delete_loc_sym_tab_map();scope--;}
+    ;
+until: until_header OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR {delete_loc_sym_tab_map();scope--;}
+     ;
+
 var_decl : real_decl
          | comp_decl
          ;
