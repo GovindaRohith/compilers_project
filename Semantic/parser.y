@@ -317,6 +317,388 @@ exp_rhs : OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR {$<exp_rhs_attr.data_type>$=$<exp_r
                                                             }
         
         ;
+var_decl : real_decl
+         | comp_decl
+         ;
+
+real_decl : INT int_part
+          | DOUBLE double_part
+          ;
+int_part : int_id_type
+         | int_id_type COMMA int_part
+         ;
+int_id_type : ID { 
+                   if(search_loc_sym_tab_scope($1,scope)){
+                          yyerror("Variable already declared");
+                     }
+                     else{
+                        char a[3] = "No";
+                          insert_loc_sym_tab($1,1,false,true,scope,0,"No");
+                   }
+                 }
+            | ID ASSIGN all_exp_rhs { 
+                         if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                        }
+                        else{
+                                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3 == false)
+                                {
+                                   insert_loc_sym_tab($1,1,false,true,scope,0,"No");
+                                }
+                                else {
+                                        yyerror("Invalid assignment");
+                                }
+                         }
+            }
+            | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR { 
+                                if((($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5)) && $<exp_rhs_attr.type>3==false){
+                                        if(search_loc_sym_tab_scope($1,scope)){
+                                            // cout<<"qwertyu"<<endl;
+                                            yyerror("Variable already declared");
+                                    }
+                                    else{
+                                            // cout<<"qwertyu"<<endl;
+                                            insert_loc_sym_tab($1,1,true,true,scope,0,"No");
+                                    }
+                                }
+                                else{
+                                        yyerror("Array index must be integer");
+                                }
+                                
+            }
+            | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                                    if(($<exp_rhs_attr.data_type>6 == 1 || $<exp_rhs_attr.data_type>6 == 5) && $<exp_rhs_attr.type>6==false){
+                                        if(search_loc_sym_tab_scope($1,scope)){
+                                                yyerror("Variable already declared");
+                                        }
+                                        else{
+                                                insert_loc_sym_tab($1,1,true,true,scope,0,"No");
+                                        }
+                                    }
+                                    else{
+                                            yyerror("Array index must be integer");
+                                    }
+                                }
+                                else{
+                                        yyerror("Initialization value must be integer");
+                                }        
+            }                   
+            ;
+double_part : double_id_type
+            | double_id_type COMMA double_part
+            ;
+double_id_type : ID {
+                        if(search_loc_sym_tab_scope($1,scope)){
+                               yyerror("Variable already declared");
+                          }
+                          else{
+                             char a[3] = "No";
+                             insert_loc_sym_tab($1,3,false,true,scope,0,"No");
+                        }        
+                        }
+               | ID ASSIGN all_exp_rhs { 
+                                     if(search_loc_sym_tab_scope($1,scope)){
+                                             yyerror("Variable already declared");
+                                     }
+                                     else{  
+                                            if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3 == false)
+                                             {
+                                                insert_loc_sym_tab($1,3,false,true,scope,0,"No");
+                                             }
+                                             else {
+                                                     
+                                                     yyerror("Invalid assignment");
+                                             }
+                                     }
+                                }
+               | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                        if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                            if(search_loc_sym_tab_scope($1,scope)){
+                                    yyerror("Variable already declared");
+                            }
+                            else{
+                                    insert_loc_sym_tab($1,3,true,true,scope,0,"No");
+                            }
+                        }
+               }
+               | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                            if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                                if(($<exp_rhs_attr.data_type>6 == 1 || $<exp_rhs_attr.data_type>6 == 5) && $<exp_rhs_attr.type>6==false){
+                                    if(search_loc_sym_tab_scope($1,scope)){
+                                        yyerror("Variable already declared");
+                                    }
+                                    else{
+                                        insert_loc_sym_tab($1,3,true,true,scope,0,"No");
+                                    }
+                                }
+                                else{
+                                        yyerror("Array index must be integer");
+                                }
+                            }
+                            else{
+                                    yyerror("Initialization value must be integer or real");
+                                }
+                                }
+               ;
+comp_decl : CINT cint_part
+          | CDOUBLE cdouble_part
+          ;
+cint_part : cint_id_type
+          | cint_id_type COMMA cint_part
+          ;
+cint_id_type : ID {
+                   if(search_loc_sym_tab_scope($1,scope)){
+                          yyerror("Variable already declared");
+                     }
+                     else{
+                        char a[3] = "No";
+                        insert_loc_sym_tab($1,2,false,true,scope,0,"No");
+                   }       
+                }
+             | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR {
+                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                   if(search_loc_sym_tab_scope($1,scope)){
+                          yyerror("Variable already declared");
+                     }
+                     else{
+                        char a[3] = "No";
+                        insert_loc_sym_tab($1,2,false,true,scope,0,"No");
+                   } 
+                }
+                else{
+                        yyerror("Initialization value must be integer");
+                }
+             }
+             | ID OPEN_CIR_PAR all_exp_rhs COMMA all_exp_rhs CLOSE_CIR_PAR {
+                   if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                    if(($<exp_rhs_attr.data_type>5 == 1 || $<exp_rhs_attr.data_type>5 == 5) && $<exp_rhs_attr.type>5==false){
+                        if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                            }
+                            else{
+                                char a[3] = "No";
+                                insert_loc_sym_tab($1,2,false,true,scope,0,"No");
+                        }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer");
+                    }
+                   } 
+                     else{
+                            yyerror("Initialization value must be integer");
+                     }
+             }          
+             | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                    if(search_loc_sym_tab_scope($1,scope)){
+                            yyerror("Variable already declared");
+                    }
+                    else{
+                            insert_loc_sym_tab($1,2,true,true,scope,0,"No");
+                    }
+                }
+                else{
+                        yyerror("Array index must be integer");
+                }
+             }
+             | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                    if(($<exp_rhs_attr.data_type>6 == 1 || $<exp_rhs_attr.data_type>6 == 5) && $<exp_rhs_attr.type>6==false){
+                                if(search_loc_sym_tab_scope($1,scope)){
+                                        yyerror("Variable already declared");
+                                }
+                                else{
+                                        insert_loc_sym_tab($1,2,true,true,scope,0,"No");
+                                }     
+                    }
+                    else{
+                            yyerror("Array index must be integer");
+                    }
+                }  
+                else{
+                        yyerror("Initialization value must be integer");
+                }         
+             }
+             | ID OPEN_CIR_PAR all_exp_rhs COMMA all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(($<exp_rhs_attr.data_type>5 == 1 || $<exp_rhs_attr.data_type>5 == 5) && $<exp_rhs_attr.type>5==false){
+                            if(($<exp_rhs_attr.data_type>8 == 1 || $<exp_rhs_attr.data_type>8 == 5) && $<exp_rhs_attr.type>8==false){
+                                if(search_loc_sym_tab_scope($1,scope)){
+                                        yyerror("Variable already declared");
+                                }
+                                else{
+                                        insert_loc_sym_tab($1,2,true,true,scope,0,"No");
+                                }
+                            }
+                            else{
+                                    yyerror("Array index must be integer");
+                            }
+                        }
+                        else{
+                                yyerror("Initialization value must be integer");
+                        }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer");
+                    }
+             }
+             | ID ASSIGN all_exp_rhs { 
+                                     if(search_loc_sym_tab_scope($1,scope)){
+                                             yyerror("Variable already declared");
+                                     }
+                                     else{   
+                                            if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 2 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3 == false)
+                                             {
+                                                insert_loc_sym_tab($1,2,false,true,scope,0,"No");
+                                             }
+                                             else {   
+                                                yyerror("Invalid assignment");
+                                             }
+                                     }
+                                }
+             ;
+cdouble_part : cdouble_id_type
+            | cdouble_id_type COMMA cdouble_part
+            ;
+cdouble_id_type : ID {
+                   if(search_loc_sym_tab_scope($1,scope)){
+                          yyerror("Variable already declared");
+                     }
+                     else{
+                        char a[3] = "No";
+                        insert_loc_sym_tab($1,4,false,true,scope,0,"No");
+                   }         
+                }
+                | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                            }
+                            else{
+                                char a[3] = "No";
+                                insert_loc_sym_tab($1,4,false,true,scope,0,"No");
+                        }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer or real");
+                    }
+                }
+                | ID OPEN_CIR_PAR all_exp_rhs COMMA all_exp_rhs CLOSE_CIR_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(($<exp_rhs_attr.data_type>5 == 1 || $<exp_rhs_attr.data_type>5 == 3 || $<exp_rhs_attr.data_type>5 == 5) && $<exp_rhs_attr.type>5==false){
+                            if(search_loc_sym_tab_scope($1,scope)){
+                                    yyerror("Variable already declared");
+                                }
+                                else{
+                                    char a[3] = "No";
+                                    insert_loc_sym_tab($1,4,false,true,scope,0,"No");
+                            }
+                        }
+                        else{
+                                yyerror("Initialization value must be integer or real");
+                        }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer or real");
+                    }
+                }
+                | ID OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                            }
+                            else{
+                                char a[3] = "No";
+                                insert_loc_sym_tab($1,4,true,true,scope,0,"No");
+                        }
+                    }
+                    else{
+                            yyerror("Array index must be integer");
+                    }
+                }
+                | ID OPEN_CIR_PAR all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                    if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                       if(($<exp_rhs_attr.data_type>6 == 1 || $<exp_rhs_attr.data_type>6 == 5) && $<exp_rhs_attr.type>6==false){ 
+                            if(search_loc_sym_tab_scope($1,scope)){
+                                yyerror("Variable already declared");
+                            }
+                            else{
+                            char a[3] = "No";
+                            insert_loc_sym_tab($1,4,true,true,scope,0,"No");
+                            }
+                       }
+                          else{
+                             yyerror("Array index must be integer");
+                          }
+                    }
+                    else{
+                            yyerror("Initialization value must be integer or real");
+                    }
+                }
+                | ID OPEN_CIR_PAR all_exp_rhs COMMA all_exp_rhs CLOSE_CIR_PAR OPEN_SQUARE_PAR exp_rhs CLOSE_SQUARE_PAR {
+                  if(($<exp_rhs_attr.data_type>3 == 1 || $<exp_rhs_attr.data_type>3 == 3 || $<exp_rhs_attr.data_type>3 == 5) && $<exp_rhs_attr.type>3==false){
+                        if(($<exp_rhs_attr.data_type>5 == 1 || $<exp_rhs_attr.data_type>5 == 3 || $<exp_rhs_attr.data_type>5 == 5) && $<exp_rhs_attr.type>5==false){
+                            if(($<exp_rhs_attr.data_type>8 == 1 || $<exp_rhs_attr.data_type>8 == 5) && $<exp_rhs_attr.type>8==false){
+                                if(search_loc_sym_tab_scope($1,scope)){
+                                    yyerror("Variable already declared");
+                                }
+                                else{
+                                    char a[3] = "No";
+                                    insert_loc_sym_tab($1,4,true,true,scope,0,"No");
+                                }
+                            }
+                            else{
+                                    yyerror("Array index must be integer");
+                            }
+                        }
+                        else{
+                                yyerror("Initialization value must be integer or real");
+                        }
+                  }
+                    else{
+                                yyerror("Initialization value must be integer or real");
+                    }
+                }
+                | ID ASSIGN all_exp_rhs { 
+                                     if(search_loc_sym_tab_scope($1,scope)){
+                                             yyerror("Variable already declared");
+                                     }
+                                     else{   
+                                             if($<exp_rhs_attr.data_type>3 != 6 && $<exp_rhs_attr.type>3 == false)
+                                             {
+                                                insert_loc_sym_tab($1,4,false,true,scope,0,"No");
+                                             }
+                                             else {
+                                                     
+                                                yyerror("Invalid assignment");
+                                             }
+                                     }
+                                }
+                ;
+
+/*for function*/
+argument : argument_list 
+         | argument_list COMMA argument
+         ;
+argument_list : T L{    args arg_attr;
+                            arg_attr.name=$<arg_name_type.arg_name>2;
+                            arg_attr.dat_type.first=$1;
+                            arg_attr.dat_type.second=$<arg_name_type.arg_type_bool>2;
+                            
+        argmnt_list.push_back(arg_attr);}
+         |
+         ;
+T : INT{$$=1;}
+ | CINT {$$=2;}
+ | DOUBLE {$$=3;}
+ | CDOUBLE {$$=4;}
+ ;
+L : ID {$<arg_name_type.arg_name>$=$1;
+        $<arg_name_type.arg_type_bool>$=0;}
+  | ID OPEN_SQUARE_PAR CLOSE_SQUARE_PAR{$<arg_name_type.arg_name>$=$1;
+        $<arg_name_type.arg_type_bool>$=1;}
+  ;
 
 %%
   
