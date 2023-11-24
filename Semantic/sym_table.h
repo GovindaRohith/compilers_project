@@ -146,3 +146,395 @@ bool same_type_comp(short int left, short int right) // checks wheather the comp
     }
     return false;
 }
+void real_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "real";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp;
+    temp.name = "x";
+    temp.dat_type.first = 4;
+    temp.dat_type.second = false;
+    exist.arg_list.push_back(temp);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+
+void img_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "img";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp;
+    temp.name = "x";
+    temp.dat_type.first = 4;
+    temp.dat_type.second = false;
+    exist.arg_list.push_back(temp);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void real_pow_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "real_pow";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 3;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 3;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void complex_pow_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "complex_pow";
+    exist.ret_type.first = 4;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 3;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void polar_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "polar";
+    exist.ret_type.first = 0;
+    exist.ret_type.second = false;
+    args temp;
+    temp.name = "x";
+    temp.dat_type.first = 4;
+    temp.dat_type.second = false;
+    exist.arg_list.push_back(temp);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void conjugate_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "conjugate";
+    exist.ret_type.first = 4;
+    exist.ret_type.second = false;
+    args temp;
+    temp.name = "x";
+    temp.dat_type.first = 4;
+    temp.dat_type.second = false;
+    exist.arg_list.push_back(temp);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void mod_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "mod";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp;
+    temp.name = "x";
+    temp.dat_type.first = 4;
+    temp.dat_type.second = false;
+    exist.arg_list.push_back(temp);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void arg_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "arg";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp;
+    temp.name = "x";
+    temp.dat_type.first = 4;
+    temp.dat_type.second = false;
+    exist.arg_list.push_back(temp);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void angle_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "angle";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp;
+    temp.name = "x";
+    temp.dat_type.first = 4;
+    temp.dat_type.second = false;
+    exist.arg_list.push_back(temp);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void dist_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "dist";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void cprint_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "cprint";
+    exist.ret_type.first = 0;
+    exist.ret_type.second = false;
+    args temp;
+    temp.name = "x";
+    temp.dat_type.first = 4;
+    temp.dat_type.second = false;
+    exist.arg_list.push_back(temp);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void rotate_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "rotate";
+    exist.ret_type.first = 4;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 3;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void get_line_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "get_line";
+    exist.ret_type.first = 0;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void is_triangle_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "is_triangle";
+    exist.ret_type.first = 5;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 4;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void get_centroid_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "get_centroid";
+    exist.ret_type.first = 4;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 4;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void get_circumcenter_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "get_circumcenter";
+    exist.ret_type.first = 4;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 4;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void get_orthocenter_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "get_orthocenter";
+    exist.ret_type.first = 4;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 4;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void get_excenter_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "get_excenter";
+    exist.ret_type.first = 4;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 4;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void get_incenter_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "get_incenter";
+    exist.ret_type.first = 4;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 4;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void get_area_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "get_area";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 4;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+void get_perimeter_fn(Fn_Symbol exist)
+{
+    exist.fn_name = "get_perimeter";
+    exist.ret_type.first = 3;
+    exist.ret_type.second = false;
+    args temp1;
+    temp1.name = "x";
+    temp1.dat_type.first = 4;
+    temp1.dat_type.second = false;
+    exist.arg_list.push_back(temp1);
+    args temp2;
+    temp2.name = "y";
+    temp2.dat_type.first = 4;
+    temp2.dat_type.second = false;
+    exist.arg_list.push_back(temp2);
+    args temp3;
+    temp3.name = "z";
+    temp3.dat_type.first = 4;
+    temp3.dat_type.second = false;
+    exist.arg_list.push_back(temp3);
+    fn_sym_tab[exist.fn_name] = exist;
+}
+
+void init_inbuilt()
+{
+    // for fn_sym_table
+    Fn_Symbol exist;
+    real_fn(exist);
+    img_fn(exist);
+    real_pow_fn(exist);
+    complex_pow_fn(exist);
+    polar_fn(exist);
+    conjugate_fn(exist);
+    mod_fn(exist);
+    arg_fn(exist);
+    angle_fn(exist);
+    dist_fn(exist);
+    cprint_fn(exist);
+    rotate_fn(exist);
+    get_line_fn(exist);
+    is_triangle_fn(exist);
+    get_centroid_fn(exist);
+    get_circumcenter_fn(exist);
+    get_orthocenter_fn(exist);
+    get_excenter_fn(exist);
+    get_incenter_fn(exist);
+    get_area_fn(exist);
+    get_perimeter_fn(exist);
+}
