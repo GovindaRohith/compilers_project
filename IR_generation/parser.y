@@ -680,6 +680,33 @@ fn_args : all_exp_rhs COMMA fn_args{pair<short int,bool> temp;
         
         ;
 
+iter_fir_stmt: decl_stmt
+             |assign_stmt
+             |inc_stmt{fprintf(cpp_fp,";");}
+             |/*epsilon*/{fprintf(cpp_fp,";");}
+             ;
+iter_sec_stmt:exp_rhs{fprintf(cpp_fp,"%s;",$<exp_rhs_attr.name>1);}
+             |/*epsilon*/{fprintf(cpp_fp,";");}
+             ;
+iter_thir_stmt:assign_stmt{fprintf(cpp_fp,"){");}
+              |inc_stmt {fprintf(cpp_fp,"){");}
+              |/*epsilon*/{fprintf(cpp_fp,"){");}
+              ;
+
+iter_header:ITER {create_loc_sym_tab_map();scope++;
+                    fprintf(cpp_fp,"for(");}
+          ;
+
+until_header:UNTIL OPEN_CIR_PAR exp_rhs CLOSE_CIR_PAR {fprintf(cpp_fp,"while(%s){",$<exp_rhs_attr.name>3);
+                                                        create_loc_sym_tab_map();scope++;}
+             ;
+iter:iter_header OPEN_CIR_PAR iter_fir_stmt SEMICOL iter_sec_stmt SEMICOL iter_thir_stmt CLOSE_CIR_PAR OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR {fprintf(cpp_fp,"}");
+                                                                                                                                            delete_loc_sym_tab_map();scope--;}
+    ;
+until: until_header OPEN_CURLY_PAR stmts CLOSE_CURLY_PAR {fprintf(cpp_fp,"}");
+                                                            delete_loc_sym_tab_map();scope--;}
+     ;
+
 argument : argument_list { $$ = $<arg_name_type.arg_name>1; }
          | argument_list COMMA argument { char*temporary1=string_to_char(", ");
                                             $$ = concater($<arg_name_type.arg_name>1, temporary1, $3);  }
